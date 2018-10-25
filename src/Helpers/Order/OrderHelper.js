@@ -1,15 +1,15 @@
 import React from 'react';
-import OrderItem from  '../../../insights_hsdm_api/src/model/OrderItem';
+import OrderItem from  '../../../service_portal-api-js/src/model/OrderItem';
 
-var InsightsServiceCatalogApi = require('../../../insights_hsdm_api');
+var ServicePortalApi = require('../../../service_portal-api-js');
 
-var defaultClient = InsightsServiceCatalogApi.ApiClient.instance;
+var defaultClient = ServicePortalApi.ApiClient.instance;
 
 // Configure HTTP basic authorization: UserSecurity
 var AdminSecurity = defaultClient.authentications['AdminSecurity'];
 
 
-var api = new InsightsServiceCatalogApi.AdminsApi();
+var api = new ServicePortalApi.AdminsApi();
 
 let order_id = 0;
 

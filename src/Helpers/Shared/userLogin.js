@@ -1,14 +1,14 @@
 import React from 'react';
 
-const InsightsServiceCatalogApi = require('../../../insights_hsdm_api');
-const defaultClient = InsightsServiceCatalogApi.ApiClient.instance;
+const ServicePortalApi = require('../../../service_portal-api-js');
+const defaultClient = ServicePortalApi.ApiClient.instance;
 
 // Configure HTTP basic authorization: UserSecurity
 const AdminSecurity = defaultClient.authentications['AdminSecurity'];
 
 // TODO - replace with actual login info when available
 let admin_hash = {'x-rh-auth-identity': btoa(JSON.stringify({'identity': {'is_org_admin': true }}))};
-const adminApi = new InsightsServiceCatalogApi.AdminsApi();
+const adminApi = new ServicePortalApi.AdminsApi();
 Object.assign(adminApi.apiClient.defaultHeaders, admin_hash);
 
 export function getUserApi(){
