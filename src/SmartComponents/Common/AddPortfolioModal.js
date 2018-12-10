@@ -7,7 +7,7 @@ import { Main, PageHeader, PageHeaderTitle } from '@red-hat-insights/insights-fr
 import { addPortfolioWithItem, fetchPortfolios } from '../../Store/Actions/PortfolioActions';
 import { PortfolioStore } from '../../Store/Reducers/PortfolioStore';
 import { consoleLog } from '../../Helpers/Shared/Helper';
-import { FormRenderer } from '@red-hat-insights/insights-frontend-components/components/Forms';
+import DataDrivenForm from './DataDrivenForm'
 import { addAlert, removeAlert } from '../../Store/Actions/AlertActions';
 
 const schema = {
@@ -60,9 +60,11 @@ class AddPortfolioModal extends Component {
                       </PageHeader>
                   </div>
                   <div className="pf-l-stack">
-                      <FormRenderer schema={ schema }
-                          onSubmit={ this.onSubmit }
-                          onCancel={ this.onCancel } />
+                      <DataDrivenForm
+                        schemaType="mozilla"
+                        schema={ schema }
+                        onSubmit={ this.onSubmit }
+                        onCancel={ this.onCancel } />
                   </div>
               </div>
           </Main>
