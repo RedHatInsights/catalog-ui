@@ -7,14 +7,16 @@ import { connect } from 'react-redux';
 import Form from 'react-jsonschema-form';
 import { Bullseye, Button, Radio } from '@patternfly/react-core';
 import '../../Utilities/jschema.scss';
+import CatItemSvg from '../../assets/images/vendor-openshift.svg';
+import ImageWithDefault from '../../PresentationalComponents/Shared/ImageWithDefault';
 import { fetchServicePlans, sendSubmitOrder } from '../../redux/Actions/OrderActions';
 
 const optionRow = (plan, option, selected_id, onChange) => {
   return (
     <div>
       <Radio
-        value={ plan.plan_id }
-        checked={ selected_id === plan.plan_id }
+        value={ plan.id }
+        checked={ selected_id === plan.id }
         name={ plan.name }
         aria-label={ plan.description }
         onChange={ onChange }
@@ -42,7 +44,7 @@ class OrderServiceFormStepConfiguration extends React.Component {
   };
 
   planOptions = () => {
-    let selected_id = this.state.selectedPlan ? this.state.selectedPlan : this.props.servicePlans[0].plan_id;
+    let selected_id = this.state.selectedPlan ? this.state.selectedPlan : this.props.servicePlans[0].id;
     let onChange = this.handlePlanChange;
 
     return this.props.servicePlans.map((plan, option) => optionRow(plan, option, selected_id, onChange));
@@ -58,25 +60,29 @@ class OrderServiceFormStepConfiguration extends React.Component {
   render() {
     if (!this.props.isLoading) {
       return (
-        <PFForm horizontal>
-          <PFForm.FormGroup>
-            { (this.props.servicePlans.length > 1) &&
-              <div>
-                <h3>Select Plan:</h3>
-                <div>{ this.planOptions() }</div>
-              </div>
-            }
-            <div>
-              { (!this.props.isLoading && this.props.servicePlans.length > 0) &&
-                <Form schema={ this.props.servicePlans[this.state.selectedPlanIdx].create_json_schema } onSubmit={ this.onSubmit }>
+        <React.Fragment>
+          <ImageWithDefault src = { this.props.imageUrl || CatItemSvg } width="60" />
+          <h3> { this.props.name } </h3>
+          <PFForm horizontal>
+            <PFForm.FormGroup>
+              { (this.props.servicePlans.length > 1) &&
                   <div>
-                    <Button variant="primary" type="submit">Submit</Button>
+                    <h3>Select Plan:</h3>
+                    <div>{ this.planOptions() }</div>
                   </div>
-                </Form>
               }
-            </div>
-          </PFForm.FormGroup>
-        </PFForm>
+              <div>
+                { (!this.props.isLoading && this.props.servicePlans.length > 0) &&
+                    <Form schema={ this.props.servicePlans[this.state.selectedPlanIdx].create_json_schema } onSubmit={ this.onSubmit }>
+                      <div>
+                        <Button variant="primary" type="submit">Submit</Button>
+                      </div>
+                    </Form>
+                }
+              </div>
+            </PFForm.FormGroup>
+          </PFForm>
+        </React.Fragment>
       );
     }
 
@@ -105,7 +111,7 @@ OrderServiceFormStepConfiguration.propTypes = {
   stepParametersValid: propTypes.bool,
   fulfilled: propTypes.bool,
   error: propTypes.bool,
-  imageURL: propTypes.string,
+  imageUrl: propTypes.string,
   id: propTypes.string,
   name: propTypes.string
 };
