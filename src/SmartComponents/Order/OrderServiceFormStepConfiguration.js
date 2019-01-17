@@ -1,14 +1,10 @@
 import React from 'react';
-// PF3?
-import { Form as PFForm } from 'patternfly-react';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
-// replce with data driven form
+// replace with data driven form
 import Form from 'react-jsonschema-form';
-import { Bullseye, Button, Radio } from '@patternfly/react-core';
+import { Bullseye, Button, Radio, Title, Form as PFForm } from '@patternfly/react-core';
 import '../../Utilities/jschema.scss';
-import CatItemSvg from '../../assets/images/vendor-openshift.svg';
-import ImageWithDefault from '../../PresentationalComponents/Shared/ImageWithDefault';
 import { fetchServicePlans, sendSubmitOrder } from '../../redux/Actions/OrderActions';
 
 const optionRow = (plan, option, selected_id, onChange) => {
@@ -61,40 +57,35 @@ class OrderServiceFormStepConfiguration extends React.Component {
     if (!this.props.isLoading) {
       return (
         <React.Fragment>
-          <ImageWithDefault src = { this.props.imageUrl || CatItemSvg } width="60" />
-          <h3> { this.props.name } </h3>
-          <PFForm horizontal>
-            <PFForm.FormGroup>
-              { (this.props.servicePlans.length > 1) &&
+          <Title> Configuration </Title>
+          <PFForm>
+            { (this.props.servicePlans.length > 1) &&
                   <div>
-                    <h3>Select Plan:</h3>
+                    <Title>Select Plan:</Title>
                     <div>{ this.planOptions() }</div>
                   </div>
-              }
-              <div>
-                { (!this.props.isLoading && this.props.servicePlans.length > 0) &&
+            }
+            <div>
+              { (!this.props.isLoading && this.props.servicePlans.length > 0) &&
                     <Form schema={ this.props.servicePlans[this.state.selectedPlanIdx].create_json_schema } onSubmit={ this.onSubmit }>
                       <div>
                         <Button variant="primary" type="submit">Submit</Button>
                       </div>
                     </Form>
-                }
-              </div>
-            </PFForm.FormGroup>
+              }
+            </div>
           </PFForm>
         </React.Fragment>
       );
     }
 
     return (
-      <PFForm horizontal>
-        <PFForm.FormGroup>
-          <Bullseye>
-            <div>
-              { this.props.isLoading && (<span color={ '#00b9e4' }> Loading...</span>) }
-            </div>
-          </Bullseye>
-        </PFForm.FormGroup>
+      <PFForm>
+        <Bullseye>
+          <div>
+            { this.props.isLoading && (<span color={ '#00b9e4' }> Loading...</span>) }
+          </div>
+        </Bullseye>
       </PFForm>
     );
   }
