@@ -41,6 +41,13 @@ export const fetchSelectedPlatform = id => ({
   })
 });
 
+export const updatePlatform = id => ({
+  type: ActionTypes.UPDATE_PLATFORM,
+  payload: new Promise(resolve => {
+    resolve(PlatformHelper.updatePlatform(id));
+  })
+});
+
 export const searchPlatformItems = value => ({
   type: ActionTypes.FILTER_PLATFORM_ITEMS,
   payload: new Promise(resolve => {
