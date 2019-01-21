@@ -7,8 +7,8 @@ import { Nav, NavGroup, NavItem } from '@patternfly/react-core';
 import { fetchPlatforms } from '../../redux/Actions/PlatformActions';
 import { fetchPortfolios } from '../../redux/Actions/PortfolioActions';
 import { toggleEdit } from '../../redux/Actions/UiActions';
-import './portalnav.scss';
 import { NavLoader } from '../../PresentationalComponents/Shared/LoaderPlaceholders';
+import './portalnav.scss';
 
 const PLATFORMS_URL_BASE = '/platforms';
 const PLATFORM_URL_BASE = '/platform';
@@ -38,7 +38,7 @@ class PortalNav extends React.Component {
   portfolioNavItems = () => this.props.portfolios.map(item => (
     <NavItem key={ item.id } id={ item.id }>
       <NavLink to={ `${PORTFOLIO_URL_BASE}/${item.id}` }>
-        { item.name }
+        { item.name } ({ item.products })
       </NavLink>
     </NavItem>
   ));
@@ -60,7 +60,9 @@ class PortalNav extends React.Component {
             All Platforms
             </NavLink>
           </NavItem>
-          { this.renderPlatformNav() }
+          <div className="portal-nav-sub-items">
+            { this.renderPlatformNav() }
+          </div>
         </NavGroup>
         <NavGroup title="Portfolios">
           <NavItem key='all' id="all-portfolios">
@@ -68,7 +70,9 @@ class PortalNav extends React.Component {
               All Portfolios
             </NavLink>
           </NavItem>
-          { this.renderPortfilioNav() }
+          <div className="portal-nav-sub-items">
+            { this.renderPortfilioNav() }
+          </div>
         </NavGroup>
       </Nav>
     );

@@ -3,7 +3,14 @@ import { getUserApi } from '../Shared/userLogin';
 const userApi = getUserApi();
 
 export function listPortfolios() {
-  return userApi.listPortfolios().then(data => data, error => console.error(error));
+  return userApi.listPortfolios().then(data => {
+    const promises = data.map(({ id }) => getPortfolioItemsWithPortfolio(id)
+    .then(portfolioItems => ({
+      ...data.find(portfolio => portfolio.id === id),
+      products: portfolioItems.length
+    })));
+    return Promise.all(promises);
+  });
 }
 
 export function getPortfolioItems() {

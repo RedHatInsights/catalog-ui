@@ -15,7 +15,6 @@ const createToolbarActions = (portfolioName, portfolioId) => [
     <Button
       variant="plain"
       aria-label={ `edit-portfolio-${portfolioName}` }
-      onClick={ () => console.log('Edit portfolio api helper not available.') }
     >
       <EditAltIcon fill={ ICON_FILL } />
     </Button>
@@ -25,20 +24,19 @@ const createToolbarActions = (portfolioName, portfolioId) => [
       key="remove-portfolio-action"
       variant="plain"
       aria-label={ `remove-portfolio-${portfolioName}` }
-      onClick={ () => console.log('Remove portfolio api helper not available.') }
     >
       <TrashIcon fill={ ICON_FILL } />
     </Button>
   </Link>
 ];
 
-const PortfolioCard = ({ imageUrl, name, id, ...props }) => (
+const PortfolioCard = ({ imageUrl, name, id, products, ...props }) => (
   <GridItem sm={ 6 } md={ 4 } lg={ 4 } xl={ 3 }>
     <Link style={ { textDecoration: 'none' } } to={ `/portfolio/${id}` }>
       <Card>
         <CardHeader className="card-image-header">
           <PortfolioCardHeader
-            portfolioName={ name }
+            portfolioName={ `${name} (${products})` }
             headerActions={ createToolbarActions(name, id) }
           />
         </CardHeader>
@@ -55,7 +53,8 @@ PortfolioCard.propTypes = {
   history: propTypes.object,
   imageUrl: propTypes.string,
   name: propTypes.string,
-  id: propTypes.string
+  id: propTypes.string,
+  products: propTypes.number
 };
 
 export default PortfolioCard;

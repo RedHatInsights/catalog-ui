@@ -6,6 +6,10 @@
 }
 
 .portal-nav {
+	padding-top: 16px;
+	.portal-nav-sub-items {
+		padding-left: 8px;
+	}
 	.pf-c-nav__link.active {
 		color: #007bba;
 		font-weight: 500;
