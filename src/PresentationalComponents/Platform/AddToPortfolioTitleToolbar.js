@@ -3,32 +3,29 @@ import propTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Toolbar, ToolbarGroup, ToolbarItem, Title, Button } from '@patternfly/react-core';
 import { css } from '@patternfly/react-styles';
-import spacingStyles from '@patternfly/patternfly-next/utilities/Spacing/spacing.css';
-import flexStyles from '@patternfly/patternfly-next/utilities/Flex/flex.css';
 import '../../SmartComponents/Portfolio/portfolio.scss';
 
-const AddToPortfolioTitleToolbar = ({ title, addSelectPortfolioRoute, platformRoute }) =>(
+const AddToPortfolioTitleToolbar = ({ title, addSelectPortfolioRoute, onPortfolioSelectionChange, platformRoute }) =>(
   <Toolbar
-    className={ css(flexStyles.justifyContentSpaceBetween, spacingStyles.mxXl, spacingStyles.myMd) }
     style={ { backgroundColor: '#FFFFFF' } }
   >
     <ToolbarGroup>
-      <ToolbarItem className={ css(spacingStyles.mrXl) }>
+      <ToolbarItem>
         { title &&  (<Title size={ '2xl' }> { 'Add To Portfolio: ' + title }</Title>) }
       </ToolbarItem>
     </ToolbarGroup>
     <ToolbarGroup className={ 'pf-u-ml-auto-on-xl' }>
-      <ToolbarItem className={ css(spacingStyles.mxLg) }>
+      <ToolbarItem>
         <Link to={ platformRoute }>
           <Button variant="link" aria-label="Cancel Add Products to Portfolio">
             Cancel
           </Button>
         </Link>
       </ToolbarItem>
-      <ToolbarItem className={ css(spacingStyles.mxLg) } >
+      <ToolbarItem>
         <Link to={ addSelectPortfolioRoute }>
-          <Button variant="plain" aria-label="Add to Portfolio">
-            Add
+          <Button variant="link" aria-label="Add Products to Portfolio">
+          Add
           </Button>
         </Link>
       </ToolbarItem>
@@ -40,6 +37,7 @@ AddToPortfolioTitleToolbar.propTypes = {
   history: propTypes.object,
   title: propTypes.string,
   addSelectPortfolioRoute: propTypes.string,
+  onPortfolioSelectionChange: propTypes.func.isRequired,
   platformRoute: propTypes.string.isRequired
 };
 

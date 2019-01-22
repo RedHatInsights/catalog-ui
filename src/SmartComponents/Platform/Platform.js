@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Title } from '@patternfly/react-core';
+
 import { fetchSelectedPlatform, fetchPlatformItems } from '../../redux/Actions/PlatformActions';
 import ContentGallery from '../../SmartComponents/ContentGallery/ContentGallery';
 import PlatformItem from '../../PresentationalComponents/Platform/PlatformItem';
@@ -11,6 +11,7 @@ import PlatformActionToolbar from '../../PresentationalComponents/Platform/Platf
 import EditPlatformModal from './edit-platform-modal';
 import { scrollToTop } from '../../Helpers/Shared/helpers';
 import NoMatch from '../../PresentationalComponents/Shared/404Route';
+import AddSelectPortfolio from './add-to-portfolio-modal';
 import './platform.scss';
 
 class Platform extends Component {
@@ -89,6 +90,7 @@ class Platform extends Component {
       <Switch>
         <Route path="/platform/:id/add-to-portfolio"
           render={ props => this.renderAddToPortfolio({ platformRoute, addSelectPortfolioRoute, ...props }) } />
+        <Route path="/platform/:id/add-select-portfolio" component={ AddSelectPortfolio } />
         <Route
           path="/platform/:id"
           render={ props => this.renderPlatformItems({ addSelectPortfolioRoute,

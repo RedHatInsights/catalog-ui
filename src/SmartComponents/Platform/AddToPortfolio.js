@@ -71,6 +71,7 @@ class AddToPortfolio extends Component {
           <AddToPortfolioTitleToolbar title={ title }
             onClickAddToPortfolio = { this.onAddToPortfolio }
             addSelectPortfolioRoute={ this.props.addSelectPortfolioRoute }
+            onPortfolioSelectionChange={ this.onPortfolioSelectionChange }
             platformRoute={ this.props.platformRoute }
           />
           <ContentGallery

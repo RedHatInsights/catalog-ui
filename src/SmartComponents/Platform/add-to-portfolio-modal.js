@@ -3,62 +3,60 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Modal, Button } from '@patternfly/react-core';
+import { Modal, Button, Stack, Card } from '@patternfly/react-core';
 import { addNotification } from '@red-hat-insights/insights-frontend-components/components/Notifications';
-import { addPortfolio, fetchPortfolios } from '../../redux/Actions/PortfolioActions';
+import { addToPortfolio, fetchPortfolios } from '../../redux/Actions/PortfolioActions';
 import Select from 'react-select';
-import { pipe } from 'rxjs';
+import '../../App.scss';
 
-const AddToPortfolioModal = ({
-  history: { goBack },
+const AddSelectPortfolioModal = ({
+  history: { goBack, go },
   addPortfolio,
-  addNotification,
   fetchPortfolios,
-  onOptionSelect,
+  onPortfolioSelectionChange,
   portfolios
 }) => {
-  const onSubmit = data => addPortfolio(data).then(fetchPortfolios()).then(goBack());
+  const onSubmit = data => addToPortfolio(data).then(fetchPortfolios()).then(go(-2));
 
-  const onCancel = () => pipe(
-    addNotification({
-      variant: 'warning',
-      title: 'Add To Portfolio',
-      description: 'Add to portfolio was cancelled by the user.'
-    }),
-    goBack()
-  );
+  const onCancel = () => goBack();
 
   const dropdownItems = portfolios.map(portfolio => ({ value: portfolio.id, label: portfolio.name, portfolio: portfolio.id }));
 
   return (
     <Modal
+      isLarge
       title={ 'Add Products To Portfolio' }
       isOpen
       onClose={ onCancel }
+      actions={ [
+        <Button variant="secondary" key='cancel' onClick={ onCancel }>Cancel</Button>,
+        <Button variant="primary" key='add' onClick={ onSubmit }>  Add  </Button>
+      ] }
     >
-      <Select
-        isMulti={ true }
-        placeholder={ 'Filter by Platform' }
-        options={ dropdownItems }
-        onChange={ onOptionSelect }
-        closeMenuOnSelect={ false }
-      />
-      <div>
-        <Button variant="primary" onClick={onSubmit}>Submit</Button>
-        <Button variant="secondary" onClick={onCancel}>Cancel</Button>
-      </div>
+      <Stack>
+        <Card className='elipsis-text-overflow' style={ { height: '200px' } }>
+          <Select
+            isMulti={ true }
+            placeholder={ 'Choose portfolio(s)' }
+            options={ dropdownItems }
+            onChange={ onPortfolioSelectionChange }
+            closeMenuOnSelect={ false }
+          />
+        </Card>
+        <Button variant="secondary" key='new' >Add new portfolio</Button>
+      </Stack>
     </Modal>
   );
 };
 
-AddToPortfolioModal.propTypes = {
+AddSelectPortfolioModal.propTypes = {
   history: PropTypes.shape({
     goBack: PropTypes.func.isRequired
   }).isRequired,
   addPortfolio: PropTypes.func.isRequired,
   addNotification: PropTypes.func.isRequired,
   fetchPortfolios: PropTypes.func.isRequired,
-  onOptionSelect: PropTypes.func.isRequired,
+  onPortfolioSelectionChange: PropTypes.func.isRequired,
   portfolios: PropTypes.array
 };
 
@@ -72,4 +70,4 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   fetchPortfolios
 }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AddToPortfolioModal));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AddSelectPortfolioModal));
