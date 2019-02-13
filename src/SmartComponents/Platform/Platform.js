@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Title } from '@patternfly/react-core';
@@ -11,7 +12,8 @@ import './platform.scss';
 
 class Platform extends Component {
   state = {
-    filterValue: ''
+    filterValue: '',
+    currentOffset: 0
   };
 
   fetchData(apiProps) {
@@ -33,6 +35,8 @@ class Platform extends Component {
 
   handleFilterChange = filterValue => this.setState({ filterValue });
 
+  handlePageChange = page => this.props.fetchPlatformItems(this.props.match.params.id, page).then(this.setState({ currentOffset: parseInt(page, 10) }))
+
   render() {
     let filteredItems = {
       items: this.props.platformItems
@@ -40,7 +44,7 @@ class Platform extends Component {
       .map(data => <PlatformItem key={ data.id } { ...data } />),
       isLoading: this.props.isPlatformDataLoading
     };
-
+    const { currentOffset } = this.state;
     let title = this.props.platform ? this.props.platform.name : '';
 
     return (
@@ -48,6 +52,15 @@ class Platform extends Component {
         <PlatformToolbar searchValue={ this.state.filterValue } onFilterChange={ this.handleFilterChange }/>
         <div className="toolbar-padding">
           { title &&  (<Title size={ '2xl' } > { title }</Title>) }
+        </div>
+        <div>
+          <button disabled={ currentOffset.toString() === this.props.paginationOffsets.first } onClick={ () => this.handlePageChange(this.props.paginationOffsets.prev) }>Prev</button>
+          <button
+            disabled={ currentOffset.toString() === this.props.paginationOffsets.last }
+            onClick={ () => this.handlePageChange(this.props.paginationOffsets.next) }
+          >
+            Next
+          </button>
         </div>
         <ContentGallery { ...filteredItems }/>
       </Fragment>
@@ -57,14 +70,15 @@ class Platform extends Component {
 
 const mapStateToProps = ({ platformReducer: { selectedPlatform, platformItems, isPlatformDataLoading }}) => ({
   platform: selectedPlatform,
-  platformItems: selectedPlatform && platformItems[selectedPlatform.id],
+  platformItems: selectedPlatform && platformItems[selectedPlatform.id] && platformItems[selectedPlatform.id].data,
+  paginationOffsets: selectedPlatform && platformItems[selectedPlatform.id] && platformItems[selectedPlatform.id].links,
   isPlatformDataLoading: !selectedPlatform || isPlatformDataLoading
 });
 
-const mapDispatchToProps = dispatch => ({
-  fetchSelectedPlatform: platformId => dispatch(fetchSelectedPlatform(platformId)),
-  fetchPlatformItems: apiProps => dispatch(fetchPlatformItems(apiProps))
-});
+const mapDispatchToProps = dispatch => bindActionCreators({
+  fetchSelectedPlatform,
+  fetchPlatformItems
+}, dispatch);
 
 Platform.propTypes = {
   filteredItems: PropTypes.object,
@@ -75,11 +89,13 @@ Platform.propTypes = {
   platform: PropTypes.shape({
     name: PropTypes.string
   }),
-  platformItems: PropTypes.array
+  platformItems: PropTypes.array,
+  paginationOffsets: PropTypes.object
 };
 
 Platform.defaultProps = {
-  platformItems: []
+  platformItems: [],
+  paginationOffsets: {}
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Platform);

@@ -13,9 +13,9 @@ export const fetchPlatforms = () => (dispatch, getState) => {
   }
 };
 
-export const fetchPlatformItems = platformId => ({
+export const fetchPlatformItems = (platformId, page) => ({
   type: ActionTypes.FETCH_PLATFORM_ITEMS,
-  payload: PlatformHelper.getPlatformItems(platformId).then(({ data }) => data),
+  payload: PlatformHelper.getPlatformItems(platformId, page),
   meta: {
     platformId
   }
