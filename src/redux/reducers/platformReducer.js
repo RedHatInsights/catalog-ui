@@ -17,20 +17,13 @@ export const platformInitialState = {
   filterValue: ''
 };
 
-const generateLinksData = links => Object.keys(links).reduce((acc, key) => ({
-  ...acc,
-  [key]: links[key] && links[key].substring(links[key].lastIndexOf('offset') + 'offset'.length + 1)
-}), {});
-
 // rename isPlatformLoading.. to isLoaing so we can use common action for loading states
 
 const setLoadingState = state => ({ ...state, isPlatformDataLoading: true });
 const setPlatforms = (state, { payload }) => ({ ...state, platforms: payload, isPlatformDataLoading: false });
 const setPlatformItems = (state, { payload, meta: { platformId }}) =>
-  ({ ...state, platformItems: { ...state.platformItems, [platformId]: {
-    ...payload,
-    links: generateLinksData(payload.links) }},
-  isPlatformDataLoading: false
+  ({ ...state, platformItems: { ...state.platformItems, [platformId]: payload },
+    isPlatformDataLoading: false
   });
 const setMultiplePlatformItems = (state, { payload }) =>
   ({ ...state, platformItems: { ...state.platformItems, ...payload }, isPlatformDataLoading: false });

@@ -12,8 +12,7 @@ import './platform.scss';
 
 class Platform extends Component {
   state = {
-    filterValue: '',
-    currentOffset: 0
+    filterValue: ''
   };
 
   fetchData(apiProps) {
@@ -35,7 +34,7 @@ class Platform extends Component {
 
   handleFilterChange = filterValue => this.setState({ filterValue });
 
-  handlePageChange = page => this.props.fetchPlatformItems(this.props.match.params.id, page).then(this.setState({ currentOffset: parseInt(page, 10) }))
+  handlePageChange = page => this.props.fetchPlatformItems(this.props.match.params.id, page)
 
   render() {
     let filteredItems = {
@@ -44,7 +43,7 @@ class Platform extends Component {
       .map(data => <PlatformItem key={ data.id } { ...data } />),
       isLoading: this.props.isPlatformDataLoading
     };
-    const { currentOffset } = this.state;
+
     let title = this.props.platform ? this.props.platform.name : '';
 
     return (
@@ -54,9 +53,14 @@ class Platform extends Component {
           { title &&  (<Title size={ '2xl' } > { title }</Title>) }
         </div>
         <div>
-          <button disabled={ currentOffset.toString() === this.props.paginationOffsets.first } onClick={ () => this.handlePageChange(this.props.paginationOffsets.prev) }>Prev</button>
           <button
-            disabled={ currentOffset.toString() === this.props.paginationOffsets.last }
+            disabled={ !this.props.paginationOffsets.prev }
+            onClick={ () => this.handlePageChange(this.props.paginationOffsets.prev) }
+          >
+            Prev
+          </button>
+          <button
+            disabled={ !this.props.paginationOffsets.next }
             onClick={ () => this.handlePageChange(this.props.paginationOffsets.next) }
           >
             Next
