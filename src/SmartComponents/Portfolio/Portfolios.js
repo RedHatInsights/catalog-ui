@@ -8,6 +8,7 @@ import PortfoliosFilterToolbar from '../../PresentationalComponents/Portfolio/Po
 import { fetchPortfolios } from '../../redux/Actions/PortfolioActions';
 import AddPortfolio from './add-portfolio-modal';
 import RemovePortfolio from './remove-portfolio-modal';
+import SharePortfolio from './share-portfolio-modal';
 import './portfolio.scss';
 import { scrollToTop } from '../../Helpers/Shared/helpers';
 import Portfolio from './Portfolio';
@@ -52,6 +53,7 @@ class Portfolios extends Component {
         <Route { ...props } exact path="/portfolios/add-portfolio" component={ AddPortfolio } />
         <Route exact path="/portfolios/edit/:id" component={ AddPortfolio } />
         <Route exact path="/portfolios/remove/:id" component={ RemovePortfolio } />
+        <Route exact path="/portfolios/share/:id" component={ SharePortfolio } />
         <ContentGallery { ...filteredItems } />
       </Fragment>
     );}
