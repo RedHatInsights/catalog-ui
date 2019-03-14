@@ -3,7 +3,7 @@ import propTypes from 'prop-types';
 import ItemDetails from '../Shared/CardCommon';
 import { Link } from 'react-router-dom';
 import { Card, CardHeader, CardBody, CardFooter, Button, GalleryItem } from '@patternfly/react-core';
-import { EditAltIcon, TrashIcon } from '@patternfly/react-icons';
+import { EditAltIcon, TrashIcon, ShareAltIcon } from '@patternfly/react-icons';
 import PortfolioCardHeader from './portfolio-card-header';
 import './portfoliocard.scss';
 
@@ -11,6 +11,14 @@ const TO_DISPLAY = [ 'description', 'modified' ];
 const ICON_FILL = 'white';
 
 const createToolbarActions = (portfolioName, portfolioId) => [
+  <Link key="share-portfolio-action" to={ `/portfolios/share/${portfolioId}` }>
+    <Button
+      variant="plain"
+      aria-label={ `share-portfolio-${portfolioName}` }
+    >
+      <ShareAltIcon fill={ ICON_FILL } />
+    </Button>
+  </Link>,
   <Link key="edit-portfolio-action" to={ `/portfolios/edit/${portfolioId}` }>
     <Button
       variant="plain"
