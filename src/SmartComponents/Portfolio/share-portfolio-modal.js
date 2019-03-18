@@ -44,7 +44,7 @@ const SharePortfolioModal = ({
     <Modal
       title={ 'Share portfolio' }
       isOpen
-      style={ { maxWidth: 800 } }
+      isLarge
       onClose={ onCancel }
     >
       <div style={ { padding: 8 } }>
