@@ -1,14 +1,15 @@
-import { ASYNC_ACTIONS } from '../ActionTypes/rbac-action-types';
+import {
+  FETCH_RBAC_GROUPS
+} from '../ActionTypes';
 
+// Initial State
 export const rbacInitialState = {
-  isFetching: false,
-  rbacGroups: []
+  rbacGroups: [],
+  isLoading: true
 };
 
-const setLoadingState = state => ({ ...state, isFetching: true });
-const setRbacGroups = (state, { payload }) => ({ ...state, isFetching: false, rbacGroups: payload });
+const setRbacGroups = (state, { payload }) => ({ ...state, rbacGroups: payload, isLoading: false });
 
 export default {
-  [ASYNC_ACTIONS.FETCH_GROUPS_PENDING]: setLoadingState,
-  [ASYNC_ACTIONS.FETCH_GROUPS_FULFILLED]: setRbacGroups
+  [`${FETCH_RBAC_GROUPS}_FULFILLED`]: setRbacGroups
 };

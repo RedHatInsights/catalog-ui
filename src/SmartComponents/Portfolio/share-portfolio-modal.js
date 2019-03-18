@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import FormRenderer from '../Common/FormRenderer';
 import { withRouter } from 'react-router-dom';
@@ -12,7 +12,7 @@ import { fetchRbacGroups } from '../../redux/Actions/rbac-actions';
 import { pipe } from 'rxjs';
 
 // TODO - actual permission verbs
-const permissionOptions = ['Can order/edit', 'Can order/view'];
+const permissionOptions = [{ value: 'rx', label: 'Can order/edit' }, { value: 'rwx', label: 'Can order/view'} ];
 
 const SharePortfolioModal = ({
   history: { goBack },
@@ -44,6 +44,7 @@ const SharePortfolioModal = ({
     <Modal
       title={ 'Share portfolio' }
       isOpen
+      style={ { maxWidth: 800 } }
       onClose={ onCancel }
     >
       <div style={ { padding: 8 } }>
@@ -70,6 +71,10 @@ SharePortfolioModal.propTypes = {
   fetchPortfolios: PropTypes.func.isRequired,
   fetchRbacGroups: PropTypes.func.isRequired,
 //  updatePortfolioSharing: PropTypes.func.isRequired,
+  rbacGroups: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.oneOfType([ PropTypes.number, PropTypes.string ]).isRequired,
+    label: PropTypes.string.isRequired
+  })).isRequired,
   initialValues: PropTypes.object
 };
 

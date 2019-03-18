@@ -6,13 +6,13 @@ import { componentTypes, validatorTypes } from '@data-driven-forms/react-form-re
 export const createPortfolioShareSchema = (rbacGroups, permissionVerbs) => ({
   fields: [{
     label: 'Invite Group',
-    name: 'new_group',
+    name: 'group',
     component: componentTypes.SELECT,
     options: rbacGroups
-  },
-    {
-    label: '',
+  }, {
+    label: 'Permissions',
     name: 'permissions',
+    isRequired: true,
     component: componentTypes.SELECT,
     options: permissionVerbs
   }]
