@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import { PageHeader, PageHeaderTitle } from '@red-hat-insights/insights-frontend-components';
 import { DataList } from '@patternfly/react-core';
-import Group from './Group';
+import GroupShare from './GroupShare';
 
 class GroupList extends Component {
 
@@ -52,10 +52,10 @@ class GroupList extends Component {
   };
 }
 
-GroupList.propTypes = {
+GroupShareList.propTypes = {
   isLoading: propTypes.bool,
   items: propTypes.array,
   noItems: propTypes.string
 };
 
-export default GroupList;
+export default GroupShareList;
