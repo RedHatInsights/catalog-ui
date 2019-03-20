@@ -1,4 +1,4 @@
-import { AdminsApi, ApiClient as CatalogApiClient } from '@manageiq/service-portal-api';
+import { AdminsApi, ApiClient as CatalogApiClient } from 'catalog_api' //'@manageiq/service-portal-api';
 import { DefaultApi, ApiClient as TopologicalInventoryApiClient } from '@manageiq/topological_inventory';
 import { AccessApi, PrincipalApi, GroupApi, ApiClient } from 'rbac_api_jsclient';
 import { TOPOLOGICAL_INVENTORY_API_BASE, CATALOG_API_BASE, RBAC_API_BASE } from '../../Utilities/Constants';

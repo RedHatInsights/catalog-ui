@@ -12,6 +12,7 @@
     "@patternfly/react-tokens": "^1.10.0",
     "@red-hat-insights/insights-frontend-components": "^3.39.1",
     "awesome-debounce-promise": "^2.1.0",
+    "catalog_api": "file:../catalog-api-jsclient",
     "font-awesome": "^4.7.0",
     "patternfly-react": "^2.13.1",
     "rbac_api_jsclient": "^1.0.0",

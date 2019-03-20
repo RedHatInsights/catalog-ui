@@ -1,5 +1,6 @@
 import { getUserApi } from '../Shared/userLogin';
 import { CATALOG_API_BASE } from '../../Utilities/Constants';
+import * as CatalogApi from 'catalog_api' //'@manageiq/service-portal-api';
 
 const userApi = getUserApi();
 
@@ -93,4 +94,17 @@ export async function updatePortfolioItem(portfolioItem) {
       workflow_ref: portfolioItem.workflow_ref || null
     })
   });
+}
+
+export function queryPortfolio(portfolioId) {
+  return userApi.queryPortfolio(portfolioId);
+}
+
+export async function sharePortfolio(portfolioData) {
+  let policy = new CatalogApi.SharePolicy(portfolioData.permissions.split(','), [portfolioData.group]);
+  await userApi.sharePortfolio(portfolioData.id, policy);
+}
+
+export async function unsharePortfolio(portfolioData) {
+  await userApi.unsharePortfolio(portfolioData.id, portfolioData);
 }
