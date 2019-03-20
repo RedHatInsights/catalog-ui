@@ -4,7 +4,7 @@ import { PageHeader, PageHeaderTitle } from '@red-hat-insights/insights-frontend
 import { DataList } from '@patternfly/react-core';
 import GroupShare from './GroupShare';
 
-class GroupList extends Component {
+class GroupShareList extends Component {
 
   state= {
     expanded: []
@@ -41,7 +41,7 @@ class GroupList extends Component {
           <DataList aria-label="Expandable data list">
             { this.props.items.map((item) => {
               return (
-                <Group key= { item.uuid } item={ item } isExpanded={ this.isExpanded } toggleExpand={ this.toggleExpand }/>);
+                <GroupShare key= { item.uuid } item={ item } isExpanded={ this.isExpanded } toggleExpand={ this.toggleExpand }/>);
             }
             )
             }

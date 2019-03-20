@@ -43,6 +43,10 @@ const SharePortfolioModal = ({
     goBack()
   );
 
+  let shareItems = {
+    items: rbacGroups
+  };
+
   return (
     <Modal
       title={ 'Share portfolio' }
@@ -60,7 +64,7 @@ const SharePortfolioModal = ({
           formContainer="modal"
           buttonsLabels={ { submitLabel: 'Send' } }
         />
-        <GroupShareList/>
+        <GroupShareList { ...shareItems } noItems={ 'No Groups' }/>
       </div>
     </Modal>
   );
