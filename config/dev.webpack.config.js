@@ -10,7 +10,7 @@ webpackConfig.serve = {
   content: config.paths.public,
   devtool: 'source-map',
   mode: 'development',
-  port: 8002,
+  port: 8005,
   // Setting inline and hot to false disables websockets
   inline: false,
   hot: false,
