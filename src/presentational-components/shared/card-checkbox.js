@@ -1,18 +1,19 @@
 import React from 'react';
 import propTypes from 'prop-types';
-import { Checkbox } from '@patternfly/react-core';
+import { CheckSquareIcon, OutlinedSquareIcon } from '@patternfly/react-icons';
 
-const CardCheckbox = ({ handleCheck, isChecked, id }) => (
-  <div style={ { float: 'right' } }>
-    <Checkbox
-      onClick={ event => event.stopPropagation() }
-      checked={ isChecked }
-      onChange={ handleCheck }
-      aria-label="card checkbox"
-      id={ id }
-    />
-  </div>
-);
+const CardCheckbox = ({ handleCheck, isChecked, id }) => {
+  const Component = isChecked ? CheckSquareIcon : OutlinedSquareIcon;
+  return (
+    <div style={ { float: 'right' } }>
+      <Component
+        className={ `icon-checkbox ${isChecked ? 'selected' : ''}` }
+        onClick={ handleCheck }
+        aria-label="card checkbox"
+        id={ id }
+      />
+    </div>
+  );};
 
 CardCheckbox.propTypes = {
   handleCheck: propTypes.func,

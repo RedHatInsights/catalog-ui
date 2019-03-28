@@ -48,3 +48,12 @@
     color: #FF0000 !important;
   }
 }
+
+.icon-checkbox {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  &.selected {
+    fill: #0088CE;
+  }
+}
