@@ -2,6 +2,7 @@
 
 exports[`<AddProductsGallery /> should render correctly 1`] = `
 <ContentGallery
+  NoItems={[Function]}
   checkedItems={Array []}
   editMode={true}
 />

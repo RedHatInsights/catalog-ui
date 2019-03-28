@@ -30,7 +30,7 @@ describe('<PortfolioItem />', () => {
         <PortfolioItem { ...initialProps } onSelect={ onSelect } isSelectable />
       </MemoryRouter>
     );
-    wrapper.find('input').simulate('change');
+    wrapper.find('svg').simulate('click');
     expect(onSelect).toHaveBeenCalledWith('1');
   });
 });

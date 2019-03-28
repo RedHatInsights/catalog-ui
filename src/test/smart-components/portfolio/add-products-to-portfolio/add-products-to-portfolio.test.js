@@ -62,7 +62,7 @@ describe('<AddProductsToPortfolio />', () => {
         <AddProductsToPortfolio { ...initialProps } />
       </ComponentWrapper>
     );
-    fetchMock.getOnce(`${TOPOLOGICAL_INVENTORY_API_BASE}/sources/1/service_offerings?archived_at=&limit=50&offset=0`, {
+    fetchMock.get(`${TOPOLOGICAL_INVENTORY_API_BASE}/sources/1/service_offerings?archived_at=&limit=50&offset=0`, {
       data: [{
         id: '123', name: 'platformItem', description: 'description'
       }],
@@ -90,6 +90,7 @@ describe('<AddProductsToPortfolio />', () => {
   });
 
   it('should check item and send correct data on submit', done => {
+    expect.assertions(1);
     const store = mockStore({
       platformReducer: {
         platforms: [{ id: '1', name: 'foo' }],
@@ -109,7 +110,7 @@ describe('<AddProductsToPortfolio />', () => {
         <AddProductsToPortfolio { ...initialProps } portfolio={ { id: '321' } } />
       </ComponentWrapper>
     );
-    fetchMock.getOnce(`${TOPOLOGICAL_INVENTORY_API_BASE}/sources/1/service_offerings?archived_at=&limit=50&offset=0`, {
+    fetchMock.get(`${TOPOLOGICAL_INVENTORY_API_BASE}/sources/1/service_offerings?archived_at=&limit=50&offset=0`, {
       data: [{
         id: '123', name: 'platformItem', description: 'description'
       }],
@@ -128,13 +129,15 @@ describe('<AddProductsToPortfolio />', () => {
     apiClientMock.get(`${CATALOG_API_BASE}/portfolios/321/portfolio_items`, mockOnce({ body: { id: '999' }}));
 
     setImmediate(() => {
-      const select = wrapper.find(Select);
-      select.props().onChange({
-        id: '1'
+      setImmediate(() => {
+        const select = wrapper.find(Select);
+        select.props().onChange({
+          id: '1'
+        });
+        wrapper.update();
+        wrapper.find('svg').last().simulate('click');
+        wrapper.find('button').at(2).simulate('click');
       });
-      wrapper.update();
-      wrapper.find('input').last().simulate('change');
-      wrapper.find('button').at(2).simulate('click');
     });
   });
 });

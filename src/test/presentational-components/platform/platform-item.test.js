@@ -16,7 +16,7 @@ describe('<PlatformItem />', () => {
   it('should call handle check callback', () => {
     const onToggleItemSelect = jest.fn();
     const wrapper = mount(<PlatformItem { ...initialProps } editMode onToggleItemSelect={ onToggleItemSelect } description="Foo" id="foo" />);
-    wrapper.find('input').simulate('change');
+    wrapper.find('svg').last().simulate('click');
     expect(onToggleItemSelect).toHaveBeenCalled();
   });
 });

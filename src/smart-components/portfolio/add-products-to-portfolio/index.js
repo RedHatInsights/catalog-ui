@@ -41,8 +41,19 @@ const AddProductsToPortfolio = ({
   const [ searchValue, handleFilterChange ] = useState('');
   const [ selectedPlatform, setSelectedPlatform ] = useState(undefined);
   const [ checkedItems, setCheckedItems ] = useState([]);
+  const [ isFetching, setIsFetching ] = useState(false);
 
-  useEffect(() => { fetchPlatforms(); }, []);
+  useEffect(() => {
+    fetchPlatforms().then((data) => {
+      if (data.value.length > 0) {
+        onPlatformSelect({
+          id: data.value[0].id,
+          label: data.value[0].name,
+          value: data.value[0].id
+        });
+      }
+    });
+  }, []);
 
   const checkItem = itemId => {
     const index = checkedItems.indexOf(itemId);
@@ -55,9 +66,12 @@ const AddProductsToPortfolio = ({
   const items = selectedPlatform && platformItems[selectedPlatform.id] ? platformItems[selectedPlatform.id].data : [];
   const meta = selectedPlatform && platformItems[selectedPlatform.id] && platformItems[selectedPlatform.id].meta;
 
-  const handleAddToPortfolio = () => addToPortfolio(portfolio.id, checkedItems)
-  .then(() => push(portfolioRoute))
-  .then(() => fetchPortfolioItemsWithPortfolio(portfolio.id));
+  const handleAddToPortfolio = () => {
+    setIsFetching(true);
+    return addToPortfolio(portfolio.id, checkedItems)
+    .then(() => push(portfolioRoute))
+    .then(() => fetchPortfolioItemsWithPortfolio(portfolio.id));
+  };
 
   const onPlatformSelect = platform => pipe(
     setSelectedPlatform(platform),
@@ -69,12 +83,13 @@ const AddProductsToPortfolio = ({
       <PortfolioOrderToolbar
         portfolioName={ `${portfolio && portfolio.name || ''} new One` }
         onClickAddToPortfolio={ handleAddToPortfolio }
-        itemsSelected={ checkedItems.length > 0 }
+        disableAdd={ checkedItems.length === 0 || isFetching }
         portfolioRoute={ portfolioRoute }
         searchValue={ searchValue }
         onFilterChange={ value => handleFilterChange(value) }
         onOptionSelect={ onPlatformSelect }
         options={ platforms.map(platform => ({ value: platform.id, label: platform.name, id: platform.id })) }
+        selectedPlatform={ selectedPlatform }
       >
         { meta && <AddProductsPagination meta={ meta } platformId={ selectedPlatform.id } /> }
       </PortfolioOrderToolbar>

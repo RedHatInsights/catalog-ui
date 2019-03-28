@@ -72,37 +72,19 @@ exports[`<ContentGallery /> should render no items placeholder 1`] = `
       className="ins-l-content"
     >
        
-      <Gallery
-        className="content-gallery"
-        gutter="md"
-      >
-        <div
-          className="pf-l-gallery pf-m-gutter content-gallery"
+      <NoItemsDefault>
+        <Text
+          className=""
+          component="h1"
         >
-          <NoItems>
-            <Bullseye
-              className=""
-              component="div"
-            >
-              <div
-                className="pf-l-bullseye"
-              >
-                <Text
-                  className=""
-                  component="h1"
-                >
-                  <h1
-                    className=""
-                    data-pf-content={true}
-                  >
-                    No items found
-                  </h1>
-                </Text>
-              </div>
-            </Bullseye>
-          </NoItems>
-        </div>
-      </Gallery>
+          <h1
+            className=""
+            data-pf-content={true}
+          >
+            No items found
+          </h1>
+        </Text>
+      </NoItemsDefault>
        
     </section>
   </Section>

@@ -8,16 +8,14 @@ exports[`<CardCheckbox /> should render correctly 1`] = `
     }
   }
 >
-  <Checkbox
+  <OutlinedSquareIcon
     aria-label="card checkbox"
-    checked={false}
-    className=""
+    className="icon-checkbox "
+    color="currentColor"
     id="foo-id"
-    isChecked={null}
-    isDisabled={false}
-    isValid={true}
-    onChange={[MockFunction]}
-    onClick={[Function]}
+    onClick={[MockFunction]}
+    size="sm"
+    title={null}
   />
 </div>
 `;

@@ -21,7 +21,7 @@ describe('<CardCheckbox />', () => {
 
   it('should call handleCheck on checkbock click', () => {
     const wrapper = mount(<CardCheckbox { ...initialProps }/>);
-    wrapper.find('input').simulate('change');
-    expect(initialProps.handleCheck).toHaveBeenCalledWith(false, expect.any(Object));
+    wrapper.find('svg').simulate('click');
+    expect(initialProps.handleCheck).toHaveBeenCalledWith(expect.any(Object));
   });
 });

@@ -27,11 +27,12 @@ const PortfolioOrderToolbar = ({
   portfolioName,
   portfolioRoute,
   onClickAddToPortfolio,
-  itemsSelected,
+  disableAdd,
   onOptionSelect,
   options,
   onFilterChange,
   searchValue,
+  selectedPlatform,
   children
 }) => (
   <TopToolbar>
@@ -52,6 +53,7 @@ const PortfolioOrderToolbar = ({
               placeholder={ 'Filter by Platform' }
               options={ options }
               onChange={ onOptionSelect }
+              value={ selectedPlatform }
             />
           </ToolbarItem>
         </ToolbarGroup>
@@ -70,7 +72,7 @@ const PortfolioOrderToolbar = ({
               variant="primary"
               aria-label="Add products to Portfolio"
               type="button" onClick={ onClickAddToPortfolio }
-              isDisabled={ !itemsSelected }>
+              isDisabled={ disableAdd }>
               Add
             </Button>
           </ToolbarItem>
@@ -85,7 +87,7 @@ PortfolioOrderToolbar.propTypes = {
   portfolioName: PropTypes.string.isRequired,
   portfolioRoute: PropTypes.string.isRequired,
   onClickAddToPortfolio: PropTypes.func.isRequired,
-  itemsSelected: PropTypes.bool,
+  disableAdd: PropTypes.bool,
   onOptionSelect: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(PropTypes.shape({
     label: PropTypes.string.isRequired,
@@ -96,7 +98,11 @@ PortfolioOrderToolbar.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node)
-  ])
+  ]),
+  selectedPlatform: PropTypes.shape({
+    value: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired
+  })
 };
 
 export default PortfolioOrderToolbar;

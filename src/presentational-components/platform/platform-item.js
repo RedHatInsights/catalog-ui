@@ -9,7 +9,7 @@ import { TOPOLOGICAL_INVENTORY_API_BASE } from '../../utilities/constants';
 
 import './platform-card.scss';
 
-const PlatformItem = props =>(
+const PlatformItem = props => (
   <Card key={ props.id } className="content-gallery-card">
     <CardHeader>
       <CardIcon
