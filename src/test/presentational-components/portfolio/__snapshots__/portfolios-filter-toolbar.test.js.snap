@@ -26,6 +26,7 @@ exports[`<PortfoliosFilterToolbar /> should render correctly 1`] = `
   >
     <Component
       component="TopToolbarTitle"
+      id="portfolios-title"
       key="portfolios-toolbar-title"
       title="Portfolios"
     />
@@ -44,6 +45,7 @@ exports[`<PortfoliosFilterToolbar /> should render correctly 1`] = `
         >
           <Component
             component="FilterToolbarItem"
+            id="portfolios-filter-input"
             key="filter-input"
             onFilterChange={[MockFunction]}
             searchValue=""
@@ -66,6 +68,7 @@ exports[`<PortfoliosFilterToolbar /> should render correctly 1`] = `
             <Component
               aria-label="Create portfolio"
               component="Button"
+              id="create-portfolio-button"
               key="create-portfolio-button"
               title="Create portfolio"
               variant="primary"

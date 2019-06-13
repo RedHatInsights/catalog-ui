@@ -8,7 +8,12 @@ const PortfolioCardHeader = ({ portfolioName, headerActions }) => (
   <Level>
     <LevelItem className="portfolio-card-header-title">
       <TextContent>
-        <Text title={ portfolioName } className="elipsis-text-overflow pf-u-mb-0" component={ TextVariants.h3 }>{ portfolioName }</Text>
+        <Text
+          id={ `portfolio-card-title-${portfolioName}` }
+          title={ portfolioName }
+          className="elipsis-text-overflow pf-u-mb-0"
+          component={ TextVariants.h3 }
+        >{ portfolioName }</Text>
       </TextContent>
     </LevelItem>
     <LevelItem onClick={ event => event.preventDefault() }>

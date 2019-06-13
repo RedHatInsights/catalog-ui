@@ -14,7 +14,8 @@ const createPortfolioToolbarSchema = ({
     fields: [{
       component: toolbarComponentTypes.TOP_TOOLBAR_TITLE,
       key: 'portfolios-toolbar-title',
-      title: 'Portfolios'
+      title: 'Portfolios',
+      id: 'portfolios-title'
     }, {
       component: toolbarComponentTypes.TOOLBAR,
       key: 'main-portfolio-toolbar',
@@ -26,7 +27,8 @@ const createPortfolioToolbarSchema = ({
           key: 'filter-input',
           searchValue,
           onFilterChange,
-          placeholder
+          placeholder,
+          id: 'portfolios-filter-input'
         }),
         createSingleItemGroup({
           groupName: 'portfolio-button-group',
@@ -36,7 +38,8 @@ const createPortfolioToolbarSchema = ({
             variant: 'primary',
             key: 'create-portfolio-button',
             'aria-label': 'Create portfolio',
-            title: 'Create portfolio'
+            title: 'Create portfolio',
+            id: 'create-portfolio-button'
           })
         }) ]
     }]

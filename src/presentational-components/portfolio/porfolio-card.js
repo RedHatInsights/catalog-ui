@@ -27,6 +27,7 @@ const TO_DISPLAY = [ 'description' ];
 const createToolbarActions = (portfolioId, isOpen, setOpen) => [
   <Dropdown
     key="portfolio-dropdown"
+    id={ `portfolio-card-header-actions-${portfolioId}` }
     isOpen={ isOpen }
     isPlain
     onSelect={ () => setOpen(false) }
@@ -34,18 +35,22 @@ const createToolbarActions = (portfolioId, isOpen, setOpen) => [
     toggle={ <KebabToggle onToggle={ setOpen }/> }
     dropdownItems={ [
       <DropdownItem key="share-portfolio-action">
-        <Link to={ `/portfolios/share/${portfolioId}` } className="pf-c-dropdown__menu-item" >
+        <Link id={ `share-portfolio-${portfolioId}-link` } to={ `/portfolios/share/${portfolioId}` } className="pf-c-dropdown__menu-item" >
           Share
         </Link>
       </DropdownItem>,
       <DropdownSeparator key="share-portfolio-separator"/>,
       <DropdownItem key="edit-portfolio-action">
-        <Link to={ `/portfolios/edit/${portfolioId}` } className="pf-c-dropdown__menu-item" >
+        <Link id={ `edit-portfolio-${portfolioId}-link` } to={ `/portfolios/edit/${portfolioId}` } className="pf-c-dropdown__menu-item" >
           Edit
         </Link>
       </DropdownItem>,
       <DropdownItem key="remove-portfolio-action">
-        <Link to={ `/portfolios/remove/${portfolioId}` } className="pf-c-dropdown__menu-item destructive-color">
+        <Link
+          id={ `delete-portfolio-${portfolioId}-link` }
+          to={ `/portfolios/remove/${portfolioId}` }
+          className="pf-c-dropdown__menu-item destructive-color"
+        >
           Delete
         </Link>
       </DropdownItem>
@@ -64,7 +69,7 @@ const PortfolioCard = ({ imageUrl, name, id, ...props }) => {
           />
         </CardHeader>
         <CardBody className="pf-u-pl-0 pf-u-pr-0 pf-u-pb-0">
-          <Link className="card-link pf-u-display-block pf-u-pl-lg pf-u-pr-lg" to={ `/portfolios/detail/${id}` }>
+          <Link id={ `portfolio-card-link-${id}` } className="card-link pf-u-display-block pf-u-pl-lg pf-u-pr-lg" to={ `/portfolios/detail/${id}` }>
             <TextContent>
               <Text component={ TextVariants.small }>
                 { createModifiedLabel(new Date(props.updated_at || props.created_at), props.owner) }

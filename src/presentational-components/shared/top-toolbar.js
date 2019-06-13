@@ -32,12 +32,12 @@ TopToolbar.defaultProps = {
 
 export default TopToolbar;
 
-export const TopToolbarTitle = ({ title, children, ...rest }) => (
+export const TopToolbarTitle = ({ title, children, id, ...rest }) => (
   <Fragment>
     <Level className="pf-u-mb-xl" { ...rest }>
       <LevelItem>
         <TextContent className="top-toolbar-title">
-          { <Text component={ TextVariants.h2 }>{ title || <ToolbarTitlePlaceholder /> }</Text> }
+          { <Text id={ id } component={ TextVariants.h2 }>{ title || <ToolbarTitlePlaceholder /> }</Text> }
         </TextContent>
       </LevelItem>
       { children }
@@ -47,6 +47,7 @@ export const TopToolbarTitle = ({ title, children, ...rest }) => (
 
 TopToolbarTitle.propTypes = {
   title: PropTypes.string.isRequired,
+  id: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node)
