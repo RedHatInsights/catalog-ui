@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import { CardBody, Text, TextContent, TextVariants } from '@patternfly/react-core';
 import ItemDetails from './card-common';
 
-const ServiceOfferingCardBody = ({ name, display_name, distributor, ...props }) =>(
+const ServiceOfferingCardBody = ({ name, display_name, distributor, id, ...props }) =>(
   <CardBody style={ { height: 240 } }>
     <TextContent>
       <Text
         className="elipsis-text-overflow"
         component={ TextVariants.h3 }
         title={ display_name || name }
+        id={ id }
       >
         { display_name || name }
       </Text>
@@ -23,7 +24,8 @@ ServiceOfferingCardBody.propTypes = {
   name: PropTypes.string,
   display_name: PropTypes.string,
   distributor: PropTypes.string,
-  long_description: PropTypes.string
+  long_description: PropTypes.string,
+  id: PropTypes.string
 };
 
 export default ServiceOfferingCardBody;

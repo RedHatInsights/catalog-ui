@@ -17,12 +17,13 @@ const PortfolioActionsToolbar = ({ setKebabOpen, isKebabOpen, removePortfolioRou
     isOpen={ isKebabOpen }
     isDisabled
     isPlain
+    id="portfolio-actions-dropdown"
     dropdownItems={ [
       <DropdownItem component="button" aria-label="Copy Portfolio" key="copy-portfolio" onClick={ copyPortfolio }>
         Copy
       </DropdownItem>,
       <DropdownItem aria-label="Remove Portfolio" key="delete-portfolio">
-        <Link to={ removePortfolioRoute } role="link" className="pf-c-dropdown__menu-item destructive-color">
+        <Link id="delete-portfolio-action" to={ removePortfolioRoute } role="link" className="pf-c-dropdown__menu-item destructive-color">
           Delete
         </Link>
       </DropdownItem>
@@ -63,6 +64,7 @@ const createPortfolioToolbarSchema = ({
       component: toolbarComponentTypes.TOP_TOOLBAR_TITLE,
       key: 'portfolio-toolbar-title',
       title,
+      id: 'portfolio-title',
       fields: [{
         component: toolbarComponentTypes.LEVEL_ITEM,
         key: 'portfolio-actions',
@@ -73,10 +75,12 @@ const createPortfolioToolbarSchema = ({
             variant: 'secondary',
             title: 'Share',
             isDisabled: copyInProgress,
-            key: 'portfolio-share-button'
+            key: 'portfolio-share-button',
+            id: 'share-portfolio-link'
           }),
           createLinkButton({
             to: editPortfolioRoute,
+            id: 'edit-portfolio-link',
             variant: 'link',
             isDisabled: copyInProgress,
             title: 'Edit',
@@ -101,7 +105,8 @@ const createPortfolioToolbarSchema = ({
           key: 'portfolio-items-filter',
           searchValue,
           onFilterChange,
-          placeholder
+          placeholder,
+          id: 'portfolio-filter-input'
 
         }),
         createSingleItemGroup({
@@ -112,7 +117,8 @@ const createPortfolioToolbarSchema = ({
             isDisabled: isLoading || copyInProgress,
             variant: 'primary',
             title: 'Add products',
-            key: 'add-products-button'
+            key: 'add-products-button',
+            id: 'add-products-to-portfolio-link'
           })
         }),
         createSingleItemGroup({
@@ -124,7 +130,8 @@ const createPortfolioToolbarSchema = ({
             variant: 'link',
             className: 'destructive-color',
             title: 'Remove products',
-            key: 'remove-products-button'
+            key: 'remove-products-button',
+            id: 'remove-products-to-portfolio-link'
           })
         }) ]
     }]

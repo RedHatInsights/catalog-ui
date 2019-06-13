@@ -20,7 +20,7 @@ const PortfolioItem = props => {
 
         <CardIcon src={ `${CATALOG_API_BASE}/portfolio_items/${props.id}/icon` }/>
       </CardHeader>
-      <ServiceOfferingCardBody { ...props }/>
+      <ServiceOfferingCardBody { ...props } id={ `portfolio-item-${props.id}` }/>
       <CardFooter>
       </CardFooter>
     </Fragment>
@@ -34,7 +34,7 @@ const PortfolioItem = props => {
         ) }
         <Card className="content-gallery-card">
           { props.isSelectable ? renderCardContent() : (
-            <Link to={ props.orderUrl } className="card-link" >
+            <Link  id={ `portfolio-item-${props.id}-link` } to={ props.orderUrl } className="card-link" >
               { renderCardContent() }
             </Link>
           ) }
