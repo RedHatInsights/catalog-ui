@@ -42,7 +42,7 @@ class OrderItem extends Component {
       <DataListItem aria-labelledby={ `${item.id}-expand` } isExpanded={ isExpanded } className="data-list-expand-fix">
         <DataListItemRow>
           <DataListToggle
-            id={ item.id }
+            id={ `order-${item.id}-datalist-expand-toggle` }
             aria-label={ `${item.id}-expand` }
             aria-labelledby={ `${item.id}-expand` }
             onClick={ () => handleDataItemToggle(item.id) }
@@ -62,6 +62,7 @@ class OrderItem extends Component {
                           <Text
                             style={ { marginBottom: 0 } }
                             component={ TextVariants.h5 }
+                            id={ `order-${item.id}-title` }
                           >
                             { `${getOrderPortfolioName(item, portfolioItems)} # ${item.id}` }
                           </Text>
@@ -111,7 +112,12 @@ class OrderItem extends Component {
                 { item.state === 'Completed'
                   ? (
                     <div style={ { minWidth: 200, textAlign: 'end' } }>
-                      <a href={ item.orderItems && item.orderItems[0].external_url } target="_blank" rel="noopener noreferrer">
+                      <a
+                        id={ `order-${item.id}-manage-product-link` }
+                        href={ item.orderItems && item.orderItems[0].external_url }
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         Manage product
                       </a>
                     </div>)

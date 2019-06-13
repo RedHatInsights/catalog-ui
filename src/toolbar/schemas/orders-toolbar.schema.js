@@ -9,7 +9,8 @@ const createOrdersToolbarSchema = () => ({
       component: toolbarComponentTypes.TOP_TOOLBAR_TITLE,
       key: 'orders-toolbar-title',
       title: 'Orders',
-      className: 'pf-u-mb-0'
+      className: 'pf-u-mb-0',
+      id: 'orders-title'
     }]
   }]
 });
