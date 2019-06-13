@@ -20,7 +20,7 @@ const platformTypeImg = {
 
 const PlatformCard = ({ name, id, ...props }) => (
   <GalleryItem>
-    <Link to={ `/platforms/detail/${id}` } className="card-link">
+    <Link id={ `platform-link-${id}` } to={ `/platforms/detail/${id}` } className="card-link">
       <Card key={ id } className="content-gallery-card">
         <CardHeader>
           <ImageWithDefault src={ platformTypeImg[props.source_type_id] || DefaultPlatformImg } width="80" height="40"/>

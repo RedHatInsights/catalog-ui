@@ -14,7 +14,8 @@ const createPlatformsToolbarSchema = ({
     fields: [{
       component: toolbarComponentTypes.TOP_TOOLBAR_TITLE,
       key: 'platforms-toolbar-title',
-      title
+      title,
+      id: 'platforms-title'
     }, {
       component: toolbarComponentTypes.LEVEL,
       key: 'platforms-toolbar-actions',
@@ -26,6 +27,7 @@ const createPlatformsToolbarSchema = ({
           key: 'platforms-toolbar-filter-input',
           searchValue,
           onFilterChange,
+          id: 'platforms-filter-input',
           placeholder: 'Filter by name...'
         }]
       }, {

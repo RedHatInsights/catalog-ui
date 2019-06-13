@@ -3,23 +3,27 @@
 exports[`<PlatformCard /> should choose card image 1`] = `
 <PlatformCard
   description="desc"
+  id="123"
   modified="Foo"
 >
   <GalleryItem>
     <div>
       <Link
         className="card-link"
-        to="/platforms/detail/undefined"
+        id="platform-link-123"
+        to="/platforms/detail/123"
       >
         <a
           className="card-link"
-          href="/platforms/detail/undefined"
+          href="/platforms/detail/123"
+          id="platform-link-123"
           onClick={[Function]}
         >
           <Card
             className="content-gallery-card"
             component="article"
             isHoverable={false}
+            key="123"
           >
             <article
               className="pf-c-card content-gallery-card"
@@ -110,23 +114,27 @@ exports[`<PlatformCard /> should choose card image 1`] = `
 exports[`<PlatformCard /> should render correctly 1`] = `
 <PlatformCard
   description="desc"
+  id="123"
   modified="Foo"
 >
   <GalleryItem>
     <div>
       <Link
         className="card-link"
-        to="/platforms/detail/undefined"
+        id="platform-link-123"
+        to="/platforms/detail/123"
       >
         <a
           className="card-link"
-          href="/platforms/detail/undefined"
+          href="/platforms/detail/123"
+          id="platform-link-123"
           onClick={[Function]}
         >
           <Card
             className="content-gallery-card"
             component="article"
             isHoverable={false}
+            key="123"
           >
             <article
               className="pf-c-card content-gallery-card"

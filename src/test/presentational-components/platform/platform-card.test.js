@@ -9,7 +9,8 @@ describe('<PlatformCard />', () => {
   beforeEach(() => {
     initialProps = {
       description: 'desc',
-      modified: 'Foo'
+      modified: 'Foo',
+      id: '123'
     };
   });
 
