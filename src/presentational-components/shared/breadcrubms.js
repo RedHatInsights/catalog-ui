@@ -90,7 +90,7 @@ const CatalogBreadrubms = ({ match: { url }, reducers }) => {
   const routes = findRoutes(url);
   const items = routes.map((route, index) => (
     <BreadcrumbItem key={ route.path } isActive={ route.path === url || index === routes.length - 1 }>
-      <NavLink exact to={ route.path } isActive={ () => route.path === url || index === routes.length - 1 }>
+      <NavLink id={ `breadcrumbs-link-${route.path}` } exact to={ route.path } isActive={ () => route.path === url || index === routes.length - 1 }>
         { route.meta.title || get(reducers, route.reducer) }
       </NavLink>
     </BreadcrumbItem>
