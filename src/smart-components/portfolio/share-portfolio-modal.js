@@ -11,6 +11,7 @@ import { fetchShareInfo, sharePortfolio, unsharePortfolio } from '../../redux/ac
 import { fetchRbacGroups } from '../../redux/actions/rbac-actions';
 import { ShareLoader } from '../../presentational-components/shared/loader-placeholders';
 import { permissionOptions } from '../../utilities/constants';
+import { addNotification } from '@redhat-cloud-services/frontend-components-notifications';
 
 const SharePortfolioModal = ({
   history: { push },
@@ -77,7 +78,19 @@ const SharePortfolioModal = ({
     });
     push(closeUrl);
 
-    return Promise.all(sharePromises).then(() => fetchPortfolios());
+    return Promise.all(sharePromises).catch(() =>
+      addNotification({
+        variant: 'danger',
+        title: `Share portfolio`,
+        dismissable: true,
+        description: `Error updating portfolio sharing`
+      })).then(() => { addNotification({
+      variant: 'success',
+      title: `Share portfolio`,
+      dismissable: true,
+      description: `Portfolio sharing was updated successfully`
+    });
+    fetchPortfolios();});
   };
 
   const onCancel = () => push(closeUrl);
