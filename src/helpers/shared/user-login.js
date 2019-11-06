@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {  RequestApi, WorkflowApi } from '@redhat-cloud-services/approval-client';
+import { RequestApi } from '@redhat-cloud-services/approval-client';
 import { DefaultApi as SourcesDefaultApi } from '@redhat-cloud-services/sources-client';
 import { DefaultApi as TopologicalDefaultApi } from '@redhat-cloud-services/topological-inventory-client';
 import { PortfolioApi, PortfolioItemApi, OrderApi, OrderItemApi, IconApi } from '@redhat-cloud-services/catalog-client';
@@ -30,7 +30,6 @@ const orderItemApi = new OrderItemApi(undefined, CATALOG_API_BASE, axiosInstance
 const portfolioApi = new PortfolioApi(undefined, CATALOG_API_BASE, axiosInstance);
 const portfolioItemApi = new PortfolioItemApi(undefined, CATALOG_API_BASE, axiosInstance);
 const requestsApi = new RequestApi(undefined, APPROVAL_API_BASE, axiosInstance);
-const workflowApi = new WorkflowApi(undefined, APPROVAL_API_BASE, axiosInstance);
 const sourcesApi = new SourcesDefaultApi(undefined, SOURCES_API_BASE, axiosInstance);
 const topologicalInventoryApi = new TopologicalDefaultApi(undefined, TOPOLOGICAL_INVENTORY_API_BASE, axiosInstance);
 const iconApi = new IconApi(undefined, CATALOG_API_BASE, axiosInstance);
@@ -77,10 +76,6 @@ export function getRbacPrincipalApi() {
 
 export function getRbacGroupApi() {
   return rbacGroupApi;
-}
-
-export function getWorkflowApi() {
-  return workflowApi;
 }
 
 export function getAxiosInstance() {

@@ -10,7 +10,7 @@ import promiseMiddleware from 'redux-promise-middleware';
 import { componentTypes } from '@data-driven-forms/react-form-renderer';
 import { notificationsMiddleware } from '@redhat-cloud-services/frontend-components-notifications/';
 
-import { APPROVAL_API_BASE, CATALOG_API_BASE } from '../../../utilities/constants';
+import { CATALOG_API_BASE } from '../../../utilities/constants';
 import FormRenderer from '../../../smart-components/common/form-renderer';
 import AddPortfolioModal from '../../../smart-components/portfolio/add-portfolio-modal';
 

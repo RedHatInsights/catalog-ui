@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 
 import EditPortfolioItem from '../../../../smart-components/portfolio/portfolio-item-detail/edit-portfolio-item';
-import { CATALOG_API_BASE, APPROVAL_API_BASE } from '../../../../utilities/constants';
+import { CATALOG_API_BASE } from '../../../../utilities/constants';
 import { UPDATE_TEMPORARY_PORTFOLIO_ITEM, UPDATE_PORTFOLIO_ITEM } from '../../../../redux/action-types';
 import { openApiReducerMock } from '../../../__mocks__/open-api-mock';
 
