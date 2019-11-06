@@ -20,15 +20,11 @@ query {
   }
 }`;
 
-export const getPlatforms = () => {
-  return graphqlInstance.post(`${SOURCES_API_BASE}/graphql`, { query: sourcesQuery })
-  .then(({ data: { application_types }}) => application_types)
-  .then(([{ sources }]) => sources);
-};
+export const getPlatforms = () => graphqlInstance.post(`${SOURCES_API_BASE}/graphql`, { query: sourcesQuery })
+.then(({ data: { application_types }}) => application_types)
+.then(([{ sources }]) => sources);
 
-export const getPlatform = (platformId) => {
-  return sourcesApi.showSource(platformId);
-};
+export const getPlatform = platformId => sourcesApi.showSource(platformId);
 
 export const getPlatformItems = (apiProps, options) => {
   let apiPromise = null;
@@ -44,13 +40,7 @@ export const getPlatformItems = (apiProps, options) => {
   return apiPromise;
 };
 
-export const getPlatformInventories = (platformId, filter = '', options = defaultSettings) => {
-  if (platformId) {
-    return axiosInstance.
-    get(`${TOPOLOGICAL_INVENTORY_API_BASE}/sources/${platformId}/service_inventories?filter[name][contains_i]=${filter}${options
-      ? `&limit=${options.limit}&offset=${options.offset}`
-      : ''}`);
-  } else {
-    return topologicalApi.listServiceInventories(options);
-  }
-};
+export const getPlatformInventories = (platformId, filter = '', options = defaultSettings) => platformId ?
+  axiosInstance.get(`${TOPOLOGICAL_INVENTORY_API_BASE}/sources/${platformId}/service_inventories?filter[name][contains_i]=${filter}${options
+    ? `&limit=${options.limit}&offset=${options.offset}`
+    : ''}`) : topologicalApi.listServiceInventories(options);

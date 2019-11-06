@@ -34,57 +34,33 @@ const sourcesApi = new SourcesDefaultApi(undefined, SOURCES_API_BASE, axiosInsta
 const topologicalInventoryApi = new TopologicalDefaultApi(undefined, TOPOLOGICAL_INVENTORY_API_BASE, axiosInstance);
 const iconApi = new IconApi(undefined, CATALOG_API_BASE, axiosInstance);
 
-export function getSourcesApi() {
-  return sourcesApi;
-}
+export const getSourcesApi = () => sourcesApi;
 
-export function getTopologocalInventoryApi() {
-  return topologicalInventoryApi;
-}
+export const getTopologocalInventoryApi = () => topologicalInventoryApi;
 
-export function getPortfolioApi() {
-  return portfolioApi;
-}
+export const getPortfolioApi = () => portfolioApi;
 
-export function getPortfolioItemApi() {
-  return portfolioItemApi;
-}
+export const getPortfolioItemApi = () => portfolioItemApi;
 
-export function getOrderApi() {
-  return orderApi;
-}
+export const getOrderApi = () => orderApi;
 
-export function getOrderItemApi() {
-  return orderItemApi;
-}
+export const getOrderItemApi = () =>  orderItemApi;
 
-export function getRequestsApi() {
-  return requestsApi;
-}
+export const getRequestsApi = () => requestsApi;
 
 let rbacAccessApi = new AccessApi(undefined, RBAC_API_BASE, axiosInstance);
 let rbacPrincipalApi = new PrincipalApi(undefined, RBAC_API_BASE, axiosInstance);
 let rbacGroupApi = new GroupApi(undefined, RBAC_API_BASE, axiosInstance);
 
-export function getRbacAccessApi() {
-  return rbacAccessApi;
-}
+export const getRbacAccessApi = () => rbacAccessApi;
 
-export function getRbacPrincipalApi() {
-  return rbacPrincipalApi;
-}
+export const getRbacPrincipalApi = () => rbacPrincipalApi;
 
-export function getRbacGroupApi() {
-  return rbacGroupApi;
-}
+export const getRbacGroupApi = () => rbacGroupApi;
 
-export function getAxiosInstance() {
-  return axiosInstance;
-}
+export const getAxiosInstance = () => axiosInstance;
 
-export function getIconApi() {
-  return iconApi;
-}
+export const getIconApi = () => iconApi;
 
 const grapqlInstance = axios.create();
 grapqlInstance.interceptors.request.use(async config => {
@@ -107,6 +83,4 @@ grapqlInstance.interceptors.response.use(({ data }) => {
   return data;
 });
 
-export function getGraphqlInstance() {
-  return grapqlInstance;
-}
+export const getGraphqlInstance = () => grapqlInstance;

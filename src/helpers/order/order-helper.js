@@ -9,11 +9,9 @@ const portfolioItemApi = getPortfolioItemApi();
 const requestsApi = getRequestsApi();
 const axiosInstance = getAxiosInstance();
 
-export function getServicePlans(portfolioItemId) {
-  return portfolioItemApi.listServicePlans(portfolioItemId);
-}
+export const getServicePlans = portfolioItemId => portfolioItemApi.listServicePlans(portfolioItemId);
 
-export async function sendSubmitOrder({ service_parameters: { providerControlParameters, ...service_parameters }, ...parameters }) {
+export const sendSubmitOrder = async({ service_parameters: { providerControlParameters, ...service_parameters }, ...parameters }) => {
   let order = await orderApi.createOrder();
   let orderItem = {};
   orderItem.count = 1;
@@ -25,20 +23,17 @@ export async function sendSubmitOrder({ service_parameters: { providerControlPar
   };
   await orderApi.addToOrder(order.id, orderItem);
   return orderApi.submitOrder(order.id);
-}
+};
 
-export function listRequests() {
-  return requestsApi.listRequests().then(data => ({
-    ...data,
-    data: data.data.map(({ decision, ...item }) => ({
-      ...item,
-      state: decision
-    })) }));
-}
+export const listRequests = () => requestsApi.listRequests().then(data => ({
+  ...data,
+  data: data.data.map(({ decision, ...item }) => ({
+    ...item,
+    state: decision
+  }))
+}));
 
-export function cancelOrder(orderId) {
-  return orderApi.cancelOrder(orderId);
-}
+export const cancelOrder = orderId => orderApi.cancelOrder(orderId);
 
 const OPEN_ORDER_STATES = [ 'Ordered', 'Approval Pending' ];
 const CLOSED_ORDER_STATES = [ 'Completed', 'Failed', 'Denied', 'Canceled' ];
@@ -68,14 +63,8 @@ const getOrders = (states, pagination = defaultSettings) =>
     )
   );
 
-export function getOpenOrders(_apiProps, pagination) {
-  return getOrders(OPEN_ORDER_STATES, pagination);
-}
+export const getOpenOrders = (_apiProps, pagination) => getOrders(OPEN_ORDER_STATES, pagination);
 
-export function getClosedOrders(_apiProps, pagination) {
-  return getOrders(CLOSED_ORDER_STATES, pagination);
-}
+export const getClosedOrders = (_apiProps, pagination) => getOrders(CLOSED_ORDER_STATES, pagination);
 
-export function getOrderApprovalRequests(orderItemId) {
-  return orderItemApi.listApprovalRequests(orderItemId);
-}
+export const getOrderApprovalRequests = orderItemId => orderItemApi.listApprovalRequests(orderItemId);
