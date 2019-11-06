@@ -19,7 +19,6 @@ const debouncedValidator = asyncFormValidator(validateName);
 /**
  * Creates a data-driven-form schema for adding/editing portfolio
  * @param {bool} newRecord sets the variant of portfolio form
- * @param {Function} loadWorkflows async callback that loads workflows
  */
 export const createPortfolioSchema = (newRecord, portfolioId) => ({
   fields: [{

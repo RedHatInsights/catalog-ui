@@ -8,7 +8,6 @@ import thunk from 'redux-thunk';
 import orderReducer, { orderInitialState } from '../redux/reducers/order-reducer';
 import platformReducer, { platformInitialState } from '../redux/reducers/platform-reducer';
 import portfolioReducer, { portfoliosInitialState } from '../redux/reducers/portfolio-reducer';
-import approvalReducer, { approvalInitialState } from '../redux/reducers/approval-reducer';
 import rbacReducer, { rbacInitialState } from '../redux/reducers/rbac-reducer';
 import shareReducer, { shareInfoInitialState } from '../redux/reducers/share-reducer';
 import openApiReducer, { openApiInitialState } from '../redux/reducers/open-api-reducer';
@@ -31,7 +30,6 @@ registry.register({
   orderReducer: applyReducerHash(orderReducer, orderInitialState),
   platformReducer: applyReducerHash(platformReducer, platformInitialState),
   portfolioReducer: applyReducerHash(portfolioReducer, portfoliosInitialState),
-  approvalReducer: applyReducerHash(approvalReducer, approvalInitialState),
   rbacReducer: applyReducerHash(rbacReducer, rbacInitialState),
   shareReducer: applyReducerHash(shareReducer, shareInfoInitialState),
   openApiReducer: applyReducerHash(openApiReducer, openApiInitialState),

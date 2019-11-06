@@ -16,16 +16,7 @@ describe('<ItemDetailDescription />', () => {
         support_url: 'some/support/url',
         documentation_url: 'some/documention/url'
       },
-      url: '/base/url',
-      workflows: [{
-        label: 'Foo',
-        value: 'foo'
-      }, {
-        label: 'Bar',
-        value: 'bar'
-      }],
-      workflow: 'foo',
-      setWorkflow: jest.fn()
+      url: '/base/url'
     };
   });
 

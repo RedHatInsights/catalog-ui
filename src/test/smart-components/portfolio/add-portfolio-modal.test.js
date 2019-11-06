@@ -29,17 +29,9 @@ describe('<AddPortfolioModal />', () => {
 
   beforeEach(() => {
     initialProps = {
-      fetchPortfolios: jest.fn(),
-      fetchWorkflows: jest.fn(),
-      workflows: []
+      fetchPortfolios: jest.fn()
     };
     initialState = {
-      approvalReducer: {
-        workflows: [{
-          label: 'foo',
-          value: 'bar'
-        }]
-      },
       portfolioReducer: {
         portfolios: { data: [{
           id: '123',
@@ -52,25 +44,13 @@ describe('<AddPortfolioModal />', () => {
 
   it('should render correctly', () => {
     const store = mockStore({});
-    apiClientMock.get(`${APPROVAL_API_BASE}/workflows`, mockOnce({ body: { data: []}}));
     const wrapper = shallow(<ComponentWrapper store={ store }><AddPortfolioModal { ...initialProps } /></ComponentWrapper>).dive();
 
-    setImmediate(() => {
-      expect(shallowToJson(wrapper)).toMatchSnapshot();
-    });
+    expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
   it('should create edit variant of portfolio modal', done => {
     const store = mockStore(initialState);
-
-    apiClientMock.get(`${APPROVAL_API_BASE}/workflows`, mockOnce({
-      body: {
-        data: [{
-          name: 'workflow',
-          id: '123'
-        }]
-      }
-    }));
 
     const expectedSchema = {
       fields: [{
@@ -108,13 +88,6 @@ describe('<AddPortfolioModal />', () => {
       expect(JSON.parse(req.body())).toEqual({ id: '123', name: 'Portfolio', workflow_ref: null });
       return res.body(200);
     }));
-
-    apiClientMock.get(`${APPROVAL_API_BASE}/workflows`, mockOnce({ body: {
-      data: [{
-        label: 'foo',
-        value: 'bar'
-      }]
-    }}));
 
     const wrapper = mount(
       <ComponentWrapper store={ store } portfolioId="123">

@@ -39,13 +39,6 @@ describe('<PortfolioItemDetail />', () => {
   beforeEach(() => {
     initialProps = {};
     initialState = {
-      approvalReducer: {
-        workflows: [{
-          label: 'foo',
-          value: 'bar'
-        }],
-        isFetching: false
-      },
       portfolioReducer: {
         portfolioItem: {
           id: '123',
@@ -73,15 +66,6 @@ describe('<PortfolioItemDetail />', () => {
 
   it('should mount show loader', done => {
     const store = mockStore(initialState);
-
-    apiClientMock.get(`${APPROVAL_API_BASE}/workflows`, mockOnce({
-      body: {
-        data: [{
-          name: 'workflow',
-          id: '123'
-        }]
-      }
-    }));
     apiClientMock.get(new RegExp(`${CATALOG_API_BASE}/portfolio_items/*`), mockOnce({ body: { name: 'foo', id: 'bar' }}));
     apiClientMock.post(`${SOURCES_API_BASE}/graphql`, mockOnce({ body: {
       data: {
@@ -113,15 +97,6 @@ describe('<PortfolioItemDetail />', () => {
       }
     };
     const store = mockStore(loadedState);
-
-    apiClientMock.get(`${APPROVAL_API_BASE}/workflows`, mockOnce({
-      body: {
-        data: [{
-          name: 'workflow',
-          id: '123'
-        }]
-      }
-    }));
     apiClientMock.get(`${CATALOG_API_BASE}/portfolio_items/123`, mockOnce({ body: { name: 'foo', id: 'bar' }}));
     apiClientMock.post(`${SOURCES_API_BASE}/graphql`, mockOnce({ body: {
       data: {
@@ -162,7 +137,6 @@ describe('<PortfolioItemDetail />', () => {
     };
     const store = mockStore(loadedState);
 
-    apiClientMock.get(`${APPROVAL_API_BASE}/workflows`, mockOnce({ body: { data: [{ name: 'workflow', id: '123' }]}}));
     apiClientMock.get(`${CATALOG_API_BASE}/portfolio_items/123`, mockOnce({ body: { name: 'foo', id: 'bar' }}));
     apiClientMock.get(`${CATALOG_API_BASE}/portfolio_items/123/provider_control_parameters`, mockOnce({
       body: { properties: { namespace: { enum: []}}}

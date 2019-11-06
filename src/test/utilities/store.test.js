@@ -11,7 +11,6 @@ describe('redux store', () => {
       orderReducer: expect.any(Object),
       platformReducer: expect.any(Object),
       portfolioReducer: expect.any(Object),
-      approvalReducer: expect.any(Object),
       rbacReducer: expect.any(Object),
       shareReducer: expect.any(Object),
       notifications: expect.any(Object),
