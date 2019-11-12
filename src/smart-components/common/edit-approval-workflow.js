@@ -1,7 +1,6 @@
 import React, { useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useParams } from 'react-router-dom';
 import { Modal } from '@patternfly/react-core';
 import { useDispatch } from 'react-redux';
 import { useHistory, useParams, useLocation } from 'react-router-dom';
@@ -50,6 +49,8 @@ const EditApprovalWorkflow = ({
     pathname: closeUrl,
     search
   };
+  const [ workflow, setWorkflow ] = useState(undefined);
+  const [ isFetching, setFetching ] = useState(true);
   const [ currentWorkflows, setCurrentWorkflows ] = useState();
   const [ initialWorkflows, setInitialWorkflows ] = useState();
 
