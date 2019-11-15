@@ -9,7 +9,6 @@ import {
   TextVariants
 } from '@patternfly/react-core';
 import { SearchIcon } from '@patternfly/react-icons';
-
 import Platform from './platform';
 import { scrollToTop } from '../../helpers/shared/helpers';
 import ToolbarRenderer from '../../toolbar/toolbar-renderer';
@@ -18,11 +17,8 @@ import { fetchPlatforms } from '../../redux/actions/platform-actions';
 import PlatformCard from '../../presentational-components/platform/platform-card';
 import { createPlatformsToolbarSchema } from '../../toolbar/schemas/platforms-toolbar.schema';
 import ContentGalleryEmptyState from '../../presentational-components/shared/content-gallery-empty-state';
-
-const platformsRoutes = {
-  platforms: '',
-  detail: '/detail/:id'
-};
+import { PLATFORM_RESOURCE_TYPE } from '../../utilities/constants';
+import EditApprovalWorkflow from '../../smart-components/common/edit-approval-workflow';
 
 class Platforms extends Component {
     state = {
@@ -83,18 +79,26 @@ class Platforms extends Component {
           />
         </Fragment>
       );
-    }
+    };
 
     render() {
       return (
         <Section>
           <Switch>
-            <Route path={ `/platforms${platformsRoutes.detail}` } component={ Platform } />
-            <Route exact path={ `/platforms${platformsRoutes.platforms}` } render={ () => this.renderPlatforms() } />
+            <Route path={ `/platforms/detail/:id` }>
+              <Platform/>
+            </Route>
+            <Route path={ `/platforms` }>
+              { this.renderPlatforms() }
+            </Route>
           </Switch>
+          <Route path={ `/platforms/:id/edit-workflow` }>
+            <EditApprovalWorkflow closeUrl={ `/platforms` }
+              objectType={ PLATFORM_RESOURCE_TYPE }/>
+          </Route>
         </Section>
       );
-    }
+    };
 }
 
 const mapStateToProps = ({ platformReducer: { platforms, isPlatformDataLoading, filterValue }}) => ({
