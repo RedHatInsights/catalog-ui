@@ -44,8 +44,11 @@ const EditApprovalWorkflow = ({
   const { id } = useParams();
   const history = useHistory();
   const pushParam = {
-    pathname: closeUrl
+    pathname: closeUrl,
+    search
   };
+  const [ currentWorkflows, setCurrentWorkflows ] = useState();
+  const [ toUnlinkWorkflows, setUnlinkWorkflows ] = useState();
 
   useEffect(() => {
     dispatch(
@@ -102,6 +105,12 @@ const EditApprovalWorkflow = ({
       ) : (
         <WorkflowLoader />
       )}
+          buttonsLabels={ { submitLabel: 'Save' } }
+        /> : <WorkflowLoader/> }
+      <ApprovalList setSelectedWorkflows={ setCurrentWorkflows }
+                    selectedWorkflows={ currentWorkflows }
+                    toUnlinkWorkflows = { toUnlinkWorkflows }
+                    setUnlinkWorkflows = { setUnlinkWorkflows }/>
     </Modal>
   );
 };
