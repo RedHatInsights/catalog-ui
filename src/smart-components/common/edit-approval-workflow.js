@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Modal } from '@patternfly/react-core';
@@ -15,6 +15,7 @@ import {
 import { APP_NAME } from '../../utilities/constants';
 import { loadWorkflowOptions } from '../../helpers/approval/approval-helper';
 import { WorkflowLoader } from '../../presentational-components/shared/loader-placeholders';
+import ApprovalList from './approval-list';
 
 const initialState = {
   isFetching: true
@@ -49,10 +50,8 @@ const EditApprovalWorkflow = ({
     pathname: closeUrl,
     search
   };
-  const [ workflow, setWorkflow ] = useState(undefined);
-  const [ isFetching, setFetching ] = useState(true);
+
   const [ currentWorkflows, setCurrentWorkflows ] = useState();
-  const [ initialWorkflows, setInitialWorkflows ] = useState();
 
   useEffect(() => {
     dispatch(listWorkflowsForObject({ objectType, appName: APP_NAME, objectId: id || objectId }, meta))
@@ -67,8 +66,9 @@ const EditApprovalWorkflow = ({
 
   const onSubmit = (values) => {
     history.push(pushParam);
-    const toUnlinkWorkflows = currentWorkflows - initialWorkflows;
-    const toLinkWorkflows = initialWorkflows - currentWorkflows;
+
+    const toUnlinkWorkflows = currentWorkflows - data;
+    const toLinkWorkflows = data - currentWorkflows;
 
     if (toUnlinkWorkflows) {
       toUnlinkWorkflows.map(wf => dispatch(unlinkWorkflow(approvalWorkflow.id, approvalWorkflow.name, {
@@ -79,20 +79,17 @@ const EditApprovalWorkflow = ({
     }
 
     if (toLinkWorkflows) {
-      toLinkWorkflows.map(wf => dispatch(linkWorkflow(wf.id, { object_type: objectType, app_name: APP_NAME, object_id: id || objectId })));
+      toLinkWorkflows.map(wf => dispatch(linkWorkflow(values.workflow, {
+        object_type: objectType,
+        app_name: APP_NAME[objectType],
+        object_id: id || objectId
+      })));
     }
   };
 
-    return dispatch(linkWorkflow(values.workflow, {
-      object_type: objectType,
-      app_name: APP_NAME[objectType],
-      object_id: id || objectId
-    }));
+  const onAddWorkflow = values => {
+    return setCurrentWorkflows([ ...currentWorkflows, values.workflow ]);
   };
-
-const onAddWorkflow = values => {
-  return setCurrentWorkflows([ ...currentWorkflows, values.workflow ]);
-};
 
 const removeWorkflow = values => {
   return setCurrentWorkflows([ ...currentWorkflows, values.workflow ]);
@@ -105,15 +102,15 @@ const removeWorkflow = values => {
       onClose={() => history.push(pushParam)}
       isSmall
     >
-      {!isFetching ? (
-        <FormRenderer
-            initialValues={{ workflow: data && data[0] ? data[0].id : undefined }}
-          onSubmit={ onAddWorkflow }
-          onCancel={ () => history.push(pushParam) }
-          schema={ editApprovalWorkflowSchema(loadWorkflowOptions) }
-          formContainer="modal"
-          buttonsLabels={ { submitLabel: 'Add workflow' } }
-        /> : <WorkflowLoader/> }
+      { !isFetching ?
+      <FormRenderer
+          initialValues={{ workflow: data && data[0] ? data[0].id : undefined }}
+        onSubmit={ onAddWorkflow }
+        onCancel={ () => history.push(pushParam) }
+        schema={ editApprovalWorkflowSchema(loadWorkflowOptions) }
+        formContainer="modal"
+        buttonsLabels={ { submitLabel: 'Add workflow' } }
+      />: <WorkflowLoader/> }
       <ApprovalList workflows={ currentWorkflows }
         setWorkflows ={ setCurrentWorkflows }
         removeWorkflow = { removeWorkflow }
