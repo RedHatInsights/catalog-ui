@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { mappedProps } from '../../helpers/shared/helpers';
 import { defaultSettings } from '../../helpers/shared/pagination';
 import { listWorkflowsForObject } from '../../helpers/approval/approval-helper';
 import ContentList from '../../presentational-components/shared/content-list';
@@ -12,7 +11,7 @@ const columns = [
   { title: 'Description' }
 ];
 
-const ApprovalList = ({ currentWorkflows, isLoading, pagination, toUnlinkWorkflows, setUnlinkWorkflows }) => {
+const ApprovalList = ({ currentWorkflows, isLoading, pagination, removeWorkflow }) => {
   const [ filterValue, setFilterValue ] = useState('');
 
   useEffect(() => {
@@ -31,7 +30,7 @@ const ApprovalList = ({ currentWorkflows, isLoading, pagination, toUnlinkWorkflo
 
   const actionResolver = (workflow) => {
     return [{ title: 'Unlink approval workflow',
-      onClick: () => setUnlinkWorkflows([ ...toUnlinkWorkflows, workflow.id ]) }];
+      onClick: () => removeWorkflow(workflow.id) }];
   };
 
   return <ContentList title={ 'Approval workflows' }
@@ -58,11 +57,8 @@ const ApprovalList = ({ currentWorkflows, isLoading, pagination, toUnlinkWorkflo
 ApprovalList.propTypes = {
   workflows: PropTypes.array,
   isLoading: PropTypes.bool,
-  searchFilter: PropTypes.string,
-  setSelectedWorkflows: PropTypes.func.isRequired,
-  selectedWorkflows: PropTypes.array,
+  removeWorkflow: PropTypes.func.isRequired,
   currentWorkflows: PropTypes.array,
-  setUnlinkWorkflows: PropTypes.func.isRequired,
   pagination: PropTypes.shape({
     limit: PropTypes.number.isRequired,
     offset: PropTypes.number.isRequired,
@@ -71,7 +67,7 @@ ApprovalList.propTypes = {
 };
 
 ApprovalList.defaultProps = {
-  roles: [],
+  workflows: [],
   pagination: defaultSettings
 };
 

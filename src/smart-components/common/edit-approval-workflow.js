@@ -5,7 +5,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { Modal } from '@patternfly/react-core';
 import { useDispatch } from 'react-redux';
 import { useHistory, useParams, useLocation } from 'react-router-dom';
-import { Button, Modal } from '@patternfly/react-core';
+import { Button, Modal, ActionGroup } from '@patternfly/react-core';
 import FormRenderer from '../common/form-renderer';
 import editApprovalWorkflowSchema from '../../forms/edit-workflow_form.schema';
 import {
@@ -117,9 +117,20 @@ const removeWorkflow = values => {
         setWorkflows ={ setCurrentWorkflows }
         removeWorkflow = { removeWorkflow }
       />
-      <Button>
-        Submit
-      </Button>
+      <ActionGroup>
+        <Button type="button">
+          Cancel
+        </Button>
+        <Button
+          onClick={ () => onSubmit() }
+          isDisabled={ false }
+          type="button"
+          className="pf-u-mr-md"
+          id="edit-approval-submit"
+        >
+          Submit
+        </Button>
+      </ActionGroup>
     </Modal>
   );
 };
