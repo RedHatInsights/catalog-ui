@@ -6,12 +6,12 @@ import { Section } from '@redhat-cloud-services/frontend-components';
 import { scrollToTop } from '../../helpers/shared/helpers';
 import ToolbarRenderer from '../../toolbar/toolbar-renderer';
 import { defaultSettings, getCurrentPage, getNewPage } from '../../helpers/shared/pagination';
-import { createApprovalFilterToolbarSchema } from '../../toolbar/schemas/platforms-toolbar.schema';
+import { createApprovalFilterToolbarSchema } from '../../toolbar/schemas/approval-toolbar.schema';
 import ContentGaleryEmptyState from '../../presentational-components/shared/content-gallery-empty-state';
 import asyncFormValidator from '../../utilities/async-form-validator';
 import debouncePromise from 'awesome-debounce-promise/dist/index';
 import ContentList from '../../presentational-components/shared/content-list';
-import { listWorkflowsForObjects } from '../../redux/actions/approval-actions';
+import { listWorkflowsForObject } from '../../redux/actions/approval-actions';
 import { createRows } from './approval-table-helpers.js';
 
 const initialState = {
@@ -21,7 +21,7 @@ const initialState = {
   isFiltering: false
 };
 
-const ApprovalWorkflowsState = (state, action) => {
+const approvalWorkflowsState = (state, action) => {
   switch (action.type) {
     case 'setFetching':
       return { ...state, isFetching: action.payload };
@@ -37,20 +37,20 @@ const ApprovalWorkflowsState = (state, action) => {
 const columns = [ 'Name', 'Description' ];
 
 const ApprovalWorkflows = (props) => {
-  const [{ filterValue, isFetching, isFiltering }, stateDispatch ] = useReducer(ApprovalWorkflowsState, initialState);
-  const { data, meta } = useSelector(({ platformReducer: { ApprovalWorkflows }}) => ApprovalWorkflows);
+  const [{ filterValue, isFetching, isFiltering }, stateDispatch ] = useReducer(approvalWorkflowsState, initialState);
+  const { data, meta } = useSelector(({ approvalReducer: { workflows }}) => workflows);
   const platform = useSelector(({ platformReducer: { selectedPlatform }}) => selectedPlatform);
   const dispatch = useDispatch();
 
   const debouncedFilter = asyncFormValidator((value, dispatch, filteringCallback, meta = defaultSettings) => {
     filteringCallback(true);
-    dispatch(listWorkflowsForObjects(props.resourceObject.objectType,
+    dispatch(listWorkflowsForObject(props.resourceObject.objectType,
       props.resourceObject.appName,
       props.resourceObject.objectId, meta)).then(() => filteringCallback(false));
   }, 1000);
 
   useEffect(() => {
-    dispatch(listWorkflowsForObjects(props.resourceObject.objectType,
+    dispatch(listWorkflowsForObject(props.resourceObject.objectType,
       props.resourceObject.appName,
       props.resourceObject.objectId, filterValue, defaultSettings))
     .then(() => stateDispatch({ type: 'setFetching', payload: false }));
@@ -65,7 +65,7 @@ const ApprovalWorkflows = (props) => {
     });
   };
 
-  const handleOnPerPageSelect = limit => listWorkflowsForObjects(props.resourceObject.objectType,
+  const handleOnPerPageSelect = limit => listWorkflowsForObject(props.resourceObject.objectType,
     props.resourceObject.appName, props.resourceObject.objectId, {
       offset: meta.offset,
       limit
@@ -77,7 +77,7 @@ const ApprovalWorkflows = (props) => {
       limit: props.paginationCurrent.limit
     };
 
-    const request = () => dispatch(listWorkflowsForObjects(props.resourceObject.objectType,
+    const request = () => dispatch(listWorkflowsForObject(props.resourceObject.objectType,
       props.resourceObject.appName, props.resourceObject.objectId, filterValue, options));
     if (debounce) {
       return debouncePromise(request, 250)();
