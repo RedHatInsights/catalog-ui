@@ -5,7 +5,11 @@ import { SearchIcon } from '@patternfly/react-icons';
 import { Section } from '@redhat-cloud-services/frontend-components';
 import { scrollToTop } from '../../helpers/shared/helpers';
 import ToolbarRenderer from '../../toolbar/toolbar-renderer';
-import { defaultSettings, getCurrentPage, getNewPage } from '../../helpers/shared/pagination';
+import {
+  defaultSettings,
+  getCurrentPage,
+  getNewPage
+} from '../../helpers/shared/pagination';
 import { createApprovalFilterToolbarSchema } from '../../toolbar/schemas/approval-toolbar.schema';
 import ContentGaleryEmptyState from '../../presentational-components/shared/content-gallery-empty-state';
 import asyncFormValidator from '../../utilities/async-form-validator';
@@ -34,42 +38,77 @@ const approvalWorkflowsState = (state, action) => {
   }
 };
 
-const columns = [ 'Name', 'Description' ];
+const columns = ['Name', 'Description'];
 
 const ApprovalWorkflows = (props) => {
-  const [{ filterValue, isFetching, isFiltering }, stateDispatch ] = useReducer(approvalWorkflowsState, initialState);
-  const { data, meta } = useSelector(({ approvalReducer: { workflows }}) => workflows);
-  const platform = useSelector(({ platformReducer: { selectedPlatform }}) => selectedPlatform);
+  const [{ filterValue, isFetching, isFiltering }, stateDispatch] = useReducer(
+    approvalWorkflowsState,
+    initialState
+  );
+  const { data, meta } = useSelector(
+    ({ approvalReducer: { workflows } }) => workflows
+  );
+  const platform = useSelector(
+    ({ platformReducer: { selectedPlatform } }) => selectedPlatform
+  );
   const dispatch = useDispatch();
 
-  const debouncedFilter = asyncFormValidator((value, dispatch, filteringCallback, meta = defaultSettings) => {
-    filteringCallback(true);
-    dispatch(listWorkflowsForObject(props.resourceObject.objectType,
-      props.resourceObject.appName,
-      props.resourceObject.objectId, meta)).then(() => filteringCallback(false));
-  }, 1000);
+  const debouncedFilter = asyncFormValidator(
+    (value, dispatch, filteringCallback, meta = defaultSettings) => {
+      filteringCallback(true);
+      dispatch(
+        listWorkflowsForObject(
+          {
+            objectType: props.resourceObject.objectType,
+            appName: props.resourceObject.appName,
+            objectId: props.resourceObject.objectId
+          },
+          meta
+        )
+      ).then(() => filteringCallback(false));
+    },
+    1000
+  );
 
   useEffect(() => {
-    dispatch(listWorkflowsForObject(props.resourceObject.objectType,
-      props.resourceObject.appName,
-      props.resourceObject.objectId, filterValue, defaultSettings))
-    .then(() => stateDispatch({ type: 'setFetching', payload: false }));
+    dispatch(
+      listWorkflowsForObject(
+        {
+          objectType: props.resourceObject.objectType,
+          appName: props.resourceObject.appName,
+          objectId: props.resourceObject.objectId
+        },
+        filterValue,
+        defaultSettings
+      )
+    ).then(() => stateDispatch({ type: 'setFetching', payload: false }));
     scrollToTop();
   }, []);
 
-  const handleFilterChange = value => {
+  const handleFilterChange = (value) => {
     stateDispatch({ type: 'setFilterValue', payload: value });
-    debouncedFilter(value, dispatch, isFiltering => stateDispatch({ type: 'setFilteringFlag', payload: isFiltering }), {
-      ...meta,
-      offset: 0
-    });
+    debouncedFilter(
+      value,
+      dispatch,
+      (isFiltering) =>
+        stateDispatch({ type: 'setFilteringFlag', payload: isFiltering }),
+      {
+        ...meta,
+        offset: 0
+      }
+    );
   };
 
-  const handleOnPerPageSelect = limit => listWorkflowsForObject(props.resourceObject.objectType,
-    props.resourceObject.appName, props.resourceObject.objectId, {
-      offset: meta.offset,
-      limit
-    });
+  const handleOnPerPageSelect = (limit) =>
+    listWorkflowsForObject(
+      props.resourceObject.objectType,
+      props.resourceObject.appName,
+      props.resourceObject.objectId,
+      {
+        offset: meta.offset,
+        limit
+      }
+    );
 
   const handleSetPage = (number, debounce) => {
     const options = {
@@ -77,8 +116,16 @@ const ApprovalWorkflows = (props) => {
       limit: props.paginationCurrent.limit
     };
 
-    const request = () => dispatch(listWorkflowsForObject(props.resourceObject.objectType,
-      props.resourceObject.appName, props.resourceObject.objectId, filterValue, options));
+    const request = () =>
+      dispatch(
+        listWorkflowsForObject(
+          props.resourceObject.objectType,
+          props.resourceObject.appName,
+          props.resourceObject.objectId,
+          filterValue,
+          options
+        )
+      );
     if (debounce) {
       return debouncePromise(request, 250)();
     }
@@ -93,37 +140,49 @@ const ApprovalWorkflows = (props) => {
   const renderItems = () => {
     const approvalRows = data ? createRows(data, filterValue) : [];
     const paginationCurrent = meta || defaultSettings;
-    const title =  platform ? platform.name : '';
+    const title = platform ? platform.name : '';
     return (
       <Fragment>
-        <ToolbarRenderer schema={ createApprovalFilterToolbarSchema({
-          onFilterChange: handleFilterChange,
-          searchValue: filterValue,
-          pagination: {
-            itemsPerPage: paginationCurrent.limit,
-            numberOfItems: paginationCurrent.count,
-            onPerPageSelect: handleOnPerPageSelect,
-            page: getCurrentPage(paginationCurrent.limit, paginationCurrent.offset),
-            onSetPage: handleSetPage,
-            direction: 'down'
-          }
-        }) }/>
+        <ToolbarRenderer
+          schema={createApprovalFilterToolbarSchema({
+            onFilterChange: handleFilterChange,
+            searchValue: filterValue,
+            pagination: {
+              itemsPerPage: paginationCurrent.limit,
+              numberOfItems: paginationCurrent.count,
+              onPerPageSelect: handleOnPerPageSelect,
+              page: getCurrentPage(
+                paginationCurrent.limit,
+                paginationCurrent.offset
+              ),
+              onSetPage: handleSetPage,
+              direction: 'down'
+            }
+          })}
+        />
         <Section type="content">
-          <ContentList title={ title }
-            data={ approvalRows }
-            columns={ columns }
-            isLoading={ isFetching || isFiltering }
-            actionResolver = { actionResolver }
-            renderEmptyState={ () => (
+          <ContentList
+            title={title}
+            data={approvalRows}
+            columns={columns}
+            isLoading={isFetching || isFiltering}
+            actionResolver={actionResolver}
+            renderEmptyState={() => (
               <ContentGaleryEmptyState
                 title="No workflows"
-                Icon={ SearchIcon }
-                description={ filterValue === '' ? 'No workflows found.' : 'No workflows match your filter criteria.' }
+                Icon={SearchIcon}
+                description={
+                  filterValue === ''
+                    ? 'No workflows found.'
+                    : 'No workflows match your filter criteria.'
+                }
               />
-            ) } />
+            )}
+          />
         </Section>
       </Fragment>
-    );};
+    );
+  };
 
   return renderItems();
 };

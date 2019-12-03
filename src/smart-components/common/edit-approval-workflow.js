@@ -1,8 +1,6 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { Modal } from '@patternfly/react-core';
-import { useDispatch } from 'react-redux';
 import { useHistory, useParams, useLocation } from 'react-router-dom';
 import { Button, Modal, ActionGroup } from '@patternfly/react-core';
 import FormRenderer from '../common/form-renderer';
@@ -47,8 +45,7 @@ const EditApprovalWorkflow = ({
   const { id } = useParams();
   const history = useHistory();
   const pushParam = {
-    pathname: closeUrl,
-    search
+    pathname: closeUrl
   };
 
   const [ currentWorkflows, setCurrentWorkflows ] = useState();
@@ -56,11 +53,9 @@ const EditApprovalWorkflow = ({
   useEffect(() => {
     dispatch(listWorkflowsForObject({ objectType, appName: APP_NAME, objectId: id || objectId }, meta))
     .then(() => stateDispatch({ type: 'setFetching', payload: false }));
-    listWorkflowsForObjectlistWorkflowsForObject(
+    listWorkflowsForObject(
         { objectType, appName: APP_NAME[objectType], objectId: id || objectId },
-        meta
-    )
-    .then((data) => { setInitialWorkflows(data  ? data.data : {}); setFetching(false); })
+        meta).then((data) => { setCurrentWorkflows(data  ? data.data : {}); stateDispatch({ type: 'setFetching', payload: false }); })
     .catch(() => setCurrentWorkflows([]));
   }, []);
 
@@ -71,7 +66,7 @@ const EditApprovalWorkflow = ({
     const toLinkWorkflows = data - currentWorkflows;
 
     if (toUnlinkWorkflows) {
-      toUnlinkWorkflows.map(wf => dispatch(unlinkWorkflow(approvalWorkflow.id, approvalWorkflow.name, {
+      toUnlinkWorkflows.map(wf => dispatch(unlinkWorkflow(wf.id, wf.name, {
         object_type: objectType,
         app_name: APP_NAME[objectType],
         object_id: id || objectId
@@ -111,9 +106,10 @@ const removeWorkflow = values => {
         formContainer="modal"
         buttonsLabels={ { submitLabel: 'Add workflow' } }
       />: <WorkflowLoader/> }
-      <ApprovalList workflows={ currentWorkflows }
-        setWorkflows ={ setCurrentWorkflows }
-        removeWorkflow = { removeWorkflow }
+      <ApprovalList resourceObject={ { objectType, appName: APP_NAME, objectId: id || objectId } }
+                    workflows={ data }
+                    setWorkflows={ setCurrentWorkflows }
+                    removeWorkflow = { removeWorkflow }
       />
       <ActionGroup>
         <Button type="button">
