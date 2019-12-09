@@ -40,7 +40,7 @@ exports[`<PlatformCard /> should choose card image 1`] = `
                                 <DropdownItem
                                   component={
                                     <ForwardRef
-                                      to="/platforms/edit-workflow/undefined"
+                                      to="/platforms/undefined/edit-workflow"
                                     >
                                       Edit approval
                                     </ForwardRef>
@@ -89,7 +89,7 @@ exports[`<PlatformCard /> should choose card image 1`] = `
                                     <DropdownItem
                                       component={
                                         <ForwardRef
-                                          to="/platforms/edit-workflow/undefined"
+                                          to="/platforms/undefined/edit-workflow"
                                         >
                                           Edit approval
                                         </ForwardRef>
@@ -114,7 +114,7 @@ exports[`<PlatformCard /> should choose card image 1`] = `
                                       <DropdownItem
                                         component={
                                           <ForwardRef
-                                            to="/platforms/edit-workflow/undefined"
+                                            to="/platforms/undefined/edit-workflow"
                                           >
                                             Edit approval
                                           </ForwardRef>
@@ -139,7 +139,7 @@ exports[`<PlatformCard /> should choose card image 1`] = `
                                           <DropdownItem
                                             component={
                                               <ForwardRef
-                                                to="/platforms/edit-workflow/undefined"
+                                                to="/platforms/undefined/edit-workflow"
                                               >
                                                 Edit approval
                                               </ForwardRef>
@@ -165,7 +165,7 @@ exports[`<PlatformCard /> should choose card image 1`] = `
                                           <DropdownItem
                                             component={
                                               <ForwardRef
-                                                to="/platforms/edit-workflow/undefined"
+                                                to="/platforms/undefined/edit-workflow"
                                               >
                                                 Edit approval
                                               </ForwardRef>
@@ -431,7 +431,7 @@ exports[`<PlatformCard /> should render correctly 1`] = `
                                 <DropdownItem
                                   component={
                                     <ForwardRef
-                                      to="/platforms/edit-workflow/undefined"
+                                      to="/platforms/undefined/edit-workflow"
                                     >
                                       Edit approval
                                     </ForwardRef>
@@ -480,7 +480,7 @@ exports[`<PlatformCard /> should render correctly 1`] = `
                                     <DropdownItem
                                       component={
                                         <ForwardRef
-                                          to="/platforms/edit-workflow/undefined"
+                                          to="/platforms/undefined/edit-workflow"
                                         >
                                           Edit approval
                                         </ForwardRef>
@@ -505,7 +505,7 @@ exports[`<PlatformCard /> should render correctly 1`] = `
                                       <DropdownItem
                                         component={
                                           <ForwardRef
-                                            to="/platforms/edit-workflow/undefined"
+                                            to="/platforms/undefined/edit-workflow"
                                           >
                                             Edit approval
                                           </ForwardRef>
@@ -530,7 +530,7 @@ exports[`<PlatformCard /> should render correctly 1`] = `
                                           <DropdownItem
                                             component={
                                               <ForwardRef
-                                                to="/platforms/edit-workflow/undefined"
+                                                to="/platforms/undefined/edit-workflow"
                                               >
                                                 Edit approval
                                               </ForwardRef>
@@ -556,7 +556,7 @@ exports[`<PlatformCard /> should render correctly 1`] = `
                                           <DropdownItem
                                             component={
                                               <ForwardRef
-                                                to="/platforms/edit-workflow/undefined"
+                                                to="/platforms/undefined/edit-workflow"
                                               >
                                                 Edit approval
                                               </ForwardRef>
