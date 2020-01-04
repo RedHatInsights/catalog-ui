@@ -90,7 +90,12 @@ const EditApprovalWorkflow = ({ closeUrl, objectType, objectId }) => {
           initialValues={{ workflow: data && data[0] ? data[0].id : undefined }}
           onSubmit={onSubmit}
           onCancel={() => history.push(pushParam)}
-          schema={editApprovalWorkflowSchema(loadWorkflowOptions)}
+          schema={editApprovalWorkflowSchema(
+            loadWorkflowOptions,
+            data && data[0]
+              ? { value: data[0].id, label: data[0].name }
+              : undefined
+          )}
           formContainer="modal"
           buttonsLabels={{ submitLabel: 'Save' }}
         />
