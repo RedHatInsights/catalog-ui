@@ -51,16 +51,17 @@ const EditApprovalWorkflow = ({
   const [ currentWorkflows, setCurrentWorkflows ] = useState();
 
   useEffect(() => {
-    dispatch(listWorkflowsForObject({ objectType, appName: APP_NAME, objectId: id || objectId }, meta))
-    .then(() => stateDispatch({ type: 'setFetching', payload: false }));
-    listWorkflowsForObject(
+    dispatch(
+      listWorkflowsForObject(
         { objectType, appName: APP_NAME[objectType], objectId: id || objectId },
-        meta).then((data) => { setCurrentWorkflows(data  ? data.data : {}); stateDispatch({ type: 'setFetching', payload: false }); })
-    .catch(() => setCurrentWorkflows([]));
+        meta
+      )
+    ).then(() => stateDispatch({ type: 'setFetching', payload: false }));
   }, []);
 
   const onSubmit = (values) => {
     history.push(pushParam);
+    const approvalWorkflow = data ? data[0] : undefined;
 
     const toUnlinkWorkflows = currentWorkflows - data;
     const toLinkWorkflows = data - currentWorkflows;
@@ -81,8 +82,11 @@ const EditApprovalWorkflow = ({
       })));
     }
   };
+  const onCancel = (values) => {
+    history.push(pushParam);
+  }
 
-  const onAddWorkflow = values => {
+    const onAddWorkflow = values => {
     return setCurrentWorkflows([ ...currentWorkflows, values.workflow ]);
   };
 
@@ -90,12 +94,12 @@ const removeWorkflow = values => {
   return setCurrentWorkflows([ ...currentWorkflows, values.workflow ]);
 };
 
-  return (
+ return (
     <Modal
       title={`Set approval workflow for ${objectName(id)}`}
       isOpen
       onClose={() => history.push(pushParam)}
-      isSmall
+      isLarge
     >
       { !isFetching ?
       <FormRenderer
@@ -108,11 +112,11 @@ const removeWorkflow = values => {
       />: <WorkflowLoader/> }
       <ApprovalList resourceObject={ { objectType, appName: APP_NAME, objectId: id || objectId } }
                     workflows={ data }
-                    setWorkflows={ setCurrentWorkflows }
+                    isLoading = { isFetching }
                     removeWorkflow = { removeWorkflow }
       />
       <ActionGroup>
-        <Button type="button">
+        <Button type="button" onClick={ () => onCancel() }>
           Cancel
         </Button>
         <Button

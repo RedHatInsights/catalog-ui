@@ -79,10 +79,10 @@ const Portfolios = () => {
   }, []);
 
   const itemName = (id) => {
-    if (data) {
-      return data.find((item) => item.id === id).name;
+    let item;
+    if ( data && (item = data.find((item) => item.id === id))) {
+      return item.name;
     }
-
     return `portfolio`;
   };
 
