@@ -80,9 +80,10 @@ const Portfolios = () => {
 
   const itemName = (id) => {
     let item;
-    if ( data && (item = data.find((item) => item.id === id))) {
+    if (data && (item = data.find((item) => item.id === id))) {
       return item.name;
     }
+
     return `portfolio`;
   };
 

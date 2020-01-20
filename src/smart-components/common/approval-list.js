@@ -1,24 +1,21 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { TopToolbar } from '../../presentational-components/shared/top-toolbar';
-import ContentList from "../../presentational-components/shared/content-list";
+import ContentList from '../../presentational-components/shared/content-list';
 import { createRows } from './approval-table-helpers.js';
 import ContentGaleryEmptyState from '../../presentational-components/shared/content-gallery-empty-state';
 import { SearchIcon } from '@patternfly/react-icons';
 
 const columns = ['Name', 'Description', 'Last Updated'];
 
-const ApprovalWorkflows = ( {resourceObject, workflows, isLoading, removeWorkflow} ) => {
-
-  const actionResolver = (_rowData, { _rowIndex }) =>
-    [
-      {
-        title: 'Delete',
-        onClick: (_event, _rowId, value) => {
-          removeWorkflow(value.id);
-        }
+const ApprovalWorkflows = ({ workflows, isLoading, removeWorkflow }) => {
+  const actionResolver = () => [
+    {
+      title: 'Delete',
+      onClick: (value) => {
+        removeWorkflow(value.id);
       }
-    ];
+    }
+  ];
 
   const renderList = () => {
     const approvalRows = workflows ? createRows(workflows) : [];
@@ -26,19 +23,19 @@ const ApprovalWorkflows = ( {resourceObject, workflows, isLoading, removeWorkflo
     return (
       <Fragment>
         <ContentList
-          data={ approvalRows }
+          data={approvalRows}
           isCompact={true}
-          columns={ columns }
-          actionResolver={ actionResolver }
+          columns={columns}
+          actionResolver={actionResolver}
           title=" Approval workflow"
-          isLoading={ isLoading }
+          isLoading={isLoading}
           renderEmptyState={() => (
-              <ContentGaleryEmptyState
-                title="No workflows"
-                Icon={SearchIcon}
-                description={'No workflows found.'}
-              />
-            )}
+            <ContentGaleryEmptyState
+              title="No workflows"
+              Icon={SearchIcon}
+              description={'No workflows found.'}
+            />
+          )}
         />
       </Fragment>
     );
