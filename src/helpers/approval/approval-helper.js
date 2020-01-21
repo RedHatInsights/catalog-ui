@@ -11,9 +11,7 @@ export const loadWorkflowOptions = (filterValue = '') =>
         filterValue.length > 0 ? `/?filter[name][contains]=${filterValue}` : ''
       }`
     )
-    .then(({ data }) =>
-      data.map(({ id, name }) => ({ label: name, value: id }))
-    );
+    .then(({ data }) => data.map((wf) => ({ label: wf.name, value: wf })));
 
 export const linkWorkflow = (id, resourceObject) =>
   getWorkflowApi().linkWorkflow(id, resourceObject);

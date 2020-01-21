@@ -14,6 +14,8 @@ import { APPROVAL_API_BASE } from '../../../utilities/constants';
 import FormRenderer from '../../../smart-components/common/form-renderer';
 import EditApprovalWorkflow from '../../../smart-components/common/edit-approval-workflow';
 import { mockApi } from '../../__mocks__/user-login';
+import ReactFormRender from '@data-driven-forms/react-form-renderer/dist/index';
+import { ASYNC_ACTIONS } from '../../../redux/action-types/approval-action-types';
 
 describe('<EditApprovalWorkflow />', () => {
   let initialProps;
@@ -98,7 +100,7 @@ describe('<EditApprovalWorkflow />', () => {
         {
           component: componentTypes.SELECT,
           name: 'workflow',
-          label: 'Approval workflow',
+          label: 'Select workflow',
           loadOptions: expect.any(Function),
           isSearchable: true,
           isClearable: true
@@ -127,6 +129,70 @@ describe('<EditApprovalWorkflow />', () => {
       'Set approval workflow for Test Resource Name'
     );
     expect(form.props().schema).toEqual(expectedSchema);
+    done();
+  });
+
+  it('should submit the selected workflow', async (done) => {
+    const store = mockStore(initialState);
+
+    mockApi.onGet(`${APPROVAL_API_BASE}/workflows`).replyOnce(200, {
+      data: [
+        {
+          name: 'workflow',
+          id: '123'
+        }
+      ]
+    });
+    mockApi
+      .onGet(
+        `${APPROVAL_API_BASE}/workflows/?app_name=catalog&object_type=Portfolio&object_id=123&filter[name][contains]=&limit=50&offset=0`
+      )
+      .replyOnce(200, { data: [{ name: 'workflow', id: '123' }] });
+
+    let wrapper;
+    await act(async () => {
+      wrapper = mount(
+        <ComponentWrapper store={store} initialEntries={['/portfolio/123']}>
+          <Route
+            path="/portfolio/:id"
+            render={(args) => (
+              <EditApprovalWorkflow {...args} {...initialProps} />
+            )}
+          />
+        </ComponentWrapper>
+      );
+    });
+    const expectedActions = [
+      {
+        type: '@@catalog/approval/RESOLVE_WORKFLOWS_PENDING'
+      },
+      {
+        payload: { data: [{ id: '123', name: 'workflow' }] },
+        type: ASYNC_ACTIONS.RESOLVE_WORKFLOWS_FULFILLED
+      }
+    ];
+    wrapper.update();
+    const form = wrapper
+      .find(ReactFormRender)
+      .children()
+      .instance().form;
+
+    form.change('workflow', '123');
+    await act(async () => {
+      wrapper
+        .find('button')
+        .at(1)
+        .simulate('click');
+    });
+    done();
+    await act(async () => {
+      wrapper
+        .find('button')
+        .at(2)
+        .simulate('click');
+    });
+
+    expect(store.getActions()).toEqual(expectedActions);
     done();
   });
 });

@@ -2,7 +2,15 @@ import React, { useEffect, useReducer, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { Button, Modal, ActionGroup } from '@patternfly/react-core';
+import {
+  ActionGroup,
+  Button,
+  Modal,
+  Split,
+  SplitItem,
+  Stack,
+  StackItem
+} from '@patternfly/react-core';
 import FormRenderer from '../common/form-renderer';
 import editApprovalWorkflowSchema from '../../forms/edit-workflow_form.schema';
 import {
@@ -23,12 +31,6 @@ const approvalState = (state, action) => {
   switch (action.type) {
     case 'setFetching':
       return { ...state, isFetching: action.payload };
-    case 'setInitialValues':
-      return {
-        ...state,
-        isFetching: false,
-        currentWorkflows: action.payload.data
-      };
     default:
       return state;
   }
@@ -54,7 +56,7 @@ const EditApprovalWorkflow = ({
     pathname: closeUrl
   };
 
-  const [currentWorkflows, setCurrentWorkflows] = useState();
+  const [currentWorkflows, setCurrentWorkflows] = useState([]);
 
   useEffect(() => {
     dispatch(
@@ -62,15 +64,20 @@ const EditApprovalWorkflow = ({
         { objectType, appName: APP_NAME[objectType], objectId: id || objectId },
         meta
       )
-    ).then((data) =>
-      stateDispatch({ type: 'setInitialValues', payload: data })
-    );
+    ).then((result) => {
+      setCurrentWorkflows(result.value.data);
+      stateDispatch({ type: 'setFetching', payload: false });
+    });
   }, []);
 
   const onSubmit = () => {
     history.push(pushParam);
-    const toUnlinkWorkflows = currentWorkflows - data;
-    const toLinkWorkflows = data - currentWorkflows;
+    const toUnlinkWorkflows = data.filter(
+      (wf) => currentWorkflows.findIndex((w) => w.id === wf.id) < 0
+    );
+    const toLinkWorkflows = currentWorkflows.filter(
+      (wf) => data.findIndex((w) => w.id === wf.id) < 0
+    );
 
     if (toUnlinkWorkflows) {
       toUnlinkWorkflows.map((wf) =>
@@ -87,7 +94,7 @@ const EditApprovalWorkflow = ({
     if (toLinkWorkflows) {
       toLinkWorkflows.map((wf) =>
         dispatch(
-          linkWorkflow(wf.workflow, {
+          linkWorkflow(wf.id, {
             object_type: objectType,
             app_name: APP_NAME[objectType],
             object_id: id || objectId
@@ -101,12 +108,15 @@ const EditApprovalWorkflow = ({
     history.push(pushParam);
   };
 
-  const onAddWorkflow = (values) => {
-    return setCurrentWorkflows([...currentWorkflows, values.workflow]);
+  const onAddWorkflow = (value) => {
+    console.log('Debug - addWorkflow - values: ', value.workflow);
+    return setCurrentWorkflows([...currentWorkflows, value.workflow]);
   };
 
-  const removeWorkflow = (values) => {
-    return setCurrentWorkflows([...currentWorkflows, values.workflow]);
+  const removeWorkflow = (value) => {
+    return setCurrentWorkflows(
+      currentWorkflows.filter((wf) => wf.id !== value.id)
+    );
   };
 
   return (
@@ -114,36 +124,60 @@ const EditApprovalWorkflow = ({
       title={`Set approval workflow for ${objectName(id)}`}
       isOpen
       onClose={() => history.push(pushParam)}
-      isLarge
+      isSmall
     >
-      {!isFetching ? (
-        <FormRenderer
-          onSubmit={onAddWorkflow}
-          schema={editApprovalWorkflowSchema(loadWorkflowOptions)}
-          buttonsLabels={{ submitLabel: 'Add' }}
-        />
-      ) : (
-        <WorkflowLoader />
-      )}
-      <ApprovalList
-        workflows={data}
-        isLoading={isFetching}
-        removeWorkflow={removeWorkflow}
-      />
-      <ActionGroup>
-        <Button type="button" onClick={() => onCancel()}>
-          Cancel
-        </Button>
-        <Button
-          onClick={() => onSubmit()}
-          isDisabled={false}
-          type="button"
-          className="pf-u-mr-md"
-          id="edit-approval-submit"
-        >
-          Submit
-        </Button>
-      </ActionGroup>
+      <Stack gutter="lg">
+        <StackItem>
+          {!isFetching ? (
+            <FormRenderer
+              onSubmit={onAddWorkflow}
+              formContainer="modal"
+              schema={editApprovalWorkflowSchema(loadWorkflowOptions)}
+              buttonsLabels={{ submitLabel: 'Add workflow' }}
+            />
+          ) : (
+            <WorkflowLoader />
+          )}
+        </StackItem>
+        <StackItem>
+          {currentWorkflows.length > 0 && (
+            <ApprovalList
+              workflows={currentWorkflows}
+              isLoading={isFetching}
+              removeWorkflow={removeWorkflow}
+            />
+          )}
+        </StackItem>
+        <StackItem>
+          <ActionGroup>
+            <Split gutter="lg">
+              <SplitItem>
+                <Button
+                  aria-label={'Save'}
+                  id="edit-approval-submit"
+                  variant="primary"
+                  type="submit"
+                  isDisabled={isFetching}
+                  onClick={onSubmit}
+                >
+                  Save
+                </Button>
+              </SplitItem>
+              <SplitItem>
+                <Button
+                  aria-label="Cancel"
+                  id="edit-approval-cancel"
+                  variant="secondary"
+                  type="button"
+                  onClick={onCancel}
+                >
+                  Cancel
+                </Button>
+              </SplitItem>
+            </Split>
+          </ActionGroup>
+        </StackItem>
+      </Stack>
     </Modal>
   );
 };

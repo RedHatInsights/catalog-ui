@@ -6,7 +6,7 @@ const editWorkflowSchema = (loadWorkflows) => ({
     {
       component: componentTypes.SELECT,
       name: 'workflow',
-      label: 'Approval workflow',
+      label: 'Select workflow',
       loadOptions: asyncFormValidator(loadWorkflows),
       isSearchable: true,
       isClearable: true
