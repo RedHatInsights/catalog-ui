@@ -11,7 +11,7 @@ describe('<ItemDetailInfoBar />', () => {
       .spyOn(Date, 'now')
       .mockImplementation(() =>
         new Date(
-          'Fri Mar 22 2018 08:36:57 GMT+0100 (Central European Standard Time)'
+          'Fri Mar 22 2019 08:36:57 GMT+0100 (Central European Standard Time)'
         ).getTime()
       );
   });
