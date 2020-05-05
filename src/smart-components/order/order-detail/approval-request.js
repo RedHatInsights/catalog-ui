@@ -38,12 +38,18 @@ const ApprovalRequests = () => {
   );
 
   useEffect(() => {
-    if (order.state !== 'Failed' && approvalRequest.data.length === 0) {
+    if (
+      order.state !== 'Failed' &&
+      (!approvalRequest.data || approvalRequest.data.length === 0)
+    ) {
       checkRequest(() => dispatch(fetchApprovalRequests(orderItem.id)));
     }
   }, []);
 
-  if (order.state === 'Failed' && approvalRequest.data.length === 0) {
+  if (
+    order.state === 'Failed' &&
+    (!approvalRequest.data || approvalRequest.data.length === 0)
+  ) {
     return (
       <Bullseye>
         <Flex breakpointMods={[{ modifier: 'column' }, { modifier: 'grow' }]}>
@@ -62,7 +68,7 @@ const ApprovalRequests = () => {
 
   return (
     <TextContent>
-      {approvalRequest.data.length === 0 ? (
+      {!approvalRequest.data || approvalRequest.data.length === 0 ? (
         <Bullseye>
           <Flex breakpointMods={[{ modifier: 'column' }, { modifier: 'grow' }]}>
             <Bullseye>
