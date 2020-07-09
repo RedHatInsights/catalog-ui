@@ -1,8 +1,9 @@
 import { toolbarComponentTypes } from '../toolbar-mapper';
 import { createLinkButton } from '../helpers';
-import FilterSelect from '../../presentational-components/shared/filter-select';
+import { SearchFilterSelect } from '../../presentational-components/shared/search-filter-select';
 import ButtonWithSpinner from '../../presentational-components/shared/button-with-spinner';
 import AsyncPagination from '../../smart-components/common/async-pagination';
+import asyncFormValidator from "../../utilities/async-form-validator";
 
 const createAddProductsSchema = ({
   options,
@@ -16,7 +17,8 @@ const createAddProductsSchema = ({
   onClickAddToPortfolio,
   meta,
   platformId,
-  fetchPlatformItems
+  fetchPlatformItems,
+  loadPlatformOptions
 }) => ({
   fields: [
     {
@@ -41,10 +43,11 @@ const createAddProductsSchema = ({
                   key: 'products-filter-group',
                   fields: [
                     {
-                      component: FilterSelect,
+                      component: SearchFilterSelect,
                       key: 'select-platforms',
                       id: 'products-platform-select',
                       isMulti: false,
+                      loadOptions: asyncFormValidator(loadPlatformOptions),
                       placeholder: 'Filter by Platform',
                       options,
                       onChange: onOptionSelect

@@ -141,6 +141,7 @@ const AddProductsToPortfolio = ({ portfolioRoute }) => {
             label: platform.name,
             id: platform.id
           })),
+          loadPlatformOptions: fetchPlatforms,
           isFetching,
           portfolioName: (portfolio && portfolio.name) || '',
           itemsSelected: checkedItems.length > 0,
