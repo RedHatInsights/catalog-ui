@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import { InternalSelect } from '@data-driven-forms/pf4-component-mapper/dist/cjs/select';
 import asyncFormValidator from '../../utilities/async-form-validator';
 
-const SearchFilterSelect = ({ onChange, loadOptions, input, ...props }) => {
+const SearchFilterSelect = ({ onChange, input, ...props }) => {
   const [stateValue, setValue] = useState(undefined);
-  console.log('Debug - loadOptions', loadOptions);
   return (
     <div
       key="search-filter-select"
@@ -17,7 +16,6 @@ const SearchFilterSelect = ({ onChange, loadOptions, input, ...props }) => {
         isSearchable
         isClearable
         name="filter-select"
-        loadOptions={asyncFormValidator(loadOptions)}
         onChange={(value) => {
           onChange(value || stateValue);
           setValue(value || stateValue);

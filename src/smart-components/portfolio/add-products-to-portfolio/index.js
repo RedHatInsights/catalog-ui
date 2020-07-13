@@ -155,13 +155,15 @@ const AddProductsToPortfolio = ({ portfolioRoute }) => {
     dispatch(fetchPlatformItems(platform.id, filterValue, defaultSettings));
   };
 
-  const fetchPlatformOptions = (inputValue) => {
-    const platformOptions = (inputValue ? platforms.filter((platform) => platform.name.includes(inputValue))
-        : platforms).map((platform) => ({
-        value: platform.id,
-        label: platform.name,
-        id: platform.id
-      }));
+  const handlePlatformFilterChange = (inputValue) => {
+    const platformOptions = (inputValue
+      ? platforms.filter((platform) => platform.name.includes(inputValue))
+      : platforms
+    ).map((platform) => ({
+      value: platform.id,
+      label: platform.name,
+      id: platform.id
+    }));
     console.log('Debug - platform Options', platformOptions);
     return platformOptions;
   };
@@ -175,13 +177,12 @@ const AddProductsToPortfolio = ({ portfolioRoute }) => {
             label: platform.name,
             id: platform.id
           })),
-          loadPlatformOptions: fetchPlatformOptions,
           isFetching,
           portfolioName: (portfolio && portfolio.name) || '',
           itemsSelected: checkedItems.length > 0,
           onOptionSelect: onPlatformSelect,
           onFilterChange: (value) => handleFilterItems(value),
-          onSearchFilterChange: (value) => handleSearchFilterItems(value),
+          onPlatformFilterChange: (value) => handlePlatformFilterChange(value),
           portfolioRoute,
           onClickAddToPortfolio: handleAddToPortfolio,
           meta,
