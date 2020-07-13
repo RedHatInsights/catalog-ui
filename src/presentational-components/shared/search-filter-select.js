@@ -1,23 +1,28 @@
-import React, { useState, memo } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { InternalSelect } from '@data-driven-forms/pf4-component-mapper/dist/cjs/select';
-import isEqual from 'lodash/isEqual';
+import asyncFormValidator from '../../utilities/async-form-validator';
 
-const SearchFilterSelect = ({ onChange, loadOptions, ...props }) => {
+const SearchFilterSelect = ({ onChange, loadOptions, input, ...props }) => {
   const [stateValue, setValue] = useState(undefined);
+  console.log('Debug - loadOptions', loadOptions);
   return (
-    <div key="search-filter-select" id="search-filter-select" className="search-filter-select">
+    <div
+      key="search-filter-select"
+      id="search-filter-select"
+      className="search-filter-select"
+    >
       <InternalSelect
         isDisabled={!props.options || props.options.length === 0}
         isSearchable
         isClearable
         name="filter-select"
-        loadOptions
+        loadOptions={asyncFormValidator(loadOptions)}
         onChange={(value) => {
           onChange(value || stateValue);
           setValue(value || stateValue);
         }}
-        input={}
+        input={input}
         value={stateValue}
         {...props}
       />
@@ -27,9 +32,9 @@ const SearchFilterSelect = ({ onChange, loadOptions, ...props }) => {
 
 SearchFilterSelect.propTypes = {
   options: PropTypes.array,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  input: PropTypes.string,
+  loadOptions: PropTypes.func.isRequired
 };
 
-export default memo(SearchFilterSelect, (prevProps, nextProps) =>
-  isEqual(prevProps.options, nextProps.options)
-);
+export default SearchFilterSelect;

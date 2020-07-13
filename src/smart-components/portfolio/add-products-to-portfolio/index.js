@@ -33,6 +33,7 @@ const renderGalleryItems = (items = [], checkItem, checkedItems) =>
 
 const initialState = {
   filterValue: '',
+  searchFilterValue: '',
   isFetching: false,
   isFiltering: false
 };
@@ -45,6 +46,10 @@ const addProductsState = (state, action) => {
       return { ...state, filterValue: action.payload };
     case 'setFilteringFlag':
       return { ...state, isFiltering: action.payload };
+    case 'setFilterSearchValue':
+      return { ...state, searchFilterValue: action.payload };
+    case 'setFilterSearchFlag':
+      return { ...state, isSearchFiltering: action.payload };
   }
 
   return state;
@@ -63,10 +68,10 @@ const debouncedFilter = asyncFormValidator(
 const AddProductsToPortfolio = ({ portfolioRoute }) => {
   const [selectedPlatform, setSelectedPlatform] = useState(undefined);
   const [checkedItems, setCheckedItems] = useState([]);
-  const [{ filterValue, isFetching }, stateDispatch] = useReducer(
-    addProductsState,
-    initialState
-  );
+  const [
+    { filterValue, isFetching, searchFilterValue },
+    stateDispatch
+  ] = useReducer(addProductsState, initialState);
   const { push } = useEnhancedHistory();
   const dispatch = useDispatch();
   const { portfolio, platforms, platformItems, isLoading } = useSelector(
@@ -116,6 +121,23 @@ const AddProductsToPortfolio = ({ portfolioRoute }) => {
     );
   };
 
+  const handleSearchFilterItems = (value) => {
+    stateDispatch({ type: 'setSearchFilterValue', payload: value });
+    debouncedFilter(
+      value,
+      dispatch,
+      (isSearchFiltering) =>
+        stateDispatch({
+          type: 'setSearchFilteringFlag',
+          payload: isSearchFiltering
+        }),
+      {
+        ...meta,
+        offset: 0
+      }
+    );
+  };
+
   const handleAddToPortfolio = () => {
     dispatch({ type: 'setFetching', payload: true });
     return dispatch(addToPortfolio(portfolio.id, checkedItems))
@@ -132,6 +154,18 @@ const AddProductsToPortfolio = ({ portfolioRoute }) => {
     dispatch(fetchPlatformItems(platform.id, filterValue, defaultSettings));
   };
 
+  const fetchPlatformOptions = (inputValue) => {
+    const platformOptions = platforms
+      .filter((platform) => platform.name.contains(inputValue))
+      .map((platform) => ({
+        value: platform.id,
+        label: platform.name,
+        id: platform.id
+      }));
+    console.log('Debug - platform Options', platformOptions);
+    return platformOptions;
+  };
+
   return (
     <Fragment>
       <ToolbarRenderer
@@ -141,17 +175,19 @@ const AddProductsToPortfolio = ({ portfolioRoute }) => {
             label: platform.name,
             id: platform.id
           })),
-          loadPlatformOptions: fetchPlatforms,
+          loadPlatformOptions: fetchPlatformOptions,
           isFetching,
           portfolioName: (portfolio && portfolio.name) || '',
           itemsSelected: checkedItems.length > 0,
           onOptionSelect: onPlatformSelect,
           onFilterChange: (value) => handleFilterItems(value),
+          onSearchFilterChange: (value) => handleSearchFilterItems(value),
           portfolioRoute,
           onClickAddToPortfolio: handleAddToPortfolio,
           meta,
           platformId: selectedPlatform && selectedPlatform.id,
           searchValue: filterValue,
+          filterSearchValue: searchFilterValue,
           fetchPlatformItems: (id, options) =>
             dispatch(fetchPlatformItems(id, filterValue, options))
         })}
