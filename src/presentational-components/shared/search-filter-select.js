@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { InternalSelect } from '@data-driven-forms/pf4-component-mapper/dist/cjs/select';
-import asyncFormValidator from '../../utilities/async-form-validator';
 
 const SearchFilterSelect = ({ onChange, input, ...props }) => {
   const [stateValue, setValue] = useState(undefined);

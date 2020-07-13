@@ -8,17 +8,17 @@ const createAddProductsSchema = ({
   options,
   isFetching,
   searchValue,
-  filterSearchValue,
+  platformFilterValue,
   portfolioName,
   itemsSelected,
   onOptionSelect,
+  onPlatformFilterChange,
   onFilterChange,
   portfolioRoute,
   onClickAddToPortfolio,
   meta,
   platformId,
-  fetchPlatformItems,
-  loadPlatformOptions
+  fetchPlatformItems
 }) => ({
   fields: [
     {
@@ -47,11 +47,10 @@ const createAddProductsSchema = ({
                       key: 'select-platforms',
                       id: 'products-platform-select',
                       isMulti: false,
-                      loadOptions: loadPlatformOptions,
                       placeholder: 'Filter by Platform',
-                      searchValue: filterSearchValue,
-                      input: filterSearchValue,
+                      input: platformFilterValue,
                       options,
+                      onInputChange: onPlatformFilterChange,
                       onChange: onOptionSelect
                     },
                     {

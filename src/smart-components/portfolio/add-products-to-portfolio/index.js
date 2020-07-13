@@ -121,23 +121,6 @@ const AddProductsToPortfolio = ({ portfolioRoute }) => {
     );
   };
 
-  const handleSearchFilterItems = (value) => {
-    stateDispatch({ type: 'setSearchFilterValue', payload: value });
-    debouncedFilter(
-      value,
-      dispatch,
-      (isSearchFiltering) =>
-        stateDispatch({
-          type: 'setSearchFilteringFlag',
-          payload: isSearchFiltering
-        }),
-      {
-        ...meta,
-        offset: 0
-      }
-    );
-  };
-
   const handleAddToPortfolio = () => {
     dispatch({ type: 'setFetching', payload: true });
     return dispatch(addToPortfolio(portfolio.id, checkedItems))
@@ -188,7 +171,7 @@ const AddProductsToPortfolio = ({ portfolioRoute }) => {
           meta,
           platformId: selectedPlatform && selectedPlatform.id,
           searchValue: filterValue,
-          filterSearchValue: searchFilterValue,
+          platformFilterValue: searchFilterValue,
           fetchPlatformItems: (id, options) =>
             dispatch(fetchPlatformItems(id, filterValue, options))
         })}
