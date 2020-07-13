@@ -13,6 +13,7 @@ const createAddProductsSchema = ({
   itemsSelected,
   onOptionSelect,
   onFilterChange,
+  onSearchFilterChange,
   portfolioRoute,
   onClickAddToPortfolio,
   meta,

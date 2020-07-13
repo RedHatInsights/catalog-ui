@@ -150,14 +150,14 @@ const AddProductsToPortfolio = ({ portfolioRoute }) => {
   };
 
   const onPlatformSelect = (platform) => {
+    console.log('Debug - platform selected: ', platform);
     setSelectedPlatform(platform);
     dispatch(fetchPlatformItems(platform.id, filterValue, defaultSettings));
   };
 
   const fetchPlatformOptions = (inputValue) => {
-    const platformOptions = platforms
-      .filter((platform) => platform.name.contains(inputValue))
-      .map((platform) => ({
+    const platformOptions = (inputValue ? platforms.filter((platform) => platform.name.includes(inputValue))
+        : platforms).map((platform) => ({
         value: platform.id,
         label: platform.name,
         id: platform.id
