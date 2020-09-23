@@ -45,6 +45,7 @@ import {
 import { ApprovalRequest } from '@redhat-cloud-services/catalog-client';
 import { CatalogRootState } from '../../../types/redux';
 import { OrderDetail } from '../../../redux/reducers/order-reducer';
+import { MAX_APPROVAL_REQ_RETRIES } from '../../../utilities/constants';
 
 /**
  * We are using type conversion of **request as StringObject** becuase the generated client does not have correct states listed
@@ -59,8 +60,10 @@ const checkRequest = async (
   fetchRequests: () => Promise<ApiCollectionResponse<any>>
 ) => {
   // eslint-disable-next-line no-constant-condition
-  while (true) {
+  let retry = 0;
+  while (retry < MAX_APPROVAL_REQ_RETRIES) {
     const result = await fetchRequests();
+    retry++;
     if (result?.data.length > 0) {
       return 'Finished';
     }
@@ -78,6 +81,7 @@ const ApprovalRequests: React.ComponentType = () => {
   const formatMessage = useFormatMessage();
   const dispatch = useDispatch();
   const [sortBy, setSortBy] = useState<ISortBy>({});
+
   const {
     order,
     approvalRequest,
