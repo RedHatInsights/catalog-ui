@@ -30,6 +30,19 @@ export const listOrderProcesses = (
   );
 };
 
+export const loadPortfolioOptions = (
+  filterValue = ''
+): Promise<SelectOptions> => {
+  return getAxiosInstance()
+    .get(`${CATALOG_API_BASE}/portfolios?filter[name][contains]=${filterValue}`)
+    .then(({ data }) =>
+      data.map((item: { name: string; id: string }) => ({
+        label: item.name,
+        value: item.id
+      }))
+    );
+};
+
 export const loadProductOptions = (
   filterValue = ''
 ): Promise<SelectOptions> => {
