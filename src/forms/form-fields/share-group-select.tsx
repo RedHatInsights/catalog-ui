@@ -17,7 +17,7 @@ import { SelectOptions } from '../../types/common-types';
 
 const initialState = {
   /**
-   * This counter will re-initialize select components withouth having to re-initialize the whole form after new group was added
+   * This counter will re-initialize select components without having to re-initialize the whole form after new group was added
    */
   resetGroup: 0,
   group: undefined,
