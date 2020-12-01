@@ -45,7 +45,11 @@ const formsMessages = defineMessages({
     id: 'forms.after.setReturnProvision',
     defaultMessage: 'Return'
   },
-  productsPlaceholder: {
+  portfolioPlaceholder: {
+    id: 'forms.product.placeholder',
+    defaultMessage: 'Select product'
+  },
+  productPlaceholder: {
     id: 'forms.product.placeholder',
     defaultMessage: 'Select product'
   }
