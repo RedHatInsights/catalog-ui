@@ -41,7 +41,11 @@ const formsMessages = defineMessages({
     id: 'forms.after.setAfterProvision',
     defaultMessage: 'After order'
   },
-  productsPlaceholder: {
+  portfolioPlaceholder: {
+    id: 'forms.product.placeholder',
+    defaultMessage: 'Select product'
+  },
+  productPlaceholder: {
     id: 'forms.product.placeholder',
     defaultMessage: 'Select product'
   }
