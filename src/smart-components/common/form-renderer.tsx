@@ -30,6 +30,7 @@ import {
   ComponentMapper,
   Schema
 } from '@data-driven-forms/react-form-renderer';
+import PortfolioProductSelect from '../../forms/form-fields/portfolio-product-select';
 
 export const catalogComponentMapper: ComponentMapper = {
   [componentTypes.TEXT_FIELD]: TextField,
@@ -46,7 +47,8 @@ export const catalogComponentMapper: ComponentMapper = {
   'copy-name-display': CopyNameDisplay,
   'textarea-field': Textarea,
   'select-field': Pf4SelectWrapper,
-  'initial-chips': InitialChips
+  'initial-chips': InitialChips,
+  'portfolio-product-select': PortfolioProductSelect
 };
 
 const catalogValidatorMapper = {

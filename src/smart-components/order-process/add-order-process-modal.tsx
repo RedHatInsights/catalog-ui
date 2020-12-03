@@ -98,6 +98,7 @@ const AddOrderProcess: React.ComponentType<AddOrderProcessProps> = ({
   const onCancel = () => push(ORDER_PROCESSES_ROUTE);
 
   const onSave = (values: Partial<OrderProcess>) => {
+    console.log('Debug - values', values);
     const submitAction = edit
       ? () =>
           updateOrderProcess(

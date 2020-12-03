@@ -92,7 +92,7 @@ export const PortfolioProductSelect: ComponentType<PortfolioProductSelectProps> 
           </GridItem>
           <GridItem span={7}>
             <InternalSelect
-              key={resetProduct}
+              name={'product'}
               isSearchable
               isClearable
               simpleValue={false}
