@@ -1,11 +1,11 @@
-import componentTypes from '@data-driven-forms/react-form-renderer/dist/cjs/component-types';
 import Field from '@data-driven-forms/react-form-renderer/dist/cjs/field';
-import loadProductOptions from './load-items-debounced';
 import formMessages from '../messages/forms.messages';
 import { BEFORE_TYPE, AFTER_TYPE } from '../utilities/constants';
 import { IntlShape } from 'react-intl';
-import asyncDebounce from '../utilities/async-form-validator';
-import { loadPortfolioOptions } from '../helpers/order-process/order-process-helper';
+import {
+  loadPortfolioOptions,
+  loadProductOptions
+} from '../helpers/order-process/order-process-helper';
 
 const setItemsSelectSchema = (
   type: 'before' | 'after' | 'return',
@@ -13,8 +13,8 @@ const setItemsSelectSchema = (
   condition: { when: string; is: string }
 ): Field[] => [
   {
-    component: componentTypes.SELECT,
-    name: `${type}_portfolio_id`,
+    component: 'portfolio-product-select',
+    name: `${type}_portfolio_product-select`,
     label: ((item_type) => {
       let label;
       switch (item_type) {
@@ -30,20 +30,8 @@ const setItemsSelectSchema = (
 
       return label;
     })(type),
-    loadOptions: asyncDebounce(loadPortfolioOptions),
-    noValueUpdates: true,
-    isSearchable: true,
-    isClearable: true,
-    condition
-  },
-  {
-    component: componentTypes.SELECT,
-    name: `${type}_portfolio_item_id`,
-    loadOptions: loadProductOptions,
-    noValueUpdates: true,
-    isSearchable: true,
-    isClearable: true,
-    condition
+    loadPortfolioOptions,
+    loadProductOptions
   }
 ];
 
