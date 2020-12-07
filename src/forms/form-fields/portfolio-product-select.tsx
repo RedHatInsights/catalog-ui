@@ -8,6 +8,7 @@ import formsMessages from '../../messages/forms.messages';
 import { StyledLevelItem } from '../../presentational-components/styled-components/level';
 import useFormatMessage from '../../utilities/use-format-message';
 import { SelectOptions } from '../../types/common-types';
+import useFormApi from '@data-driven-forms/react-form-renderer/dist/cjs/use-form-api';
 
 const initialState = {
   resetProduct: 0,
@@ -34,6 +35,7 @@ type ProductReducer = (
 const productReducer: ProductReducer = (state, { type, payload }) => {
   switch (type) {
     case 'setProduct':
+      console.log('Debug - setProduct: state, paylaod', state, payload);
       return {
         ...state,
         product: payload as { id: string; value?: string; label: string }
@@ -70,6 +72,7 @@ export const PortfolioProductSelect: ComponentType<PortfolioProductSelectProps> 
     initialState
   );
   const formatMessage = useFormatMessage();
+  const formOptions = useFormApi();
 
   return (
     <Level>
@@ -99,9 +102,11 @@ export const PortfolioProductSelect: ComponentType<PortfolioProductSelectProps> 
               menuIsPortal
               loadOptions={asyncFormValidator(loadProductOptions)}
               placeholder={formatMessage(formsMessages.productPlaceholder)}
-              onChange={(value) =>
-                dispatch({ type: 'setProduct', payload: value })
-              }
+              onChange={(value) => {
+                console.log('Debug - dispatch value', value);
+                dispatch({ type: 'setProduct', payload: value });
+                formOptions.change('product', value);
+              }}
               value={product}
             />
           </GridItem>
