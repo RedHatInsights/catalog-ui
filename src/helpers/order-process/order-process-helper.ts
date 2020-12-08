@@ -44,18 +44,33 @@ export const loadPortfolioOptions = (
 };
 
 export const loadProductOptions = (
-  filterValue = ''
+  filterValue = '',
+  portfolioId = undefined
 ): Promise<SelectOptions> => {
-  return getAxiosInstance()
-    .get(
-      `${CATALOG_API_BASE}/portfolio_items?filter[name][contains]=${filterValue}`
-    )
-    .then(({ data }) =>
-      data.map((item: { name: string; id: string }) => ({
-        label: item.name,
-        value: item.id
-      }))
-    );
+  console.log('Debug - loadProductOptions - portfolioId', portfolioId);
+  if (portfolioId) {
+    return axiosInstance
+      .get(
+        `${CATALOG_API_BASE}/portfolios/${portfolioId}/portfolio_items?filter[name][contains_i]=${filterValue}`
+      )
+      .then(({ data }) =>
+        data.map((item: { name: string; id: string }) => ({
+          label: item.name,
+          value: item.id
+        }))
+      );
+  } else {
+    return getAxiosInstance()
+      .get(
+        `${CATALOG_API_BASE}/portfolio_items?filter[name][contains]=${filterValue}`
+      )
+      .then(({ data }) =>
+        data.map((item: { name: string; id: string }) => ({
+          label: item.name,
+          value: item.id
+        }))
+      );
+  }
 };
 
 export const fetchOrderProcessByName = (
