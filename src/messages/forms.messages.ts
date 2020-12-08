@@ -47,7 +47,7 @@ const formsMessages = defineMessages({
   },
   portfolioPlaceholder: {
     id: 'forms.product.placeholder',
-    defaultMessage: 'Select product'
+    defaultMessage: 'Select portfolio'
   },
   productPlaceholder: {
     id: 'forms.product.placeholder',

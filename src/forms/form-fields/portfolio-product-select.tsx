@@ -1,6 +1,13 @@
 /* eslint-disable react/prop-types */
 import React, { useReducer, ComponentType } from 'react';
-import { Grid, GridItem, Level } from '@patternfly/react-core';
+import {
+  Grid,
+  GridItem,
+  Level,
+  Stack,
+  StackItem,
+  Title
+} from '@patternfly/react-core';
 import { InternalSelect } from '@data-driven-forms/pf4-component-mapper/dist/cjs/select';
 
 import asyncFormValidator from '../../utilities/async-form-validator';
@@ -19,7 +26,6 @@ const initialState = {
 interface InternalProductReducerState {
   portfolio?: { id: string; value?: string; label: string };
   product?: { id: string; value?: string; label: string };
-  permission?: string;
   resetProduct: number;
 }
 
@@ -35,7 +41,7 @@ type ProductReducer = (
 const productReducer: ProductReducer = (state, { type, payload }) => {
   switch (type) {
     case 'setProduct':
-      console.log('Debug - setProduct: state, paylaod', state, payload);
+      console.log('Debug - setProduct: state, payload', state, payload);
       return {
         ...state,
         product: payload as { id: string; value?: string; label: string }
@@ -61,11 +67,12 @@ export interface PortfolioProductSelectProps {
   loadProductOptions: (...args: any[]) => Promise<SelectOptions>;
   portfolio: SelectOptions;
   product: SelectOptions;
+  title: string;
 }
-
 export const PortfolioProductSelect: ComponentType<PortfolioProductSelectProps> = ({
   loadPortfolioOptions,
-  loadProductOptions
+  loadProductOptions,
+  title
 }) => {
   const [{ portfolio, product, resetProduct }, dispatch] = useReducer(
     productReducer,
@@ -75,44 +82,79 @@ export const PortfolioProductSelect: ComponentType<PortfolioProductSelectProps> 
   const formOptions = useFormApi();
 
   return (
-    <Level>
-      <StyledLevelItem grow>
-        <Grid hasGutter className="share-column">
-          <GridItem span={5}>
-            <InternalSelect
-              key={resetProduct}
-              isSearchable
-              isClearable
-              simpleValue={false}
-              menuIsPortal
-              loadOptions={asyncFormValidator(loadPortfolioOptions)}
-              placeholder={formatMessage(formsMessages.portfolioPlaceholder)}
-              onChange={(value) =>
-                dispatch({ type: 'setPortfolio', payload: value })
-              }
-              value={portfolio}
-            />
-          </GridItem>
-          <GridItem span={7}>
-            <InternalSelect
-              name={'product'}
-              isSearchable
-              isClearable
-              simpleValue={false}
-              menuIsPortal
-              loadOptions={asyncFormValidator(loadProductOptions)}
-              placeholder={formatMessage(formsMessages.productPlaceholder)}
-              onChange={(value) => {
-                console.log('Debug - dispatch value', value);
-                dispatch({ type: 'setProduct', payload: value });
-                formOptions.change('product', value);
-              }}
-              value={product}
-            />
-          </GridItem>
-        </Grid>
-      </StyledLevelItem>
-    </Level>
+    <Stack>
+      <StackItem>
+        <Title headingLevel="h6">{title}</Title>
+      </StackItem>
+      <StackItem>
+        <Level>
+          <StyledLevelItem grow>
+            <Grid hasGutter className="share-column">
+              <GridItem span={5}>
+                <Stack>
+                  <StackItem>
+                    <Title headingLevel="h6">Portfolio</Title>
+                  </StackItem>
+                  <StackItem>
+                    <InternalSelect
+                      key={resetProduct}
+                      isSearchable
+                      isClearable
+                      simpleValue={false}
+                      menuIsPortal
+                      loadOptions={asyncFormValidator(loadPortfolioOptions)}
+                      placeholder={formatMessage(
+                        formsMessages.portfolioPlaceholder
+                      )}
+                      onChange={(value) => {
+                        dispatch({ type: 'setPortfolio', payload: value });
+                        formOptions.change('portfolio', value);
+                        console.log(
+                          'Debug - dispatch value, formOptions',
+                          value,
+                          formOptions.getState()
+                        );
+                      }}
+                      value={portfolio}
+                    />
+                  </StackItem>
+                </Stack>
+              </GridItem>
+              <GridItem span={7}>
+                <Stack>
+                  <StackItem>
+                    <Title headingLevel="h6">Product</Title>
+                  </StackItem>
+                  <StackItem>
+                    <InternalSelect
+                      name={'product'}
+                      key={'setPortfolio'}
+                      isSearchable
+                      isClearable
+                      simpleValue={false}
+                      menuIsPortal
+                      loadOptions={asyncFormValidator((formOptions) => {
+                        return loadProductOptions(
+                          formOptions?.getState()?.values?.portfolio
+                        );
+                      })}
+                      placeholder={formatMessage(
+                        formsMessages.productPlaceholder
+                      )}
+                      onChange={(value) => {
+                        dispatch({ type: 'setProduct', payload: value });
+                        formOptions.change('product', value);
+                      }}
+                      value={product}
+                    />
+                  </StackItem>
+                </Stack>
+              </GridItem>
+            </Grid>
+          </StyledLevelItem>
+        </Level>
+      </StackItem>
+    </Stack>
   );
 };
 
