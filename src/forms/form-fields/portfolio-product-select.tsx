@@ -32,7 +32,7 @@ interface InternalProductReducerState {
 type ProductReducer = (
   state: InternalProductReducerState,
   action: {
-    type: 'setPortfolio' | 'setProduct' | 'resetField';
+    type: 'setPortfolio' | 'setProduct' | 'resetProduct';
     payload?: { id: string; value?: string; label: string } | string;
   }
 ) => InternalProductReducerState;
@@ -51,10 +51,9 @@ const productReducer: ProductReducer = (state, { type, payload }) => {
         ...state,
         portfolio: payload as { id: string; value?: string; label: string }
       };
-    case 'resetField':
+    case 'resetProduct':
       return {
         product: undefined,
-        portfolio: undefined,
         resetProduct: state.resetProduct + 1
       };
   }
