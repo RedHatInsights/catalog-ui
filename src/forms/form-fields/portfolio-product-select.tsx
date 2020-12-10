@@ -64,14 +64,14 @@ const productReducer: ProductReducer = (state, { type, payload }) => {
 export interface PortfolioProductSelectProps {
   loadPortfolioOptions: (...args: any[]) => Promise<SelectOptions>;
   loadProductOptions: (...args: any[]) => Promise<SelectOptions>;
-  portfolio: SelectOptions;
-  product: SelectOptions;
   title: string;
+  name: string;
 }
 export const PortfolioProductSelect: ComponentType<PortfolioProductSelectProps> = ({
   loadPortfolioOptions,
   loadProductOptions,
-  title
+  title,
+  name
 }) => {
   const [{ portfolio, product, resetProduct }, dispatch] = useReducer(
     productReducer,
@@ -107,9 +107,9 @@ export const PortfolioProductSelect: ComponentType<PortfolioProductSelectProps> 
                       )}
                       onChange={(value) => {
                         dispatch({ type: 'setPortfolio', payload: value });
-                        formOptions.change('portfolio', value);
+                        formOptions.change(`portfolio-${name}`, value);
                         console.log(
-                          'Debug - dispatch value, formOptions',
+                          'Debug - dispatch portfolio value, formOptions',
                           value,
                           formOptions.getState()
                         );
@@ -126,7 +126,7 @@ export const PortfolioProductSelect: ComponentType<PortfolioProductSelectProps> 
                   </StackItem>
                   <StackItem>
                     <InternalSelect
-                      name={'product'}
+                      name={name}
                       key={'setPortfolio'}
                       isSearchable
                       isClearable
@@ -142,7 +142,13 @@ export const PortfolioProductSelect: ComponentType<PortfolioProductSelectProps> 
                       )}
                       onChange={(value) => {
                         dispatch({ type: 'setProduct', payload: value });
-                        formOptions.change('product', value);
+                        formOptions.change(name, value.value);
+                        console.log(
+                          'Debug - dispatch product name, value.value, formOptions',
+                          name,
+                          value.value,
+                          formOptions.getState()
+                        );
                       }}
                       value={product}
                     />

@@ -14,8 +14,8 @@ const setItemsSelectSchema = (
 ): Field[] => [
   {
     component: 'portfolio-product-select',
-    name: `${type}_portfolio_product-select`,
-    label: ((item_type) => {
+    name: `${type}_portfolio_item_id`,
+    llabel: ((item_type) => {
       let label;
       switch (item_type) {
         case BEFORE_TYPE:
