@@ -79,12 +79,14 @@ const AddOrderProcess: React.ComponentType<AddOrderProcessProps> = ({
   useEffect(() => {
     if (!loadedProcess && loadedProcess !== undefined) {
       (fetchOrderProcess(order_process) as Promise<Full<OrderProcess>>).then(
-        (data) =>
-          stateDispatch({
+        (data) => {
+          console.log('Debug - data', data);
+          return stateDispatch({
             type: 'loaded',
             initialValues: data,
             schema: createOrderProcessSchema(intl, data.id)
-          })
+          });
+        }
       );
     } else if (typeof loadedProcess !== 'undefined') {
       stateDispatch({

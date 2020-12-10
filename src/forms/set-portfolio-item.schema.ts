@@ -13,7 +13,7 @@ const setItemsSelectSchema = (
 ): Field[] => [
   {
     component: 'portfolio-product-select',
-    name: `${type}_portfolio_product-select`,
+    name: `${type}_portfolio_item_id`,
     label: intl.formatMessage(
       type === BEFORE_TYPE
         ? formMessages.beforeProvision
