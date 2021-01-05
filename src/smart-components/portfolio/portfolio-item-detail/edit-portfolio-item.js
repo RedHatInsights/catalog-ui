@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { useLocation, useHistory } from 'react-router-dom';
@@ -10,6 +10,9 @@ import { Stack, StackItem } from '@patternfly/react-core';
 import IconUpload from './icon-upload';
 import { CATALOG_API_BASE } from '../../../utilities/constants';
 import CardIcon from '../../../presentational-components/shared/card-icon';
+import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/cjs/actions';
+import portfolioMessages from '../../../messages/portfolio.messages';
+import useFormatMessage from '../../../utilities/use-format-message';
 
 const EditPortfolioItem = ({
   cancelUrl,
@@ -21,10 +24,40 @@ const EditPortfolioItem = ({
   const dispatch = useDispatch();
   const { push } = useHistory();
   const { search } = useLocation();
+  const [image, setImage] = useState();
+  const formatMessage = useFormatMessage();
+
+  const submitChanges = (values) => {
+    push({
+      pathname: cancelUrl,
+      search
+    });
+    uploadIcon(image).catch((error) => {
+      dispatch(
+        addNotification({
+          variant: 'danger',
+          title: formatMessage(portfolioMessages.portfolioItemIconTitle),
+          description: error.data.errors[0].detail,
+          dismissable: true
+        })
+      );
+      setImage(undefined);
+      setIsUploading(false);
+    });
+    return dispatch(
+      updatePortfolioItem({
+        ...values,
+        metadata: { user_capabilities: userCapabilities }
+      })
+    );
+  };
+
   return (
     <Stack hasGutter>
       <StackItem key={product.icon_id || 'default'}>
         <IconUpload
+          initialImage={image}
+          setImage={setImage}
           uploadIcon={uploadIcon}
           resetIcon={resetIcon}
           enableReset={!!product.icon_id}
@@ -41,18 +74,7 @@ const EditPortfolioItem = ({
       <StackItem>
         <FormRenderer
           initialValues={{ ...product }}
-          onSubmit={(values) => {
-            push({
-              pathname: cancelUrl,
-              search
-            });
-            return dispatch(
-              updatePortfolioItem({
-                ...values,
-                metadata: { user_capabilities: userCapabilities }
-              })
-            );
-          }}
+          onSubmit={(values) => submitChanges(values)}
           schema={editPortfolioItemSchema}
           templateProps={{
             disableSubmit: ['pristine']

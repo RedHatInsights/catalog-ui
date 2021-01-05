@@ -10,7 +10,6 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/redux';
 import styled from 'styled-components';
-import portfolioMessages from '../../../messages/portfolio.messages';
 import useFormatMessage from '../../../utilities/use-format-message';
 import iconMessages from '../../../messages/icon.messages';
 
@@ -62,10 +61,16 @@ const StyledDropdown = styled(Dropdown)`
   }
 `;
 
-const IconUpload = ({ uploadIcon, resetIcon, enableReset, children }) => {
+const IconUpload = ({
+  image,
+  setImage,
+  uploadIcon,
+  resetIcon,
+  enableReset,
+  children
+}) => {
   const formatMessage = useFormatMessage();
   const inputRef = useRef();
-  const [image, setImage] = useState();
   const [isUploading, setIsUploading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const handleClick = () => {
@@ -78,8 +83,6 @@ const IconUpload = ({ uploadIcon, resetIcon, enableReset, children }) => {
     setIsUploading(true);
     return resetIcon().then(() => setIsUploading(false));
   };
-
-  const dispatch = useDispatch();
 
   const dropdownItems = [
     <DropdownItem onClick={handleClick} key="change-icon">
@@ -100,23 +103,6 @@ const IconUpload = ({ uploadIcon, resetIcon, enableReset, children }) => {
         accept=".png,.svg,.jpeg"
         onChange={(event) => {
           setImage(event.target.files[0]);
-          setIsUploading(true);
-          uploadIcon(event.target.files[0])
-            .then(() => setIsUploading(false))
-            .catch((error) => {
-              dispatch(
-                addNotification({
-                  variant: 'danger',
-                  title: formatMessage(
-                    portfolioMessages.portfolioItemIconTitle
-                  ),
-                  description: error.data.errors[0].detail,
-                  dismissable: true
-                })
-              );
-              setImage(undefined);
-              setIsUploading(false);
-            });
         }}
         ref={inputRef}
         type="file"
