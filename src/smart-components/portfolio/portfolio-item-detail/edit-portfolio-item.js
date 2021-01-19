@@ -62,9 +62,12 @@ const EditPortfolioItem = ({
           enableReset={!!product.icon_id}
         >
           <CardIcon
-            src={`${CATALOG_API_BASE}/portfolio_items/${
-              product.id
-            }/icon?cache_id=${product.icon_id || 'default'}`} // we need ho add the query to prevent the browser caching when reseting the image
+            src={
+              image ||
+              `${CATALOG_API_BASE}/portfolio_items/${
+                product.id
+              }/icon?cache_id=${product.icon_id || 'default'}`
+            } // we need ho add the query to prevent the browser caching when reseting the image
             sourceId={product.service_offering_source_ref}
             height={64}
           />
@@ -76,7 +79,7 @@ const EditPortfolioItem = ({
           onSubmit={(values) => submitChanges(values)}
           schema={editPortfolioItemSchema}
           templateProps={{
-            disableSubmit: ['pristine']
+            disableSubmit: ['pristine', 'image_pristine']
           }}
           onCancel={() =>
             push({
