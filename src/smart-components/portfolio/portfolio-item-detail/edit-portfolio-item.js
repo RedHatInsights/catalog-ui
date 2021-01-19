@@ -42,7 +42,6 @@ const EditPortfolioItem = ({
         })
       );
       setImage(undefined);
-      setIsUploading(false);
     });
     return dispatch(
       updatePortfolioItem({
