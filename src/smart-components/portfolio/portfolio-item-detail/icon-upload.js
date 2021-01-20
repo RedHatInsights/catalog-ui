@@ -61,14 +61,7 @@ const StyledDropdown = styled(Dropdown)`
   }
 `;
 
-const IconUpload = ({
-  image,
-  setImage,
-  uploadIcon,
-  resetIcon,
-  enableReset,
-  children
-}) => {
+const IconUpload = ({ image, setImage, resetIcon, enableReset, children }) => {
   const formatMessage = useFormatMessage();
   const inputRef = useRef();
   const [isUploading, setIsUploading] = useState(false);
