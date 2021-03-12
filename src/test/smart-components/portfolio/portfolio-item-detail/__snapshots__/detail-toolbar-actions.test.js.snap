@@ -40,7 +40,7 @@ exports[`<DetailToolbarActions /> should render correctly 1`] = `
           }
         >
           <Component
-            className="sc-AxiKw drCTeX"
+            className="sc-dlfnbm bQVAom"
             isDisabled={false}
             to={
               Object {
@@ -51,7 +51,7 @@ exports[`<DetailToolbarActions /> should render correctly 1`] = `
             }
           >
             <Link
-              className="sc-AxiKw drCTeX"
+              className="sc-dlfnbm bQVAom"
               to={
                 Object {
                   "hash": undefined,
@@ -61,12 +61,12 @@ exports[`<DetailToolbarActions /> should render correctly 1`] = `
               }
             >
               <LinkAnchor
-                className="sc-AxiKw drCTeX"
+                className="sc-dlfnbm bQVAom"
                 href="foo/bar"
                 navigate={[Function]}
               >
                 <a
-                  className="sc-AxiKw drCTeX"
+                  className="sc-dlfnbm bQVAom"
                   href="foo/bar"
                   onClick={[Function]}
                 >
@@ -84,7 +84,7 @@ exports[`<DetailToolbarActions /> should render correctly 1`] = `
                       variant="primary"
                     >
                       <Button
-                        className="sc-AxjAm jhCAUI"
+                        className="sc-bdfBwQ kGsFnd"
                         id="order-portfolio-item"
                         isDisabled={false}
                         ouiaId="order-portfolio-item"
@@ -93,7 +93,7 @@ exports[`<DetailToolbarActions /> should render correctly 1`] = `
                         <button
                           aria-disabled={false}
                           aria-label={null}
-                          className="pf-c-button pf-m-primary sc-AxjAm jhCAUI"
+                          className="pf-c-button pf-m-primary sc-bdfBwQ kGsFnd"
                           data-ouia-component-id="order-portfolio-item"
                           data-ouia-component-type="PF4/Button"
                           data-ouia-safe={true}
@@ -106,7 +106,7 @@ exports[`<DetailToolbarActions /> should render correctly 1`] = `
                             showSpinner={false}
                           >
                             <span
-                              className="sc-AxirZ fnlrkz"
+                              className="sc-gsTCUz czimRx"
                             >
                               Order
                             </span>

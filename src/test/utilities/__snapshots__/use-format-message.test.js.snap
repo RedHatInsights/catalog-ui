@@ -71,7 +71,7 @@ exports[`useFormatMessage should return fallback message if the message is not d
       }
     >
       <span>
-        Unable to translate message. Definition: [object Object], values: [object Object], intl-error: Error: [React Intl] An \`id\` must be provided to format a message.
+        Unable to translate message. Definition: [object Object], values: [object Object], intl-error: Error: [@formatjs/intl] An \`id\` must be provided to format a message.
       </span>
     </HookedComponent>
   </IntlProvider>
@@ -95,7 +95,7 @@ exports[`useFormatMessage should return fallback message if the message is not d
       definedMessage="nonsense"
     >
       <span>
-        Unable to translate message. Definition: nonsense, values: [object Object], intl-error: Error: [React Intl] An \`id\` must be provided to format a message.
+        Unable to translate message. Definition: nonsense, values: [object Object], intl-error: Error: [@formatjs/intl] An \`id\` must be provided to format a message.
       </span>
     </HookedComponent>
   </IntlProvider>

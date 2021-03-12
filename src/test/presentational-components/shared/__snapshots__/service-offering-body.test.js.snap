@@ -9,10 +9,10 @@ exports[`<ServiceOfferingCardBody /> should render correctly 1`] = `
 >
   <Styled(CardBody)>
     <CardBody
-      className="sc-AxheI jOYejY"
+      className="sc-gKsewC bzizFN"
     >
       <div
-        className="pf-c-card__body sc-AxheI jOYejY"
+        className="pf-c-card__body sc-gKsewC bzizFN"
       >
         <TextContent>
           <div
@@ -30,7 +30,7 @@ exports[`<ServiceOfferingCardBody /> should render correctly 1`] = `
                 >
                   <styled.div>
                     <div
-                      className="sc-AxgMl ytwOc"
+                      className="sc-jSgupP kkRWte"
                     >
                       Foo
                     </div>
@@ -87,7 +87,7 @@ exports[`<ServiceOfferingCardBody /> should render correctly 1`] = `
                   key="card-prop-long_description"
                 >
                   <div
-                    className="sc-AxjAm hDziHm"
+                    className="sc-bdfBwQ dhaypH"
                   >
                     long description
                   </div>
@@ -199,10 +199,10 @@ exports[`<ServiceOfferingCardBody /> should render correctly with alternative va
 >
   <Styled(CardBody)>
     <CardBody
-      className="sc-AxheI jOYejY"
+      className="sc-gKsewC bzizFN"
     >
       <div
-        className="pf-c-card__body sc-AxheI jOYejY"
+        className="pf-c-card__body sc-gKsewC bzizFN"
       >
         <TextContent>
           <div
@@ -220,7 +220,7 @@ exports[`<ServiceOfferingCardBody /> should render correctly with alternative va
                 >
                   <styled.div>
                     <div
-                      className="sc-AxgMl ytwOc"
+                      className="sc-jSgupP kkRWte"
                     >
                       Foo
                     </div>
@@ -266,7 +266,7 @@ exports[`<ServiceOfferingCardBody /> should render correctly with alternative va
                   key="card-prop-description"
                 >
                   <div
-                    className="sc-AxjAm hDziHm"
+                    className="sc-bdfBwQ dhaypH"
                   >
                     Bar
                   </div>
