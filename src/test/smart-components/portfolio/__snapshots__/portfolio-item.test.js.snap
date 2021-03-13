@@ -17,23 +17,23 @@ exports[`<PortfolioItem /> should render correctly 1`] = `
 >
   <Styled(Component)>
     <Component
-      className="sc-fzokOt fXxUEe"
+      className="sc-kstrdz gqtPwH"
     >
       <GalleryItem
-        className="sc-fzokOt fXxUEe"
+        className="sc-kstrdz gqtPwH"
       >
         <div
-          className="sc-fzokOt fXxUEe"
+          className="sc-kstrdz gqtPwH"
         >
           <Styled(Card)
             ouiaId="portfolio-item-1"
           >
             <Card
-              className="sc-fznZeY cloDqS"
+              className="sc-bqyKva cna-DTu"
               ouiaId="portfolio-item-1"
             >
               <article
-                className="pf-c-card sc-fznZeY cloDqS"
+                className="pf-c-card sc-bqyKva cna-DTu"
                 data-ouia-component-id="portfolio-item-1"
                 data-ouia-component-type="PF4/Card"
                 data-ouia-safe={true}
@@ -45,10 +45,10 @@ exports[`<PortfolioItem /> should render correctly 1`] = `
                   >
                     <Styled(Level)>
                       <Level
-                        className="sc-fzqBZW kPDQfP"
+                        className="sc-hBEYos iXOBOJ"
                       >
                         <div
-                          className="pf-l-level sc-fzqBZW kPDQfP"
+                          className="pf-l-level sc-hBEYos iXOBOJ"
                         >
                           <CardIcon
                             src="/api/catalog/v1.3/portfolio_items/1/icon"
@@ -57,7 +57,7 @@ exports[`<PortfolioItem /> should render correctly 1`] = `
                               height={40}
                             >
                               <div
-                                className="sc-Axmtr edxmJB"
+                                className="sc-iBPRYJ dinazv"
                                 height={40}
                               >
                                 <IconPlaceholder
@@ -87,7 +87,7 @@ exports[`<PortfolioItem /> should render correctly 1`] = `
                                   <t
                                     afterLoad={[Function]}
                                     beforeLoad={[Function]}
-                                    className="sc-AxheI hyVVbz"
+                                    className="sc-gKsewC gihfPu"
                                     delayMethod="throttle"
                                     delayTime={0}
                                     effect=""
@@ -105,7 +105,7 @@ exports[`<PortfolioItem /> should render correctly 1`] = `
                                     <t
                                       afterLoad={[Function]}
                                       beforeLoad={[Function]}
-                                      className="sc-AxheI hyVVbz"
+                                      className="sc-gKsewC gihfPu"
                                       delayMethod="throttle"
                                       delayTime={0}
                                       height={0}
@@ -114,7 +114,7 @@ exports[`<PortfolioItem /> should render correctly 1`] = `
                                       visibleByDefault={false}
                                     >
                                       <img
-                                        className="sc-AxheI hyVVbz"
+                                        className="sc-gKsewC gihfPu"
                                         height={0}
                                         hidden={true}
                                         onError={[Function]}
@@ -148,10 +148,10 @@ exports[`<PortfolioItem /> should render correctly 1`] = `
                 >
                   <Styled(CardBody)>
                     <CardBody
-                      className="sc-fznKkj icmceZ"
+                      className="sc-dQppl dRqchO"
                     >
                       <div
-                        className="pf-c-card__body sc-fznKkj icmceZ"
+                        className="pf-c-card__body sc-dQppl dRqchO"
                       >
                         <TextContent>
                           <div
@@ -169,7 +169,7 @@ exports[`<PortfolioItem /> should render correctly 1`] = `
                                 >
                                   <styled.div>
                                     <div
-                                      className="sc-fznyAO fTqqVS"
+                                      className="sc-crrsfI dsScIm"
                                     >
                                       Foo
                                     </div>
@@ -225,7 +225,7 @@ exports[`<PortfolioItem /> should render correctly 1`] = `
                                   key="card-prop-description"
                                 >
                                   <div
-                                    className="sc-AxmLO dHHURS"
+                                    className="sc-fubCfw ihngmA"
                                   >
                                     Bar
                                   </div>

@@ -11,11 +11,11 @@ exports[`<PlatformCard /> should render correctly 1`] = `
         ouiaId="platform-Foo"
       >
         <Card
-          className="sc-AxheI ueGSf"
+          className="sc-gKsewC NqKqW"
           ouiaId="platform-Foo"
         >
           <article
-            className="pf-c-card sc-AxheI ueGSf"
+            className="pf-c-card sc-gKsewC NqKqW"
             data-ouia-component-id="platform-Foo"
             data-ouia-component-type="PF4/Card"
             data-ouia-safe={true}
@@ -27,17 +27,17 @@ exports[`<PlatformCard /> should render correctly 1`] = `
               >
                 <Styled(Level)>
                   <Level
-                    className="sc-AxiKw hSLCUF"
+                    className="sc-dlfnbm ioFdWY"
                   >
                     <div
-                      className="pf-l-level sc-AxiKw hSLCUF"
+                      className="pf-l-level sc-dlfnbm ioFdWY"
                     >
                       <Styled(LevelItem)>
                         <LevelItem
-                          className="sc-AxirZ dRDdDp"
+                          className="sc-gsTCUz jIAXsj"
                         >
                           <div
-                            className="sc-AxirZ dRDdDp"
+                            className="sc-gsTCUz jIAXsj"
                           >
                             <CardIcon
                               height={40}
@@ -47,7 +47,7 @@ exports[`<PlatformCard /> should render correctly 1`] = `
                                 height={40}
                               >
                                 <div
-                                  className="sc-fzokOt efqMbY"
+                                  className="sc-kstrdz dTcyVN"
                                   height={40}
                                 >
                                   <IconPlaceholder
@@ -76,7 +76,7 @@ exports[`<PlatformCard /> should render correctly 1`] = `
                                     <t
                                       afterLoad={[Function]}
                                       beforeLoad={[Function]}
-                                      className="sc-fznZeY ea-dOJy"
+                                      className="sc-bqyKva fVsTci"
                                       delayMethod="throttle"
                                       delayTime={0}
                                       effect=""
@@ -93,7 +93,7 @@ exports[`<PlatformCard /> should render correctly 1`] = `
                                       <t
                                         afterLoad={[Function]}
                                         beforeLoad={[Function]}
-                                        className="sc-fznZeY ea-dOJy"
+                                        className="sc-bqyKva fVsTci"
                                         delayMethod="throttle"
                                         delayTime={0}
                                         height={0}
@@ -102,7 +102,7 @@ exports[`<PlatformCard /> should render correctly 1`] = `
                                         visibleByDefault={false}
                                       >
                                         <img
-                                          className="sc-fznZeY ea-dOJy"
+                                          className="sc-bqyKva fVsTci"
                                           height={0}
                                           hidden={true}
                                           onError={[Function]}
@@ -257,10 +257,10 @@ exports[`<PlatformCard /> should render correctly 1`] = `
             </CardHeader>
             <Styled(CardBody)>
               <CardBody
-                className="sc-AxmLO fFTSWm"
+                className="sc-fubCfw eMINnA"
               >
                 <div
-                  className="pf-c-card__body sc-AxmLO fFTSWm"
+                  className="pf-c-card__body sc-fubCfw eMINnA"
                 >
                   <TextContent>
                     <div
@@ -284,7 +284,7 @@ exports[`<PlatformCard /> should render correctly 1`] = `
                           }
                         >
                           <Component
-                            className="sc-AxhUy cYwveG"
+                            className="sc-eCssSg bNMsbf"
                             to={
                               Object {
                                 "hash": undefined,
@@ -294,7 +294,7 @@ exports[`<PlatformCard /> should render correctly 1`] = `
                             }
                           >
                             <Link
-                              className="sc-AxhUy cYwveG"
+                              className="sc-eCssSg bNMsbf"
                               to={
                                 Object {
                                   "hash": undefined,
@@ -304,12 +304,12 @@ exports[`<PlatformCard /> should render correctly 1`] = `
                               }
                             >
                               <LinkAnchor
-                                className="sc-AxhUy cYwveG"
+                                className="sc-eCssSg bNMsbf"
                                 href="/platform/platform-templates?platform=Foo"
                                 navigate={[Function]}
                               >
                                 <a
-                                  className="sc-AxhUy cYwveG"
+                                  className="sc-eCssSg bNMsbf"
                                   href="/platform/platform-templates?platform=Foo"
                                   onClick={[Function]}
                                 >
@@ -323,7 +323,7 @@ exports[`<PlatformCard /> should render correctly 1`] = `
                                     >
                                       <styled.div>
                                         <div
-                                          className="sc-AxhCb hYKqDj"
+                                          className="sc-hKgILt iDaJio"
                                         />
                                       </styled.div>
                                     </h3>
@@ -368,7 +368,7 @@ exports[`<PlatformCard /> should render correctly 1`] = `
                             key="card-prop-description"
                           >
                             <div
-                              className="sc-AxjAm hDziHm"
+                              className="sc-bdfBwQ dhaypH"
                             />
                           </styled.div>
                         </span>
@@ -482,7 +482,7 @@ exports[`<PlatformCard /> should render correctly 1`] = `
                             key="card-prop-modified"
                           >
                             <div
-                              className="sc-AxjAm hDziHm"
+                              className="sc-bdfBwQ dhaypH"
                             />
                           </styled.div>
                         </span>

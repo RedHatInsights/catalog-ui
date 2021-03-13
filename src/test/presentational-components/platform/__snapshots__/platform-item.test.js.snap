@@ -9,11 +9,11 @@ exports[`<PlatformItem /> should render correctly 1`] = `
     ouiaId="platform-itemFoo"
   >
     <Card
-      className="sc-fznZeY cloDqS"
+      className="sc-bqyKva cna-DTu"
       ouiaId="platform-itemFoo"
     >
       <article
-        className="pf-c-card sc-fznZeY cloDqS"
+        className="pf-c-card sc-bqyKva cna-DTu"
         data-ouia-component-id="platform-itemFoo"
         data-ouia-component-type="PF4/Card"
         data-ouia-safe={true}
@@ -25,10 +25,10 @@ exports[`<PlatformItem /> should render correctly 1`] = `
           >
             <Styled(Level)>
               <Level
-                className="sc-fzqBZW kPDQfP"
+                className="sc-hBEYos iXOBOJ"
               >
                 <div
-                  className="pf-l-level sc-fzqBZW kPDQfP"
+                  className="pf-l-level sc-hBEYos iXOBOJ"
                 >
                   <CardIcon
                     height={40}
@@ -37,7 +37,7 @@ exports[`<PlatformItem /> should render correctly 1`] = `
                       height={40}
                     >
                       <div
-                        className="sc-Axmtr edxmJB"
+                        className="sc-iBPRYJ dinazv"
                         height={40}
                       >
                         <IconPlaceholder
@@ -67,7 +67,7 @@ exports[`<PlatformItem /> should render correctly 1`] = `
                           <t
                             afterLoad={[Function]}
                             beforeLoad={[Function]}
-                            className="sc-AxheI hyVVbz"
+                            className="sc-gKsewC gihfPu"
                             delayMethod="throttle"
                             delayTime={0}
                             effect=""
@@ -85,7 +85,7 @@ exports[`<PlatformItem /> should render correctly 1`] = `
                             <t
                               afterLoad={[Function]}
                               beforeLoad={[Function]}
-                              className="sc-AxheI hyVVbz"
+                              className="sc-gKsewC gihfPu"
                               delayMethod="throttle"
                               delayTime={0}
                               height={0}
@@ -94,7 +94,7 @@ exports[`<PlatformItem /> should render correctly 1`] = `
                               visibleByDefault={false}
                             >
                               <img
-                                className="sc-AxheI hyVVbz"
+                                className="sc-gKsewC gihfPu"
                                 height={0}
                                 hidden={true}
                                 onError={[Function]}
@@ -117,10 +117,10 @@ exports[`<PlatformItem /> should render correctly 1`] = `
         >
           <Styled(CardBody)>
             <CardBody
-              className="sc-fznKkj icmceZ"
+              className="sc-dQppl dRqchO"
             >
               <div
-                className="pf-c-card__body sc-fznKkj icmceZ"
+                className="pf-c-card__body sc-dQppl dRqchO"
               >
                 <TextContent>
                   <div
@@ -136,7 +136,7 @@ exports[`<PlatformItem /> should render correctly 1`] = `
                         >
                           <styled.div>
                             <div
-                              className="sc-fznyAO fTqqVS"
+                              className="sc-crrsfI dsScIm"
                             />
                           </styled.div>
                         </h3>
@@ -176,7 +176,7 @@ exports[`<PlatformItem /> should render correctly 1`] = `
                           key="card-prop-long_description"
                         >
                           <div
-                            className="sc-AxmLO dHHURS"
+                            className="sc-fubCfw ihngmA"
                           />
                         </styled.div>
                       </span>
