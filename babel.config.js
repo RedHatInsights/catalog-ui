@@ -2,68 +2,87 @@ require.extensions['.css'] = () => undefined;
 const path = require('path');
 const glob = require('glob');
 
+const cammelToDash = (name) =>
+  name
+    .split(/(?=[A-Z])/)
+    .join('-')
+    .toLowerCase();
+
+// Mapper for Patternly components
 const mapper = {
   TextVariants: 'Text',
   DropdownPosition: 'dropdownConstants',
-  TextListVariants: 'TextList',
-  TextListItemVariants: 'TextListItem'
+  EmptyStateVariant: 'EmptyState',
+  TextListItemVariants: 'TextListItem',
+  TextListVariants: 'TextList'
+};
+
+// Wrapper for Patternfly icons
+const iconMapper = {};
+
+// Mapper for cloud-services components
+const FECMapper = {
+  SkeletonSize: 'Skeleton',
+  PageHeaderTitle: 'PageHeader'
+};
+
+const NotificationMapper = {
+  REMOVE_NOTIFICATION: 'actionTypes',
+  ADD_NOTIFICATION: 'actionTypes',
+  NotificationsPortal: 'NotificationPortal',
+  addNotification: 'actions'
+};
+
+const CharMapper = {
+  ChartThemeColor: 'ChartTheme'
 };
 
 module.exports = {
-  presets: [
-    '@babel/preset-env',
-    '@babel/preset-react',
-    '@babel/preset-typescript'
-  ],
+  presets: ['@babel/env', '@babel/react'],
   plugins: [
     '@babel/plugin-transform-runtime',
     '@babel/plugin-syntax-dynamic-import',
-    '@babel/plugin-proposal-class-properties',
     '@babel/plugin-proposal-object-rest-spread',
-    'babel-plugin-lodash',
+    '@babel/plugin-proposal-class-properties',
+    'lodash',
     [
       'transform-imports',
       {
         '@patternfly/react-core': {
-          transform: (importName, matches) => {
-            let res;
+          transform: (importName) => {
             const files = glob.sync(
               path.resolve(
                 __dirname,
-                `./node_modules/@patternfly/react-core/dist/js/**/${mapper[
+                `./node_modules/@patternfly/react-core/dist/esm/**/${mapper[
                   importName
                 ] || importName}.js`
               )
             );
             if (files.length > 0) {
-              res = files[0];
+              return files[0].replace(/.*(?=@patternfly)/, '');
             } else {
               throw `File with importName ${importName} does not exist`;
             }
-
-            res = res.replace(path.resolve(__dirname, './node_modules/'), '');
-            res = res.replace(/^\//, '');
-            return res;
           },
           preventFullImport: false,
           skipDefaultConversion: true
-        }
-      },
-      'react-core'
-    ],
-    [
-      'transform-imports',
-      {
+        },
         '@patternfly/react-icons': {
-          transform: (importName, matches) =>
-            `@patternfly/react-icons/dist/js/icons/${importName
-              .split(/(?=[A-Z])/)
-              .join('-')
-              .toLowerCase()}`,
+          transform: (importName) =>
+            `@patternfly/react-icons/dist/esm/icons/${cammelToDash(
+              importName
+            )}.js`,
           preventFullImport: true
+        },
+        '@patternfly/react-charts': {
+          transform: (importName) =>
+            `@patternfly/react-charts/dist/esm/components/${CharMapper[
+              importName
+            ] || importName}/index.js`,
+          preventFullImport: true,
+          skipDefaultConversion: true
         }
-      },
-      'react-icons'
+      }
     ]
   ]
 };
