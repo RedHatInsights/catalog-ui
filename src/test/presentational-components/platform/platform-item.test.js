@@ -40,6 +40,7 @@ describe('<PlatformItem />', () => {
       </ComponentWrapper>
     );
     expect(shallowToJson(wrapper.find(PlatformItem))).toMatchSnapshot();
+    done();
   });
 
   it('should call handle check callback', (done) => {
@@ -62,5 +63,6 @@ describe('<PlatformItem />', () => {
       .find('input')
       .simulate('change');
     expect(onToggleItemSelect).toHaveBeenCalled();
+    done();
   });
 });

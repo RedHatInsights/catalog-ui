@@ -267,11 +267,9 @@ describe('<AddProductsToPortfolio />', () => {
       wrapper.find('button').last().simulate('click');
     });
     wrapper.update();
-    setImmediate(() => {
-      expect(
-        wrapper.find(MemoryRouter).instance().history.location.pathname
-      ).toEqual('/portfolio/foo');
-      done();
-    });
+    expect(
+      wrapper.find(MemoryRouter).instance().history.location.pathname
+    ).toEqual('/portfolio/foo');
+    done();
   });
 });

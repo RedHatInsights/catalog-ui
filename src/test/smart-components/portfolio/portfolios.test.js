@@ -166,12 +166,15 @@ describe('<Portfolios />', () => {
       filterInput.getDOMNode().value = 'nothing';
     });
 
+    wrapper.update();
+    expect(wrapper.find(PortfolioCard)).toHaveLength(1);
+
     await act(async () => {
       filterInput.simulate('change', { target: { value: 'nothing' } });
     });
   });
 
-  it('should render in loading state', async () => {
+  it('should render in loading state', (done) => {
     const store = mockStore({
       ...initialState,
       portfolioReducer: {
@@ -184,7 +187,7 @@ describe('<Portfolios />', () => {
       .onGet(`${CATALOG_API_BASE}/portfolios?limit=50&offset=0`)
       .replyOnce(200, { data: [{ name: 'Foo', id: '11' }] });
     let wrapper;
-    await act(async () => {
+    act(() => {
       wrapper = mount(
         <ComponentWrapper store={store} initialEntries={['/portfolios']}>
           <Route
@@ -197,6 +200,7 @@ describe('<Portfolios />', () => {
     });
 
     expect(wrapper.find(CardLoader)).toHaveLength(1);
+    done();
   });
 
   it('should not show create button when the user does not have "catalog:portfolios:create" permission', async () => {

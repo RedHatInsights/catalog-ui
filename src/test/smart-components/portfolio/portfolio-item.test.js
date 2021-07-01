@@ -69,6 +69,7 @@ describe('<PortfolioItem />', () => {
       </ComponentWrapper>
     );
     expect(shallowToJson(wrapper.find(PortfolioItem))).toMatchSnapshot();
+    done();
   });
 
   it('should check the item correctly', (done) => {

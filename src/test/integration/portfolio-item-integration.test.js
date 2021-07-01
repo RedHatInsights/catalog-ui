@@ -320,7 +320,10 @@ describe('Integration tests for portfolio items', () => {
         commonSourcesResponse.data.application_types[0].sources[0]
       );
     await act(async () => {
-      wrapper.find(PortfolioItem).find('a').simulate('click', { button: 0 });
+      wrapper
+        .find(PortfolioItem)
+        .find('a')
+        .simulate('click', { button: 0 });
     });
     wrapper.update();
     expect(
@@ -360,9 +363,12 @@ describe('Integration tests for portfolio items', () => {
     ).toEqual('/portfolio/portfolio-item');
     wrapper.update();
     expect(wrapper.find('p#description')).toHaveLength(1);
-    expect(wrapper.find('p#description').children().html()).toEqual(
-      addedPortfolioItem.description
-    );
+    expect(
+      wrapper
+        .find('p#description')
+        .children()
+        .html()
+    ).toEqual(addedPortfolioItem.description);
     /**
      * should copy portfolio item to the same portfolio
      */

@@ -236,10 +236,7 @@ describe('<EditApprovalWorkflow />', () => {
     });
     wrapper.update();
     await act(async () => {
-      wrapper
-        .find('button.pf-c-select__menu-item')
-        .last()
-        .simulate('click');
+      wrapper.find('button.pf-c-select__menu-item').last().simulate('click');
     });
 
     expect(onCloseMock).not.toHaveBeenCalled();
@@ -250,12 +247,10 @@ describe('<EditApprovalWorkflow />', () => {
 
     wrapper.update();
 
-    setImmediate(() => {
-      expect(onCloseMock).toHaveBeenCalled();
+    expect(onCloseMock).toHaveBeenCalled();
 
-      expect(
-        wrapper.find(MemoryRouter).instance().history.location.pathname
-      ).toEqual('/foo');
-    });
+    expect(
+      wrapper.find(MemoryRouter).instance().history.location.pathname
+    ).toEqual('/foo');
   });
 });
