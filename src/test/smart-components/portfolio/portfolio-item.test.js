@@ -68,10 +68,7 @@ describe('<PortfolioItem />', () => {
         <PortfolioItem {...initialProps} />
       </ComponentWrapper>
     );
-    setImmediate(() => {
-      expect(shallowToJson(wrapper.find(PortfolioItem))).toMatchSnapshot();
-      done();
-    });
+    expect(shallowToJson(wrapper.find(PortfolioItem))).toMatchSnapshot();
   });
 
   it('should check the item correctly', (done) => {
@@ -82,13 +79,8 @@ describe('<PortfolioItem />', () => {
         <PortfolioItem {...initialProps} onSelect={onSelect} isSelectable />
       </ComponentWrapper>
     );
-    setImmediate(() => {
-      wrapper
-        .find(PortfolioItem)
-        .find('input')
-        .simulate('change');
-      expect(onSelect).toHaveBeenCalledWith('1');
-      done();
-    });
+    wrapper.find(PortfolioItem).find('input').simulate('change');
+    expect(onSelect).toHaveBeenCalledWith('1');
+    done();
   });
 });

@@ -14,7 +14,6 @@
   },
   "extends": [
     "plugin:prettier/recommended",
-    "prettier/react",
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/eslint-recommended",
@@ -45,7 +44,7 @@
   "rules": {
     "comma-dangle": 2,
     "comma-spacing": [
-      2,
+      "warn",
       {
         "after": true
       }
@@ -110,6 +109,7 @@
         "next": "*"
       }
     ],
+    "prettier/prettier": 2,
     "quote-props": [
       "error",
       "as-needed"
@@ -135,6 +135,7 @@
         "nonwords": false
       }
     ],
+    "trailing-comma": 0,
     "vars-on-top": 2,
     "wrap-iife": 2,
     "yoda": [

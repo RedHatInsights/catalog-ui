@@ -214,7 +214,7 @@ describe('<Orders />', () => {
     ]);
   });
 
-  it('should mount and render order provision component', async (done) => {
+  it('should mount and render order provision component', async () => {
     const store = mockStore({
       ...initialState,
       orderReducer: { ...orderInitialState, ...orderReducer }
@@ -243,6 +243,5 @@ describe('<Orders />', () => {
     });
 
     expect(wrapper.find(OrderProvision)).toHaveLength(1);
-    done();
   });
 });

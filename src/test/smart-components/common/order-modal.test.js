@@ -79,7 +79,7 @@ describe('<OrderModal />', () => {
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
-  it('should redirect back to close URL', async (done) => {
+  it('should redirect back to close URL', async () => {
     const store = mockStore(initialState);
 
     mockApi
@@ -112,10 +112,9 @@ describe('<OrderModal />', () => {
     expect(
       wrapper.find(MemoryRouter).instance().history.location.pathname
     ).toEqual('/close');
-    done();
   });
 
-  it('should submit data', async (done) => {
+  it('should submit data', async () => {
     expect.assertions(3);
     const store = mockStore(initialState);
 
@@ -170,6 +169,5 @@ describe('<OrderModal />', () => {
     expect(
       wrapper.find(MemoryRouter).instance().history.location.pathname
     ).toEqual('/close');
-    done();
   });
 });

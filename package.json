@@ -19,6 +19,7 @@
     "@types/react-truncate": "^2.3.3",
     "awesome-debounce-promise": "^2.1.0",
     "axios": "^0.21.1",
+    "canvass": "^0.1.0",
     "classnames": "^2.2.6",
     "clsx": "^1.0.4",
     "history": "^4.10.1",

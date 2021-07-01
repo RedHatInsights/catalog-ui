@@ -1,4 +1,3 @@
-jest.requireActual('react-intl');
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { mount } from 'enzyme';
@@ -22,6 +21,8 @@ import PortfolioEmptyState from '../../smart-components/portfolio/portfolio-empt
 import PlatformItem from '../../presentational-components/platform/platform-item';
 import PortfolioItem from '../../smart-components/portfolio/portfolio-item';
 import { IntlProvider } from 'react-intl';
+
+jest.requireActual('react-intl');
 
 describe('Integration tests for portfolio items', () => {
   const commonSourcesResponse = {
@@ -319,10 +320,7 @@ describe('Integration tests for portfolio items', () => {
         commonSourcesResponse.data.application_types[0].sources[0]
       );
     await act(async () => {
-      wrapper
-        .find(PortfolioItem)
-        .find('a')
-        .simulate('click', { button: 0 });
+      wrapper.find(PortfolioItem).find('a').simulate('click', { button: 0 });
     });
     wrapper.update();
     expect(
@@ -362,12 +360,9 @@ describe('Integration tests for portfolio items', () => {
     ).toEqual('/portfolio/portfolio-item');
     wrapper.update();
     expect(wrapper.find('p#description')).toHaveLength(1);
-    expect(
-      wrapper
-        .find('p#description')
-        .children()
-        .html()
-    ).toEqual(addedPortfolioItem.description);
+    expect(wrapper.find('p#description').children().html()).toEqual(
+      addedPortfolioItem.description
+    );
     /**
      * should copy portfolio item to the same portfolio
      */

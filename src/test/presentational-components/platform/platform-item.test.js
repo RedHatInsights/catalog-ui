@@ -39,10 +39,7 @@ describe('<PlatformItem />', () => {
         <PlatformItem {...initialProps} />
       </ComponentWrapper>
     );
-    setImmediate(() => {
-      expect(shallowToJson(wrapper.find(PlatformItem))).toMatchSnapshot();
-      done();
-    });
+    expect(shallowToJson(wrapper.find(PlatformItem))).toMatchSnapshot();
   });
 
   it('should call handle check callback', (done) => {
@@ -60,13 +57,10 @@ describe('<PlatformItem />', () => {
         );
       </ComponentWrapper>
     );
-    setImmediate(() => {
-      wrapper
-        .find(PlatformItem)
-        .find('input')
-        .simulate('change');
-      expect(onToggleItemSelect).toHaveBeenCalled();
-      done();
-    });
+    wrapper
+      .find(PlatformItem)
+      .find('input')
+      .simulate('change');
+    expect(onToggleItemSelect).toHaveBeenCalled();
   });
 });

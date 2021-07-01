@@ -93,7 +93,7 @@ describe('<EditApprovalWorkflow />', () => {
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
-  it('should create the edit workflow modal', async (done) => {
+  it('should create the edit workflow modal', async () => {
     const store = mockStore(initialState);
 
     mockApi
@@ -148,10 +148,9 @@ describe('<EditApprovalWorkflow />', () => {
     const form = wrapper.find(FormRenderer);
     expect(modal.props().title).toEqual('Set approval process');
     expect(form.props().schema).toEqual(expectedSchema);
-    done();
   });
 
-  it('should unlink/link unselected/selected workflows', async (done) => {
+  it('should unlink/link unselected/selected workflows', async () => {
     jest.useFakeTimers();
     const store = mockStore(initialState);
     mockApi
@@ -257,7 +256,6 @@ describe('<EditApprovalWorkflow />', () => {
       expect(
         wrapper.find(MemoryRouter).instance().history.location.pathname
       ).toEqual('/foo');
-      done();
     });
   });
 });

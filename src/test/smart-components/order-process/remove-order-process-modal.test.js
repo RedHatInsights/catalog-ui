@@ -168,7 +168,7 @@ describe('<RemoveOrderProcessModal />', () => {
     ).toEqual(ORDER_PROCESSES_ROUTE);
   });
 
-  it('should remove one order process and redirect to the processes list', async (done) => {
+  it('should remove one order process and redirect to the processes list', async () => {
     expect.assertions(2);
     const store = mockStore(initialState);
     mockApi
@@ -202,11 +202,9 @@ describe('<RemoveOrderProcessModal />', () => {
     expect(
       wrapper.find(MemoryRouter).instance().history.location.pathname
     ).toEqual('/order-processes');
-
-    done();
   });
 
-  it('should remove multiple order processes and redirect to the processes list', async (done) => {
+  it('should remove multiple order processes and redirect to the processes list', async () => {
     expect.assertions(3);
     const store = mockStore(initialState);
     mockApi
@@ -245,7 +243,5 @@ describe('<RemoveOrderProcessModal />', () => {
     expect(
       wrapper.find(MemoryRouter).instance().history.location.pathname
     ).toEqual('/order-processes');
-
-    done();
   });
 });

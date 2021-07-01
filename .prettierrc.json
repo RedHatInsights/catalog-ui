@@ -2,6 +2,7 @@
   "arrowParens": "always",
   "semi": true,
   "tabWidth": 2,
+  "trailingComma": "none",
   "singleQuote": true,
   "jsxSingleQuote": false
 }

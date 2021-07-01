@@ -227,7 +227,7 @@ describe('<Portfolio />', () => {
     expect(wrapper.find(AddProductsToPortfolio)).toHaveLength(1);
   });
 
-  it('should mount and render remove products page and call remove products', async (done) => {
+  it('should mount and render remove products page and call remove products', async () => {
     expect.assertions(2);
     const store = mockStore({
       ...initialState,
@@ -277,7 +277,6 @@ describe('<Portfolio />', () => {
       .onDelete(`${CATALOG_API_BASE}/portfolio_items/123`)
       .replyOnce((req) => {
         expect(req).toBeTruthy();
-        done();
         return [200];
       });
     mockGraphql
@@ -302,20 +301,17 @@ describe('<Portfolio />', () => {
         </ComponentWrapper>
       );
     });
-
-    setImmediate(async () => {
+    wrapper.update();
+    expect(wrapper.find(ToolbarRenderer)).toHaveLength(1);
+    act(() => {
+      wrapper
+        .find(PortfolioItem)
+        .props()
+        .onSelect('123');
       wrapper.update();
-      expect(wrapper.find(ToolbarRenderer)).toHaveLength(1);
-      act(() => {
-        wrapper
-          .find(PortfolioItem)
-          .props()
-          .onSelect('123');
-        wrapper.update();
-      });
-      await act(async () => {
-        wrapper.find('button#remove-products-button').simulate('click');
-      });
+    });
+    await act(async () => {
+      wrapper.find('button#remove-products-button').simulate('click');
     });
   });
 
@@ -383,7 +379,7 @@ describe('<Portfolio />', () => {
     expect(wrapper.find(RemovePortfolioModal)).toHaveLength(1);
   });
 
-  it('should mount and render order item modal', async (done) => {
+  it('should mount and render order item modal', async () => {
     const store = mockStore({
       ...initialState,
       platformReducer: { platforms: [] },
@@ -443,10 +439,9 @@ describe('<Portfolio />', () => {
     });
     wrapper.update();
     expect(wrapper.find(OrderModal)).toHaveLength(1);
-    done();
   });
 
-  it('should mount and filter portfolio items', async (done) => {
+  it('should mount and filter portfolio items', async () => {
     const store = mockStore({
       ...initialState,
       platformReducer: { platforms: [] },
@@ -498,20 +493,17 @@ describe('<Portfolio />', () => {
       );
     });
 
-    setImmediate(() => {
-      wrapper.update();
-      expect(wrapper.find(PortfolioItem)).toHaveLength(1);
-      const filterInput = wrapper.find(FilterToolbarItem).first();
-      act(() => {
-        filterInput.props().onFilterChange('nothing');
-      });
-      wrapper.update();
-      expect(wrapper.find(PortfolioItem)).toHaveLength(0);
-      done();
+    wrapper.update();
+    expect(wrapper.find(PortfolioItem)).toHaveLength(1);
+    const filterInput = wrapper.find(FilterToolbarItem).first();
+    act(() => {
+      filterInput.props().onFilterChange('nothing');
     });
+    wrapper.update();
+    expect(wrapper.find(PortfolioItem)).toHaveLength(0);
   });
 
-  it('should remove portfolio items and call undo action', async (done) => {
+  it('should remove portfolio items and call undo action', async () => {
     expect.assertions(1);
     let store = mockStore({
       ...initialState,
@@ -598,7 +590,6 @@ describe('<Portfolio />', () => {
       .onPost(`${CATALOG_API_BASE}/portfolio_items/321/undelete`)
       .replyOnce((req) => {
         expect(JSON.parse(req.data)).toEqual({ restore_key: restoreKey });
-        done();
         return [200, { id: '321' }];
       });
 
@@ -768,7 +759,7 @@ describe('<Portfolio />', () => {
     expect(search).toEqual('?portfolio=portfolio-id');
   });
 
-  it('should redirect the user to 403 page if the user capability show is set to false', async (done) => {
+  it('should redirect the user to 403 page if the user capability show is set to false', async () => {
     const store = mockStore({
       ...initialState,
       portfolioReducer: {
@@ -816,6 +807,5 @@ describe('<Portfolio />', () => {
     ).toEqual('/403');
     wrapper.update();
     expect(wrapper.find(CommonApiError)).toHaveLength(1);
-    done();
   });
 });

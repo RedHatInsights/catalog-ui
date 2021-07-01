@@ -86,7 +86,7 @@ describe('<Portfolios />', () => {
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
-  it('should mount and fetch data', async (done) => {
+  it('should mount and fetch data', async () => {
     const store = mockStore(initialState);
 
     mockApi
@@ -127,10 +127,9 @@ describe('<Portfolios />', () => {
     });
 
     expect(store.getActions()).toEqual(expectedActions);
-    done();
   });
 
-  it('should mount and filter portfolios', async (done) => {
+  it('should mount and filter portfolios', async () => {
     expect.assertions(2);
     const store = mockStore(initialState);
 
@@ -144,7 +143,6 @@ describe('<Portfolios />', () => {
       )
       .replyOnce((req) => {
         expect(req).toBeTruthy();
-        done();
         return [200, { data: [] }];
       });
 
@@ -173,7 +171,7 @@ describe('<Portfolios />', () => {
     });
   });
 
-  it('should render in loading state', async (done) => {
+  it('should render in loading state', async () => {
     const store = mockStore({
       ...initialState,
       portfolioReducer: {
@@ -199,7 +197,6 @@ describe('<Portfolios />', () => {
     });
 
     expect(wrapper.find(CardLoader)).toHaveLength(1);
-    done();
   });
 
   it('should not show create button when the user does not have "catalog:portfolios:create" permission', async () => {

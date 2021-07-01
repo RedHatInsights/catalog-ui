@@ -113,7 +113,7 @@ describe('<Orders />', () => {
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
-  it('should mount and render orders list component', async (done) => {
+  it('should mount and render orders list component', async () => {
     const store = mockStore({
       ...initialState,
       orderReducer: { ...orderInitialState, ...orderReducer }
@@ -132,7 +132,6 @@ describe('<Orders />', () => {
 
     wrapper.update();
     expect(wrapper.find(OrdersList)).toHaveLength(1);
-    done();
   });
 
   it('should mount and render orders list component and paginate correctly', async () => {
@@ -242,7 +241,7 @@ describe('<Orders />', () => {
     ]);
   });
 
-  it('should mount and render order detail component', async (done) => {
+  it('should mount and render order detail component', async () => {
     const store = mockStore({
       ...initialState,
       orderReducer: { ...orderInitialState, ...orderReducer }
@@ -271,10 +270,9 @@ describe('<Orders />', () => {
     });
 
     expect(wrapper.find(OrderDetail)).toHaveLength(1);
-    done();
   });
 
-  it('should mount and render order approval detail component', async (done) => {
+  it('should mount and render order approval detail component', async () => {
     const store = mockStore({
       ...initialState,
       orderReducer: { ...orderInitialState, ...orderReducer }
@@ -314,13 +312,11 @@ describe('<Orders />', () => {
         </ComponentWrapper>
       );
     });
-    wrapper.update();
 
     expect(wrapper.find(OrderDetail)).toHaveLength(1);
-    done();
   });
 
-  it('should mount and render order approval detail component for order in created state', async (done) => {
+  it('should mount and render order approval detail component for order in created state', async () => {
     const createdOrder = {
       ...orderReducer,
       orderDetail: {
@@ -374,10 +370,9 @@ describe('<Orders />', () => {
     });
     wrapper.update();
     expect(wrapper.find(OrderDetail)).toHaveLength(1);
-    done();
   });
 
-  it('should mount and render order detail component and open/close cancel order modal', async (done) => {
+  it('should mount and render order detail component and open/close cancel order modal', async () => {
     const enabledCancel = { ...orderReducer };
     enabledCancel.orderDetail.order.state = 'Approval Pending';
     const store = mockStore({
@@ -427,10 +422,9 @@ describe('<Orders />', () => {
     wrapper.find('button#keep-order').simulate('click');
     wrapper.update();
     expect(wrapper.find(CancelOrderModal).props().isOpen).toEqual(false);
-    done();
   });
 
-  it('should mount and render the reorder button with the order modal link', async (done) => {
+  it('should mount and render the reorder button with the order modal link', async () => {
     const enabledReorder = { ...orderReducer };
     enabledReorder.orderDetail.order.state = 'Completed';
     const store = mockStore({
@@ -485,10 +479,9 @@ describe('<Orders />', () => {
     ).toEqual(
       '?portfolio=portfolio-id&portfolio-item=portfolio-item-id&source=123'
     );
-    done();
   });
 
-  it('should mount and render order detail component with warnings about unavaiable resources', async (done) => {
+  it('should mount and render order detail component with warnings about unavaiable resources', async () => {
     const store = mockStore({
       ...initialState,
       orderReducer: {
@@ -543,6 +536,5 @@ describe('<Orders />', () => {
     wrapper.update();
 
     expect(wrapper.find(Alert)).toHaveLength(1);
-    done();
   });
 });

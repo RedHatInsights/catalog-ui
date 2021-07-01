@@ -103,7 +103,7 @@ describe('<RemovePortfolioModal />', () => {
     ).toEqual('/portfolio');
   });
 
-  it('should call remove action', async (done) => {
+  it('should call remove action', async () => {
     expect.assertions(3);
     const store = mockStore(initialState);
 
@@ -163,10 +163,9 @@ describe('<RemovePortfolioModal />', () => {
         .simulate('click');
     });
     expect(store.getActions()).toEqual(expectedActions);
-    done();
   });
 
-  it('should call remove portfolio actions and then undo it', async (done) => {
+  it('should call remove portfolio actions and then undo it', async () => {
     expect.assertions(4);
     const store = mockStore(initialState);
 
@@ -234,7 +233,6 @@ describe('<RemovePortfolioModal />', () => {
       })
     ];
     expect(store.getActions()).toEqual(expectedActions);
-    done();
   });
 
   it('should redirect away from remove modal if destroy capability is set to false', () => {
