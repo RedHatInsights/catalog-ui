@@ -164,7 +164,7 @@ describe('<AddProductsToPortfolio />', () => {
     expect(store.getActions()).toEqual(expectedActions);
   });
 
-  it('should check item and send correct data on submit', async () => {
+  it('should check item and send correct data on submit', (done) => {
     expect.assertions(1);
     const store = mockStore({
       breadcrumbsReducer: { fragments: [] },
