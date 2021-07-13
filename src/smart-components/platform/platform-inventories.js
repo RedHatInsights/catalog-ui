@@ -72,9 +72,9 @@ const PlatformInventories = () => {
   const history = useHistory();
 
   useEffect(() => {
-    dispatch(fetchPlatformInventories(id, filterValue, defaultSettings)).then(
-      () => stateDispatch({ type: 'setFetching', payload: false })
-    );
+    dispatch(
+      fetchPlatformInventories(id, filterValue, defaultSettings)
+    ).then(() => stateDispatch({ type: 'setFetching', payload: false }));
     scrollToTop();
   }, []);
 

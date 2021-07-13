@@ -80,7 +80,10 @@ describe('<PortfolioItem />', () => {
         <PortfolioItem {...initialProps} onSelect={onSelect} isSelectable />
       </ComponentWrapper>
     );
-    wrapper.find(PortfolioItem).find('input').simulate('change');
+    wrapper
+      .find(PortfolioItem)
+      .find('input')
+      .simulate('change');
     expect(onSelect).toHaveBeenCalledWith('1');
     done();
   });

@@ -236,7 +236,10 @@ describe('<EditApprovalWorkflow />', () => {
     });
     wrapper.update();
     await act(async () => {
-      wrapper.find('button.pf-c-select__menu-item').last().simulate('click');
+      wrapper
+        .find('button.pf-c-select__menu-item')
+        .last()
+        .simulate('click');
     });
 
     expect(onCloseMock).not.toHaveBeenCalled();

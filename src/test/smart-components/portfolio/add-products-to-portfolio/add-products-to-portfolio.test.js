@@ -51,7 +51,7 @@ describe('<AddProductsToPortfolio />', () => {
     mockApi.reset();
   });
 
-  it('should correctly filter service offerings', async () => {
+  it('should correctly filter service offerings', async (done) => {
     jest.useFakeTimers();
     const store = mockStore({
       breadcrumbsReducer: { fragments: [] },
@@ -149,7 +149,10 @@ describe('<AddProductsToPortfolio />', () => {
       .first()
       .simulate('keyDown', { key: 'ArrowDown', keyCode: 40 });
     await act(async () => {
-      wrapper.find('button.pf-c-select__menu-item').first().simulate('click');
+      wrapper
+        .find('button.pf-c-select__menu-item')
+        .first()
+        .simulate('click');
     });
     wrapper.update();
 
@@ -162,9 +165,10 @@ describe('<AddProductsToPortfolio />', () => {
     });
     wrapper.update();
     expect(store.getActions()).toEqual(expectedActions);
+    done();
   });
 
-  it('should check item and send correct data on submit', (done) => {
+  it('should check item and send correct data on submit', async (done) => {
     expect.assertions(1);
     const store = mockStore({
       breadcrumbsReducer: { fragments: [] },
@@ -259,17 +263,25 @@ describe('<AddProductsToPortfolio />', () => {
 
     wrapper.update();
     await act(async () => {
-      wrapper.find('input').last().simulate('change');
+      wrapper
+        .find('input')
+        .last()
+        .simulate('change');
     });
 
     wrapper.update();
     await act(async () => {
-      wrapper.find('button').last().simulate('click');
+      wrapper
+        .find('button')
+        .last()
+        .simulate('click');
     });
     wrapper.update();
-    expect(
-      wrapper.find(MemoryRouter).instance().history.location.pathname
-    ).toEqual('/portfolio/foo');
-    done();
+    setImmediate(() => {
+      expect(
+        wrapper.find(MemoryRouter).instance().history.location.pathname
+      ).toEqual('/portfolio/foo');
+      done();
+    });
   });
 });
