@@ -21,7 +21,8 @@ import { IntlProvider } from 'react-intl';
 
 describe('Portfolio share and workflow setting integration', () => {
   jest.useFakeTimers();
-  it('should set/remove workflow to portfolio and share/unshare it', async (done) => {
+  it('should set/remove workflow to portfolio and share/unshare it', async () => {
+    expect.assertions(16);
     const initialPortfolio = {
       id: '123',
       name: 'New portfolio',
@@ -90,18 +91,19 @@ describe('Portfolio share and workflow setting integration', () => {
     /**
      * One update to update the component state
      */
-    await act(async () => {
-      wrapper.update();
-    });
+    wrapper.update();
+
     expect(wrapper.find(Portfolios)).toHaveLength(1);
     expect(wrapper.find(StyledGalleryItem)).toHaveLength(1);
 
     /**
      * expand the dropdown and click on the set approval option
      */
-    wrapper
-      .find(`button#portfolio-${initialPortfolio.id}-toggle`)
-      .simulate('click');
+    await act(async () => {
+      wrapper
+        .find(`button#portfolio-${initialPortfolio.id}-toggle`)
+        .simulate('click');
+    });
     /**
      * mock workflows endpoints
      * workflows for the select must be called twice because of the initial values pre-fetch
@@ -167,21 +169,24 @@ describe('Portfolio share and workflow setting integration', () => {
           offset: 0
         }
       });
+
     await act(async () => {
       wrapper
         .find('li#workflow-portfolio-action a')
         .simulate('click', { button: 0 });
     });
-    jest.runAllTimers();
-    await act(async () => {
-      wrapper.update();
-    });
+
+    wrapper.update();
+
     expect(
       wrapper.find(MemoryRouter).instance().history.location.pathname
     ).toEqual('/portfolios/edit-workflow');
+
+    wrapper.update();
     expect(wrapper.find(EditApprovalWorkflow)).toHaveLength(1);
+
     /**
-     * open the select and choose forst option Workflow 1
+     * open the select and choose first option Workflow 1
      * wait for async data-pre fetch
      */
     await act(async () => {
@@ -195,16 +200,19 @@ describe('Portfolio share and workflow setting integration', () => {
       wrapper.update();
       jest.runAllTimers();
     });
-    wrapper
-      .find('.pf-c-select__toggle')
-      .simulate('keyDown', { key: 'ArrowDown', keyCode: 40 });
-    wrapper.update();
-    expect(wrapper.find('button.pf-c-select__menu-item')).toHaveLength(2);
 
-    wrapper
-      .find('button.pf-c-select__menu-item')
-      .first()
-      .simulate('click');
+    await act(async () => {
+      wrapper
+        .find('.pf-c-select__toggle')
+        .simulate('keyDown', { key: 'ArrowDown', keyCode: 40 });
+    });
+
+    wrapper.update();
+
+    expect(wrapper.find('button.pf-c-select__menu-item')).toHaveLength(2);
+    await act(async () => {
+      wrapper.find('button.pf-c-select__menu-item').first().simulate('click');
+    });
 
     /**
      * mock workflow link endpoint
@@ -213,18 +221,21 @@ describe('Portfolio share and workflow setting integration', () => {
     await act(async () => {
       wrapper.find('form').simulate('submit');
     });
+
     wrapper.update();
     expect(
       wrapper.find(MemoryRouter).instance().history.location.pathname
     ).toEqual('/portfolios');
+
     expect(wrapper.find(EditApprovalWorkflow)).toHaveLength(0);
     /**
      * Open the workflow modal again and unlink the first workflow and link the second
      */
-
-    wrapper
-      .find(`button#portfolio-${initialPortfolio.id}-toggle`)
-      .simulate('click');
+    await act(async () => {
+      wrapper
+        .find(`button#portfolio-${initialPortfolio.id}-toggle`)
+        .simulate('click');
+    });
 
     /**
      * mock workflows endpoints
@@ -260,55 +271,51 @@ describe('Portfolio share and workflow setting integration', () => {
           offset: 0
         }
       });
+
     await act(async () => {
       wrapper
         .find('li#workflow-portfolio-action a')
         .simulate('click', { button: 0 });
     });
+
     jest.runAllTimers();
-    await act(async () => {
-      wrapper.update();
-    });
+    wrapper.update();
+
     expect(
       wrapper.find(MemoryRouter).instance().history.location.pathname
     ).toEqual('/portfolios/edit-workflow');
     expect(wrapper.find(EditApprovalWorkflow)).toHaveLength(1);
     /**
-     * open the select and de select forst workflow and select the scond
+     * open the select and de select first workflow and select the second
      */
-    await act(async () => {
-      wrapper.update();
-      jest.runAllTimers();
-    });
-    await act(async () => {
-      wrapper.update();
-      jest.runAllTimers();
-    });
+    jest.runAllTimers();
+    wrapper.update();
 
-    wrapper
-      .find('.pf-c-select__toggle')
-      .simulate('keyDown', { key: 'ArrowDown', keyCode: 40 });
+    wrapper.update();
+
     await act(async () => {
-      wrapper.update();
+      wrapper
+        .find('.pf-c-select__toggle')
+        .simulate('keyDown', { key: 'ArrowDown', keyCode: 40 });
     });
+    wrapper.update();
+
     expect(wrapper.find('button.pf-c-select__menu-item')).toHaveLength(2);
 
     wrapper.update();
-    wrapper
-      .find('button.pf-c-select__menu-item')
-      .first()
-      .simulate('click');
-
-    wrapper
-      .find('button.pf-c-select__menu-item')
-      .last()
-      .simulate('click');
+    await act(async () => {
+      wrapper.find('button.pf-c-select__menu-item').first().simulate('click');
+    });
+    await act(async () => {
+      wrapper.find('button.pf-c-select__menu-item').last().simulate('click');
+    });
 
     /**
      * simulate unlink and link endpoints
      */
     mockApi.onPost(`${APPROVAL_API_BASE}/workflows/1/unlink`).replyOnce(200);
     mockApi.onPost(`${APPROVAL_API_BASE}/workflows/2/link`).replyOnce(200);
+
     await act(async () => {
       wrapper.find('form').simulate('submit');
     });
@@ -317,10 +324,11 @@ describe('Portfolio share and workflow setting integration', () => {
     /**
      * remove existing shares in portfolio and add new one
      */
-
-    wrapper
-      .find(`button#portfolio-${initialPortfolio.id}-toggle`)
-      .simulate('click');
+    await act(async () => {
+      wrapper
+        .find(`button#portfolio-${initialPortfolio.id}-toggle`)
+        .simulate('click');
+    });
 
     /**
      * mock share info endpoint
@@ -346,6 +354,7 @@ describe('Portfolio share and workflow setting integration', () => {
         }
       ]
     });
+
     jest.runAllTimers();
     await act(async () => {
       wrapper
@@ -367,34 +376,43 @@ describe('Portfolio share and workflow setting integration', () => {
       wrapper.update();
       jest.runAllTimers();
     });
+
     const clearButton = wrapper.find('button#remove-share-0');
-    clearButton.simulate('click');
+    await act(async () => {
+      clearButton.simulate('click');
+    });
+
     wrapper.update();
-    wrapper
-      .find('.pf-c-select__toggle')
-      .first()
-      .simulate('keyDown', { key: 'ArrowDown', keyCode: 40 });
+    await act(async () => {
+      wrapper
+        .find('.pf-c-select__toggle')
+        .first()
+        .simulate('keyDown', { key: 'ArrowDown', keyCode: 40 });
+    });
 
     expect(wrapper.find('button.pf-c-select__menu-item')).toHaveLength(2);
 
     wrapper.update();
-    wrapper
-      .find('button.pf-c-select__menu-item')
-      .last()
-      .simulate('click');
+    await act(async () => {
+      wrapper.find('button.pf-c-select__menu-item').last().simulate('click');
+    });
 
-    wrapper
-      .find('.pf-c-select__toggle')
-      .at(1)
-      .simulate('keyDown', { key: 'ArrowDown', keyCode: 40 });
-    wrapper
-      .find('button.pf-c-select__menu-item')
-      .last()
-      .simulate('click');
+    await act(async () => {
+      wrapper
+        .find('.pf-c-select__toggle')
+        .at(1)
+        .simulate('keyDown', { key: 'ArrowDown', keyCode: 40 });
+    });
 
-    wrapper.find('button#add-new-group').simulate('click');
+    await act(async () => {
+      wrapper.find('button.pf-c-select__menu-item').last().simulate('click');
+    });
+
+    await act(async () => {
+      wrapper.find('button#add-new-group').simulate('click');
+    });
     /**
-     * mock share/ushare calls
+     * mock share/unshare calls
      */
     mockApi
       .onPost(`${CATALOG_API_BASE}/portfolios/${initialPortfolio.id}/share`)
@@ -414,15 +432,16 @@ describe('Portfolio share and workflow setting integration', () => {
         });
         return [200];
       });
+
     await act(async () => {
       wrapper.find('form').simulate('submit');
     });
+
     wrapper.update();
     expect(
       wrapper.find(MemoryRouter).instance().history.location.pathname
     ).toEqual('/portfolios');
     expect(wrapper.find(Portfolios)).toHaveLength(1);
     expect(wrapper.find(StyledGalleryItem)).toHaveLength(1);
-    done();
   });
 });

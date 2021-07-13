@@ -19,7 +19,7 @@ describe('share helper', () => {
     getShareInfo(123);
   });
 
-  it('should call get share portfolio', async (done) => {
+  it('should call get share portfolio', async () => {
     expect.assertions(1);
     mockApi
       .onPost(`${CATALOG_API_BASE}/portfolios/123/share`)
@@ -28,7 +28,6 @@ describe('share helper', () => {
           permissions: ['foo', 'bar'],
           group_uuids: ['123']
         });
-        done();
         return [200];
       });
     await sharePortfolio({

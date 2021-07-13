@@ -68,7 +68,7 @@ describe('<Products />', () => {
     mockStore = configureStore(middlewares);
   });
 
-  it('should render in loading state', async (done) => {
+  it('should render in loading state', (done) => {
     const store = mockStore(initialState);
     mockApi
       .onGet(
@@ -96,22 +96,16 @@ describe('<Products />', () => {
 
     let wrapper;
 
-    await act(async () => {
-      wrapper = mount(
-        <ComponentWrapper store={store}>
-          <Products />
-        </ComponentWrapper>
-      );
-      expect(wrapper.find(CardLoader)).toHaveLength(1);
-    });
-
-    wrapper.update();
-    expect(wrapper.find(CardLoader)).toHaveLength(0);
-
+    wrapper = mount(
+      <ComponentWrapper store={store}>
+        <Products />
+      </ComponentWrapper>
+    );
+    expect(wrapper.find(CardLoader)).toHaveLength(1);
     done();
   });
 
-  it.skip('should call debounced async filter after 1 second', async (done) => {
+  it('should call debounced async filter after 1 second', (done) => {
     expect.assertions(1);
     const store = mockStore(initialState);
     mockApi
@@ -167,7 +161,7 @@ describe('<Products />', () => {
 
     let wrapper;
 
-    await act(async () => {
+    act(() => {
       wrapper = mount(
         <ComponentWrapper store={store}>
           <Products />
@@ -178,15 +172,15 @@ describe('<Products />', () => {
     wrapper.update();
     const input = wrapper.find('input').first();
 
-    await act(async () => {
+    act(() => {
       input.getDOMNode().value = 'foo';
     });
-    await act(async () => {
+    act(() => {
       input.simulate('change');
     });
   });
 
-  it('should render gallery in empty state', async (done) => {
+  it('should render gallery in empty state', async () => {
     const store = mockStore({
       breadcrumbsReducer: { fragments: [] },
       portfolioReducer: {
@@ -231,6 +225,5 @@ describe('<Products />', () => {
 
     wrapper.update();
     expect(wrapper.find(ContentGalleryEmptyState)).toHaveLength(1);
-    done();
   });
 });

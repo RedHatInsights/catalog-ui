@@ -73,7 +73,7 @@ describe('<OrderProcesses />', () => {
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
-  it('should mount and fetch data', async (done) => {
+  it('should mount and fetch data', async () => {
     const store = mockStore(initialState);
 
     mockApi
@@ -110,10 +110,9 @@ describe('<OrderProcesses />', () => {
     });
 
     expect(store.getActions()).toEqual(expectedActions);
-    done();
   });
 
-  it('should render in loading state', async (done) => {
+  it('should render in loading state', async () => {
     const store = mockStore({
       ...initialState,
       orderProcessReducer: {
@@ -141,7 +140,6 @@ describe('<OrderProcesses />', () => {
     });
 
     expect(wrapper.find(ListLoader)).toHaveLength(1);
-    done();
   });
 
   it('should render table empty state', async () => {

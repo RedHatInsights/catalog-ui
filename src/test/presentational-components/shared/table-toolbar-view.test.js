@@ -32,7 +32,7 @@ describe('<TableToolbarView />', () => {
     };
   });
 
-  it('should display the table', async (done) => {
+  it('should display the table', async () => {
     let wrapper;
     const rows = [
       {
@@ -57,10 +57,9 @@ describe('<TableToolbarView />', () => {
     expect(wrapper.find(Table)).toHaveLength(1);
     expect(wrapper.find(TableHeader)).toHaveLength(1);
     expect(wrapper.find(TableBody)).toHaveLength(1);
-    done();
   });
 
-  it('should display the empty state', async (done) => {
+  it('should display the empty state', async () => {
     let wrapper;
     const renderEmptyState = jest.fn();
     await act(async () => {
@@ -81,10 +80,9 @@ describe('<TableToolbarView />', () => {
     expect(wrapper.find(Table)).toHaveLength(0);
     expect(wrapper.find(TableHeader)).toHaveLength(0);
     expect(wrapper.find(TableBody)).toHaveLength(0);
-    done();
   });
 
-  it('should mount correctly in loading state', async (done) => {
+  it('should mount correctly in loading state', async () => {
     let wrapper;
 
     await act(async () => {
@@ -92,10 +90,9 @@ describe('<TableToolbarView />', () => {
     });
     expect(wrapper.find(Table)).toHaveLength(0);
     expect(wrapper.find(ListLoader)).toHaveLength(1);
-    done();
   });
 
-  it('should call filtering callback', async (done) => {
+  it('should call filtering callback', async () => {
     const onFilterChange = jest.fn();
     let wrapper;
 
@@ -108,10 +105,9 @@ describe('<TableToolbarView />', () => {
     input.getDOMNode().value = 'foo';
     input.simulate('change');
     expect(onFilterChange).toHaveBeenCalledWith('foo');
-    done();
   });
 
-  it('should send async requests on pagination', async (done) => {
+  it('should send async requests on pagination', async () => {
     const request = jest
       .fn()
       .mockImplementation(() => new Promise((resolve) => resolve([])));
@@ -135,7 +131,6 @@ describe('<TableToolbarView />', () => {
         limit: 50,
         offset: 50
       });
-      done();
     }, 251);
   });
 });

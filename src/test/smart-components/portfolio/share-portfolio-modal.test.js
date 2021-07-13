@@ -74,7 +74,7 @@ describe('<SharePortfolioModal/>', () => {
     mockStore = configureStore(middlewares);
   });
 
-  it('should submit share data', async (done) => {
+  it('should submit share data', async () => {
     jest.useFakeTimers();
     expect.assertions(1);
     const store = mockStore(initialState);
@@ -152,10 +152,9 @@ describe('<SharePortfolioModal/>', () => {
     await act(async () => {
       wrapper.find('form').simulate('submit');
     });
-    done();
   });
 
-  it('should redirect from share modal if both share and unshare capabilities are false', async (done) => {
+  it('should redirect from share modal if both share and unshare capabilities are false', async () => {
     const store = mockStore({
       ...initialState,
 
@@ -202,6 +201,5 @@ describe('<SharePortfolioModal/>', () => {
     expect(
       wrapper.find(MemoryRouter).instance().history.location.pathname
     ).toEqual('/403');
-    done();
   });
 });

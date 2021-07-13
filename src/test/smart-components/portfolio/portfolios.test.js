@@ -86,7 +86,7 @@ describe('<Portfolios />', () => {
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
-  it('should mount and fetch data', async (done) => {
+  it('should mount and fetch data', async () => {
     const store = mockStore(initialState);
 
     mockApi
@@ -127,10 +127,9 @@ describe('<Portfolios />', () => {
     });
 
     expect(store.getActions()).toEqual(expectedActions);
-    done();
   });
 
-  it('should mount and filter portfolios', async (done) => {
+  it('should mount and filter portfolios', async () => {
     expect.assertions(2);
     const store = mockStore(initialState);
 
@@ -144,7 +143,6 @@ describe('<Portfolios />', () => {
       )
       .replyOnce((req) => {
         expect(req).toBeTruthy();
-        done();
         return [200, { data: [] }];
       });
 
@@ -168,12 +166,15 @@ describe('<Portfolios />', () => {
       filterInput.getDOMNode().value = 'nothing';
     });
 
+    wrapper.update();
+    expect(wrapper.find(PortfolioCard)).toHaveLength(1);
+
     await act(async () => {
       filterInput.simulate('change', { target: { value: 'nothing' } });
     });
   });
 
-  it('should render in loading state', async (done) => {
+  it('should render in loading state', (done) => {
     const store = mockStore({
       ...initialState,
       portfolioReducer: {
@@ -186,7 +187,7 @@ describe('<Portfolios />', () => {
       .onGet(`${CATALOG_API_BASE}/portfolios?limit=50&offset=0`)
       .replyOnce(200, { data: [{ name: 'Foo', id: '11' }] });
     let wrapper;
-    await act(async () => {
+    act(() => {
       wrapper = mount(
         <ComponentWrapper store={store} initialEntries={['/portfolios']}>
           <Route

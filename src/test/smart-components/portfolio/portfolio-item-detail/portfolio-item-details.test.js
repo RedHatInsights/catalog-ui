@@ -96,7 +96,7 @@ describe('<PortfolioItemDetail />', () => {
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
-  it('should mount correct component before and after load', async (done) => {
+  it('should mount correct component before and after load', async () => {
     const store = mockStore(initialState);
     mockApi.onGet(`${CATALOG_API_BASE}/portfolios/123`).replyOnce(200, {});
     mockApi.onGet(`${CATALOG_API_BASE}/portfolio_items/321`).replyOnce(200, {});
@@ -119,10 +119,9 @@ describe('<PortfolioItemDetail />', () => {
     expect(wrapper.find(ItemDetailInfoBar)).toHaveLength(1);
     expect(wrapper.find(ItemDetailDescription)).toHaveLength(1);
     expect(wrapper.find(PortfolioItemDetailToolbar)).toHaveLength(1);
-    done();
   });
 
-  it('should mount and open order modal', async (done) => {
+  it('should mount and open order modal', async () => {
     const store = mockStore(initialState);
     mockApi
       .onGet(`${CATALOG_API_BASE}/portfolio_items/321/service_plans`)
@@ -149,10 +148,9 @@ describe('<PortfolioItemDetail />', () => {
       wrapper.update();
     });
     expect(wrapper.find(OrderModal)).toHaveLength(1);
-    done();
   });
 
-  it('should mount with missing source', async (done) => {
+  it('should mount with missing source', async () => {
     const store = mockStore({
       ...initialState,
       portfolioReducer: {
@@ -184,6 +182,5 @@ describe('<PortfolioItemDetail />', () => {
     });
     wrapper.update();
     expect(wrapper.find(Alert)).toHaveLength(1);
-    done();
   });
 });

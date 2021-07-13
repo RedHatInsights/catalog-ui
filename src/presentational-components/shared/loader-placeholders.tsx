@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
 import { Spinner } from '@patternfly/react-core/dist/js/components/Spinner/Spinner';
 import { Section } from '@redhat-cloud-services/frontend-components/Section';
 import {
@@ -48,10 +47,6 @@ const Skeleton = ({ component: Component = 'span', ...props }) => {
       <Component />
     </SkeletonContainer>
   );
-};
-
-Skeleton.propTypes = {
-  component: PropTypes.string
 };
 
 const SkeletonContainer = styled.div<{
