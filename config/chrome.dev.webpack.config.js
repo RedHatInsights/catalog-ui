@@ -1,0 +1,35 @@
+const webpackBase = require('./webpack.base.config');
+
+module.exports = webpackBase({
+  // The host where the API lives. EX: https://localhost:5001
+  API_HOST: '',
+
+  // Path to the API on the API host. EX: /api/catalog
+  API_BASE_PATH: '/api/catalog/',
+
+  // Path on the host where the UI is found. EX: /apps/catalog
+  UI_BASE_PATH: '',
+
+  // Port that the UI is served over
+  UI_PORT: 8002,
+
+  // Determines if the app should be compiled to run on insights or on
+  // another platform. Options: insights, standalone
+  DEPLOYMENT_MODE: 'insights',
+
+  // Determines the title of the app
+  APPLICATION_NAME: 'Automation services catalog',
+
+  // Disables custom favicons. Used to turn off our favicon so we inherit
+  // the correct one from cloud.redhat.com
+  USE_FAVICON: false,
+
+  // Serve the UI over http or https. Options: true, false
+  UI_USE_HTTPS: true,
+
+  // Enables webpack debug mode. Options: true, false
+  UI_DEBUG: true,
+
+  // Target compilation environment. Options: dev, prod
+  TARGET_ENVIRONMENT: 'dev',
+});
