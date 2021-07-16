@@ -1,11 +1,12 @@
-/* global require, module, __dirname */
+const convert = require('lodash/fp/convert');
+
 const { resolve } = require('path');
 const config = require('@redhat-cloud-services/frontend-components-config');
 const TSOverrides = require('./webpack-ts-overrides');
 const commonWPconfig = require('./webpack.common.js');
 const webpack = require('webpack');
 
-// NOTE: This file is not meant to be consumed directly by weback. Instead it
+// NOTE: This file is not meant to be consumed directly by webpack. Instead it
 // should be imported, initialized with the following settings and exported like
 // a normal webpack config. See config/insights.prod.webpack.config.js for an
 // example
@@ -28,37 +29,38 @@ const defaultConfigs = [
   { name: 'UI_PORT', default: 8002, scope: 'webpack' },
   { name: 'WEBPACK_PROXY', default: undefined, scope: 'webpack' },
   { name: 'WEBPACK_PUBLIC_PATH', default: undefined, scope: 'webpack' },
-  { name: 'USE_FAVICON', default: true, scope: 'webpack' },
+  { name: 'USE_FAVICON', default: true, scope: 'webpack' }
 ];
 
-module.exports = inputConfigs => {
+module.exports = (inputConfigs) => {
   const customConfigs = {};
   const globals = {};
 
   defaultConfigs.forEach((item, i) => {
     // == will match null and undefined, but not false
-    if (inputConfigs[item.name] == null) {
+    if (inputConfigs[item.name] === null) {
       customConfigs[item.name] = item.default;
     } else {
       customConfigs[item.name] = inputConfigs[item.name];
     }
+
     if (item.scope === 'global') {
       globals[item.name] = JSON.stringify(
-        inputConfigs[item.name] || item.default,
+        inputConfigs[item.name] || item.default
       );
     }
   });
 
   const htmlPluginConfig = {
     targetEnv: customConfigs.DEPLOYMENT_MODE,
-    applicationName: customConfigs.APPLICATION_NAME,
+    applicationName: customConfigs.APPLICATION_NAME
   };
 
   // being able to turn off the favicon is useful for deploying to insights mode
   // cloud.redhat.com sets it's own favicon and ours tends to override it if we
   // set one
   if (customConfigs.USE_FAVICON) {
-    htmlPluginConfig['favicon'] = 'static/images/favicon.ico';
+    htmlPluginConfig.favicon = 'static/images/favicon.ico';
   }
 
   const { config: webpackConfig, plugins } = config({
@@ -68,7 +70,7 @@ module.exports = inputConfigs => {
     https: customConfigs.UI_USE_HTTPS,
 
     // defines port for dev server
-    port: customConfigs.UI_PORT,
+    port: customConfigs.UI_PORT
   });
 
   webpackConfig.serve = {
@@ -78,23 +80,23 @@ module.exports = inputConfigs => {
     port: customConfigs.UI_PORT,
 
     // https://github.com/webpack-contrib/webpack-serve/blob/master/docs/addons/history-fallback.config.js
-    add: app => app.use(convert(history({}))),
+    add: (app) => app.use(convert(history({})))
   };
 
   if (customConfigs.TARGET_ENVIRONMENT === 'prod') {
     webpackConfig.serve.prod = {
-      publicPath: commonWPconfig.paths.publicPath,
+      publicPath: commonWPconfig.paths.publicPath
     };
   } else {
     webpackConfig.serve.dev = {
-      publicPath: commonWPconfig.paths.publicPath,
+      publicPath: commonWPconfig.paths.publicPath
     };
   }
 
   // Override sections of the webpack config to work with TypeScript
   const newWebpackConfig = {
     ...webpackConfig,
-    ...TSOverrides,
+    ...TSOverrides
   };
 
   if (customConfigs.WEBPACK_PROXY) {
@@ -119,6 +121,6 @@ module.exports = inputConfigs => {
 
   return {
     ...newWebpackConfig,
-    plugins,
+    plugins
   };
 };

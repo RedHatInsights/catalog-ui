@@ -4,14 +4,14 @@ import { useHistory } from 'react-router-dom';
 import { Grid, GridItem } from '@patternfly/react-core';
 import NotificationsPortal from '@redhat-cloud-services/frontend-components-notifications/NotificationPortal';
 
-import { Routes } from './loaders/chrome/Routes';
-import { MIN_SCREEN_HEIGHT } from './constants/ui-constants';
-import { AppPlaceholder } from './presentational-components/shared/loader-placeholders';
+import { Routes } from './Routes';
+import { MIN_SCREEN_HEIGHT } from '../../constants/ui-constants';
+import { AppPlaceholder } from '../../presentational-components/shared/loader-placeholders';
 import {
   SET_OPENAPI_SCHEMA,
   SET_SOURCETYPE_ICONS,
   INITIALIZE_I18N
-} from './redux/action-types';
+} from '../../redux/action-types';
 
 import 'whatwg-fetch';
 import smoothscroll from 'smoothscroll-polyfill';
