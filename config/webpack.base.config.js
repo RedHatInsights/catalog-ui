@@ -8,7 +8,7 @@ const webpack = require('webpack');
 
 // NOTE: This file is not meant to be consumed directly by webpack. Instead it
 // should be imported, initialized with the following settings and exported like
-// a normal webpack config. See config/insights.prod.webpack.config.js for an
+// a normal webpack config. See config/chrome.prod.webpack.config.js for an
 // example
 
 // Default user defined settings
@@ -111,7 +111,7 @@ module.exports = (inputConfigs) => {
   if (customConfigs.DEPLOYMENT_MODE === 'standalone') {
     console.log('Overriding configs for standalone mode.');
 
-    const newEntry = resolve(__dirname, '../src/entry-standalone.tsx');
+    const newEntry = resolve(__dirname, '../src/entry-standalone.js');
     const newPubPath = '/';
     console.log(`New entry.App: ${newEntry}`);
     newWebpackConfig.entry.App = newEntry;
