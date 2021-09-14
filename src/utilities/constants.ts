@@ -1,7 +1,15 @@
-export const CATALOG_API_BASE = `${process.env.BASE_PATH ||
-  '/api'}/catalog/v1.3`;
-export const SOURCES_API_BASE = `${process.env.BASE_PATH ||
-  '/api'}/sources/v1.0`;
+// eslint-disable-next-line no-undef
+console.log('Debug constants - DEPLOYMENT_MODE: ', DEPLOYMENT_MODE);
+export const CATALOG_API_BASE =
+  // eslint-disable-next-line no-undef
+  DEPLOYMENT_MODE === 'standalone'
+    ? 'http://127.0.0.1:8000/api/v1'
+    : `${process.env.BASE_PATH || '/api'}/catalog/v1.3`;
+export const SOURCES_API_BASE =
+  // eslint-disable-next-line no-undef
+  DEPLOYMENT_MODE === 'standalone'
+    ? 'http://127.0.0.1:8000/api/v1'
+    : `${process.env.BASE_PATH || '/api'}/sources/v1.0`;
 export const APPROVAL_API_BASE = `${process.env.BASE_PATH ||
   '/api'}/approval/v1.2`;
 export const CATALOG_INVENTORY_API_BASE = `${process.env.BASE_PATH ||

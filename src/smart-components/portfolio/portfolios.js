@@ -173,16 +173,16 @@ const Portfolios = () => {
   );
 
   const emptyStateProps = {
-    PrimaryAction: meta.noData ? NoDataAction : FilterAction,
-    title: meta.noData
+    PrimaryAction: meta?.noData ? NoDataAction : FilterAction,
+    title: meta?.noData
       ? formatMessage(portfolioMessages.portfoliosNoData)
       : formatMessage(filteringMessages.noResults),
-    description: meta.noData
+    description: meta?.noData
       ? formatMessage(portfolioMessages.portfoliosNoDataDescription)
       : formatMessage(filteringMessages.noResultsDescription),
-    Icon: meta.noData ? PlusCircleIcon : SearchIcon
+    Icon: meta?.noData ? PlusCircleIcon : SearchIcon
   };
-  const galleryItems = data.map((item) => (
+  const galleryItems = data?.map((item) => (
     <PortfolioCard
       key={item.id}
       ouiaId={`portfolio-${item.id}`}
