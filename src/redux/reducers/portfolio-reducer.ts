@@ -37,7 +37,7 @@ export interface PortfolioItemStateObject {
 export interface PortfolioReducerState extends AnyObject {
   portfolioItems: ApiCollectionResponse<PortfolioItem>;
   portfolioItem: PortfolioItemStateObject;
-  portfolios: ApiCollectionResponse<Portfolio>;
+  portfolios: any;
   selectedPortfolio: InternalPortfolio;
   portfolio: Portfolio;
   filterValue: string;
@@ -64,6 +64,7 @@ export const portfoliosInitialState: PortfolioReducerState = {
   },
   portfolios: {
     data: [],
+    results: [],
     meta: defaultSettings
   },
   selectedPortfolio: {
@@ -84,11 +85,15 @@ const setLoadingState: PortfolioReducerActionHandler = (
   ...state,
   isLoading: payload
 });
-const setPortfolios: PortfolioReducerActionHandler = (state, { payload }) => ({
-  ...state,
-  portfolios: payload,
-  isLoading: false
-});
+const setPortfolios: PortfolioReducerActionHandler = (state, { payload }) => {
+  console.log('Debug - payload: ', payload);
+  return {
+    ...state,
+    portfolios: payload,
+    isLoading: false
+  };
+};
+
 const setPortfolioItems: PortfolioReducerActionHandler = (
   state,
   { payload }
@@ -160,7 +165,7 @@ const updateTemporaryPortfolio: PortfolioReducerActionHandler = (
   },
   portfolios: {
     ...state.portfolios,
-    data: state.portfolios.data.map((item) =>
+    data: state.portfolios.data.map((item: { id: any }) =>
       item.id === payload.id
         ? {
             ...item,
@@ -180,6 +185,7 @@ const deleteTemporaryPortfolio: PortfolioReducerActionHandler = (
   selectedPortfolio: { metadata: { user_capabilities: {}, statistics: {} } },
   portfolios: {
     ...state.portfolios,
+    // @ts-ignore
     data: state.portfolios.data.filter(({ id }) => id !== payload)
   }
 });

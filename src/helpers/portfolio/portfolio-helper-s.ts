@@ -25,6 +25,7 @@ import { AxiosPromise, AxiosResponse } from 'axios';
 import { Store } from 'redux';
 import { Source } from '@redhat-cloud-services/sources-client';
 import { GetReduxState } from '../../types/redux';
+import { PortfolioReducerState } from '../../redux/reducers/portfolio-reducer';
 
 const axiosInstance = getAxiosInstance();
 const portfolioApi = getPortfolioApi();
@@ -32,7 +33,7 @@ const portfolioItemApi = getPortfolioItemApi();
 
 export const listPortfolios = (
   filters: AnyObject = {},
-  { limit, offset, sortDirection = 'asc' } = defaultSettings
+  { pageSize, page, sortDirection = 'asc' } = defaultSettings
 ): Promise<ApiCollectionResponse<InternalPortfolio>> => {
   const filterQuery = Object.entries(filters).reduce((acc, [key, value]) => {
     if (!value) {
@@ -42,7 +43,7 @@ export const listPortfolios = (
     const partial =
       key === 'sort_by'
         ? `sort_by=${value}:${sortDirection}`
-        : `filter[${key}][contains_i]=${value}`;
+        : `${key}=${value}`;
     return `${acc}&${partial}`;
   }, '');
   return (axiosInstance.get(
@@ -56,9 +57,7 @@ export const listPortfolioItems = (
   filter = ''
 ): Promise<ApiCollectionResponse<PortfolioItem>> => {
   return axiosInstance
-    .get(
-      `${CATALOG_API_BASE}/portfolio_items?filter[name][contains_i]=${filter}&limit=${limit}&offset=${offset}`
-    )
+    .get(`${CATALOG_API_BASE}/portfolio_items?name${filter}`)
     .then(
       (portfolioItems: ApiCollectionResponse<PortfolioItem & AnyObject>) => {
         const portfolioReference = portfolioItems.results.reduce<AnyObject>(
@@ -76,7 +75,7 @@ export const listPortfolioItems = (
         return axiosInstance
           .get<ApiCollectionResponse<Portfolio>>(
             `${CATALOG_API_BASE}/portfolios?${Object.keys(portfolioReference)
-              .map((id) => `filter[id][]=${id}`)
+              .map((id) => `id=${id}`)
               .join('&')}`
           )
           .then(({ results }) => ({
@@ -104,10 +103,10 @@ export const getPortfolio = (portfolioId: string): Promise<Portfolio> =>
 
 export const getPortfolioItemsWithPortfolio = (
   portfolioId: string,
-  { limit, offset, filter = '' } = defaultSettings
+  { pageSize, page, filter = '' } = defaultSettings
 ): Promise<ApiCollectionResponse<PortfolioItem>> =>
   axiosInstance.get(
-    `${CATALOG_API_BASE}/portfolios/${portfolioId}/portfolio_items?filter[name][contains_i]=${filter}&limit=${limit}&offset=${offset}`
+    `${CATALOG_API_BASE}/portfolios/${portfolioId}/portfolio_items/name=${filter}`
   );
 
 // TO DO - change to use the API call that adds multiple items to a portfolio when available
@@ -291,15 +290,14 @@ interface PortfolioReducerPlaceholder {
 }
 
 export const getPortfolioFromState = (
-  portfolioReducer: PortfolioReducerPlaceholder,
+  portfolioReducer: PortfolioReducerState,
   portfolioId: string
 ): Portfolio | undefined =>
   portfolioReducer.selectedPortfolio &&
   portfolioReducer.selectedPortfolio.id === portfolioId
     ? portfolioReducer.selectedPortfolio
-    : portfolioReducer.portfolios?.results?.find(
-        ({ id }) => id === portfolioId
-      );
+    : // @ts-ignore
+      portfolioReducer.portfolios?.data?.find(({ id }) => id === portfolioId);
 
 export const undeletePortfolio = (
   portfolioId: string,

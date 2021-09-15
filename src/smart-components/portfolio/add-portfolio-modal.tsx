@@ -43,13 +43,12 @@ const AddPortfolioModal: React.ComponentType<AddPortfolioModalProps> = ({
     removeSearch: removeQuery,
     keepHash: true
   });
-  const initialValues = useSelector<
-    CatalogRootState,
-    Portfolio | undefined
-  >(({ portfolioReducer }) => (
-    DEPLOYMENT_MODE !== 'standalone'
-      ? getPortfolioFromState(portfolioReducer, portfolioId)
-      : getPortfolioFromStateS(portfolioReducer, portfolioId)
+  const initialValues = useSelector<CatalogRootState, Portfolio | undefined>(
+    ({ portfolioReducer }) =>
+      // eslint-disable-next-line no-undef
+      DEPLOYMENT_MODE !== 'standalone'
+        ? getPortfolioFromState(portfolioReducer, portfolioId)
+        : getPortfolioFromStateS(portfolioReducer, portfolioId)
   );
 
   const onAddPortfolio = async (data: Partial<Portfolio>) => {
@@ -93,9 +92,9 @@ const AddPortfolioModal: React.ComponentType<AddPortfolioModalProps> = ({
     }
   };
 
-  if (initialValues?.metadata?.user_capabilities?.update === false) {
-    return <UnauthorizedRedirect />;
-  }
+  //if (initialValues?.metadata?.user_capabilities?.update === false) {
+  //  return <UnauthorizedRedirect />;
+  //}
 
   return (
     <FormRenderer

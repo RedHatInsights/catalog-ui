@@ -111,9 +111,12 @@ const Portfolios = () => {
     ...initialState,
     ...viewState?.portfolio
   });
-  const { data, meta } = useSelector(
+  const portfolios = useSelector(
     ({ portfolioReducer: { portfolios } }) => portfolios
   );
+  console.log('Debug - portfolios: ', portfolios);
+  const meta = portfolios.meta || { count: portfolios.count };
+  const data = portfolios.data || portfolios.results;
   const dispatch = useDispatch();
   const { permissions: userPermissions } = useContext(UserContext);
   const history = useHistory();
@@ -201,7 +204,7 @@ const Portfolios = () => {
       handleCopyPortfolio={handleCopyPortfolio}
     />
   ));
-
+  console.log('Debug - galleryItems, meta', galleryItems, meta);
   return (
     <Fragment>
       <TopToolbar>
