@@ -284,7 +284,7 @@ const App = (props) => {
     return (
       <UserContext.Provider
         value={{
-          permissions: [],
+          permissions: [{ permission: 'catalog:portfolios:create' }],
           userIdentity: { identity: { user: { is_org_admin: true } } },
           openApiSchema: {},
           standalone: true
@@ -310,7 +310,7 @@ const App = (props) => {
         {aboutModalVisible && aboutModal()}
         <UserContext.Provider
           value={{
-            permissions: [],
+            permissions: [{ permission: 'catalog:portfolios:create' }],
             userIdentity: { identity: { user: { is_org_admin: true } } },
             openApiSchema: {},
             standalone: true

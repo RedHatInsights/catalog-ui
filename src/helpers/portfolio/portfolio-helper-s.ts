@@ -46,7 +46,7 @@ export const listPortfolios = (
     return `${acc}&${partial}`;
   }, '');
   return (axiosInstance.get(
-    `${CATALOG_API_BASE}/portfolios?limit=${limit}&offset=${offset}${filterQuery}`
+    `${CATALOG_API_BASE}/portfolios/`
   ) as unknown) as Promise<ApiCollectionResponse<InternalPortfolio>>;
 };
 
@@ -297,7 +297,9 @@ export const getPortfolioFromState = (
   portfolioReducer.selectedPortfolio &&
   portfolioReducer.selectedPortfolio.id === portfolioId
     ? portfolioReducer.selectedPortfolio
-    : portfolioReducer.portfolios.results.find(({ id }) => id === portfolioId);
+    : portfolioReducer.portfolios?.results?.find(
+        ({ id }) => id === portfolioId
+      );
 
 export const undeletePortfolio = (
   portfolioId: string,

@@ -11,6 +11,10 @@ import {
   fetchPortfoliosWithState,
   copyPortfolio
 } from '../../redux/actions/portfolio-actions';
+import {
+  fetchPortfoliosWithState as fetchPortfoliosWithStateS,
+  copyPortfolio as copyPortfolioS
+} from '../../redux/actions/portfolio-actions-s';
 import PortfolioCard from '../../presentational-components/portfolio/porfolio-card';
 import ContentGalleryEmptyState, {
   EmptyStatePrimaryAction
@@ -36,9 +40,12 @@ import useFormatMessage from '../../utilities/use-format-message';
 const debouncedFilter = asyncFormValidator(
   (filters, meta = defaultSettings, dispatch, filteringCallback) => {
     filteringCallback(true);
-    dispatch(fetchPortfoliosWithState(filters, meta)).then(() =>
-      filteringCallback(false)
-    );
+    dispatch(
+      // eslint-disable-next-line no-undef
+      DEPLOYMENT_MODE !== 'standalone'
+        ? fetchPortfoliosWithState(filters, meta)
+        : fetchPortfoliosWithStateS(filters, meta)
+    ).then(() => filteringCallback(false));
   },
   1000
 );
@@ -113,7 +120,10 @@ const Portfolios = () => {
 
   useEffect(() => {
     dispatch(
-      fetchPortfoliosWithState(filters, { ...meta, sortDirection })
+      // eslint-disable-next-line no-undef
+      DEPLOYMENT_MODE !== 'standalone'
+        ? fetchPortfoliosWithState(filters, { ...meta, sortDirection })
+        : fetchPortfoliosWithStateS(filters, { ...meta, sortDirection })
     ).then(() => stateDispatch({ type: 'setFetching', payload: false }));
     scrollToTop();
   }, []);
@@ -208,7 +218,12 @@ const Portfolios = () => {
           handleFilterItems={handleFilterItems}
           sortDirection={sortDirection}
           handleSort={handleSort}
-          fetchPortfoliosWithState={fetchPortfoliosWithState}
+          fetchPortfoliosWithState={
+            // eslint-disable-next-line no-undef
+            DEPLOYMENT_MODE !== 'standalone'
+              ? fetchPortfoliosWithState
+              : fetchPortfoliosWithStateS
+          }
           isFetching={isFetching}
           isFiltering={isFiltering}
           canCreate={canCreate}
@@ -221,12 +236,17 @@ const Portfolios = () => {
           <ContentGalleryEmptyState {...emptyStateProps} />
         )}
       />
-      {meta.count > 0 && (
+      {meta?.count > 0 && (
         <BottomPaginationContainer>
           <AsyncPagination
             meta={meta}
             apiRequest={(_, options) =>
-              dispatch(fetchPortfoliosWithState(filters, options))
+              dispatch(
+                // eslint-disable-next-line no-undef
+                DEPLOYMENT_MODE !== 'standalone'
+                  ? fetchPortfoliosWithState(filters, options)
+                  : fetchPortfoliosWithStateS(filters, options)
+              )
             }
             dropDirection="up"
           />

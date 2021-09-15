@@ -9,6 +9,7 @@ import {
 } from '../../redux/actions/portfolio-actions';
 import useQuery from '../../utilities/use-query';
 import { getPortfolioFromState } from '../../helpers/portfolio/portfolio-helper';
+import { getPortfolioFromState as getPortfolioFromStateS } from '../../helpers/portfolio/portfolio-helper-s';
 import useEnhancedHistory from '../../utilities/use-enhanced-history';
 import { UnauthorizedRedirect } from '../error-pages/error-redirects';
 import { PORTFOLIO_ROUTE } from '../../constants/routes';
@@ -44,12 +45,11 @@ const AddPortfolioModal: React.ComponentType<AddPortfolioModalProps> = ({
   });
   const initialValues = useSelector<
     CatalogRootState,
-    InternalPortfolio | undefined
-  >(
-    ({ portfolioReducer }) =>
-      getPortfolioFromState(portfolioReducer, portfolioId) as
-        | InternalPortfolio
-        | undefined
+    Portfolio | undefined
+  >(({ portfolioReducer }) => (
+    DEPLOYMENT_MODE !== 'standalone'
+      ? getPortfolioFromState(portfolioReducer, portfolioId)
+      : getPortfolioFromStateS(portfolioReducer, portfolioId)
   );
 
   const onAddPortfolio = async (data: Partial<Portfolio>) => {
