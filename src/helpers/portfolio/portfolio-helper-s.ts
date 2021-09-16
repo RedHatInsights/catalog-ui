@@ -56,8 +56,9 @@ export const listPortfolioItems = (
   offset = 0,
   filter = ''
 ): Promise<ApiCollectionResponse<PortfolioItem>> => {
+  console.log('Debug 0- listPortfolioItems');
   return axiosInstance
-    .get(`${CATALOG_API_BASE}/portfolio_items?name${filter}`)
+    .get(`${CATALOG_API_BASE}/portfolio_items/?name${filter}`)
     .then(
       (portfolioItems: ApiCollectionResponse<PortfolioItem & AnyObject>) => {
         const portfolioReference = portfolioItems.results.reduce<AnyObject>(
@@ -74,7 +75,7 @@ export const listPortfolioItems = (
         );
         return axiosInstance
           .get<ApiCollectionResponse<Portfolio>>(
-            `${CATALOG_API_BASE}/portfolios?${Object.keys(portfolioReference)
+            `${CATALOG_API_BASE}/portfolios/?${Object.keys(portfolioReference)
               .map((id) => `id=${id}`)
               .join('&')}`
           )
@@ -98,15 +99,17 @@ export const listPortfolioItems = (
     });
 };
 
-export const getPortfolio = (portfolioId: string): Promise<Portfolio> =>
-  portfolioApi.showPortfolio(portfolioId) as Promise<Portfolio>;
+export const getPortfolio = (portfolioId: string): Promise<Portfolio> => {
+  console.log('Debug - getPortfolio');
+  return axiosInstance.get(`${CATALOG_API_BASE}/portfolios/${portfolioId}/`);
+};
 
 export const getPortfolioItemsWithPortfolio = (
   portfolioId: string,
   { pageSize, page, filter = '' } = defaultSettings
 ): Promise<ApiCollectionResponse<PortfolioItem>> =>
   axiosInstance.get(
-    `${CATALOG_API_BASE}/portfolios/${portfolioId}/portfolio_items/name=${filter}`
+    `${CATALOG_API_BASE}/portfolios/${portfolioId}/portfolio_items/`
   );
 
 // TO DO - change to use the API call that adds multiple items to a portfolio when available
@@ -176,7 +179,7 @@ export const fetchProviderControlParameters = (
 ): Promise<AnyObject> =>
   axiosInstance
     .get(
-      `${CATALOG_API_BASE}/portfolio_items/${portfolioItemId}/provider_control_parameters`
+      `${CATALOG_API_BASE}/portfolio_items/${portfolioItemId}/provider_control_parameters/`
     )
     .then((data: AnyObject) => ({
       required: [],
@@ -234,7 +237,7 @@ export const copyPortfolioItem = (
   ) as Promise<PortfolioItem>;
 
 export const resetPortfolioItemIcon = (iconId: string): AxiosPromise<void> =>
-  axiosInstance.delete(`${CATALOG_API_BASE}/icons/${iconId}`);
+  axiosInstance.delete(`${CATALOG_API_BASE}/icons/${iconId}/`);
 
 export const uploadPortfolioItemIcon = (
   portfolioItemId: string,
@@ -244,11 +247,11 @@ export const uploadPortfolioItemIcon = (
   const data = new FormData();
   data.append('content', file, file.name);
   if (iconId) {
-    return axiosInstance.patch(`${CATALOG_API_BASE}/icons/${iconId}`, data);
+    return axiosInstance.patch(`${CATALOG_API_BASE}/icons/${iconId}/`, data);
   }
 
   data.append('portfolio_item_id', portfolioItemId);
-  return axiosInstance.post(`${CATALOG_API_BASE}/icons`, data, {
+  return axiosInstance.post(`${CATALOG_API_BASE}/icons/`, data, {
     headers: {
       accept: 'application/json',
       'Content-Type': `multipart/form-data; boundary=${
@@ -267,10 +270,10 @@ export const getPortfolioItemDetail = (
 ): Promise<[PortfolioItem, Source]> =>
   Promise.all([
     axiosInstance.get(
-      `${CATALOG_API_BASE}/portfolio_items/${params.portfolioItem}`
+      `${CATALOG_API_BASE}/portfolio_items/${params.portfolioItem}/`
     ),
     axiosInstance
-      .get(`${CATALOG_INVENTORY_API_BASE}/sources/${params.source}`)
+      .get(`${CATALOG_INVENTORY_API_BASE}/sources/${params.source}/`)
       .catch((error) => {
         if (error.status === 404) {
           return {

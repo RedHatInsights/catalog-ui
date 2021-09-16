@@ -13,6 +13,14 @@ import {
   resetSelectedPortfolio,
   fetchPortfolioItemsWithPortfolio
 } from '../../redux/actions/portfolio-actions';
+import {
+  copyPortfolio as copyPortfolioS,
+  fetchPortfolios as fetchPortfoliosS,
+  fetchSelectedPortfolio as fetchSelectedPortfolioS,
+  removeProductsFromPortfolio as removeProductsFromPortfolioS,
+  resetSelectedPortfolio as resetSelectedPortfolioS,
+  fetchPortfolioItemsWithPortfolio as fetchPortfolioItemsWithPortfolioS
+} from '../../redux/actions/portfolio-actions-s';
 import asyncFormValidator from '../../utilities/async-form-validator';
 import useQuery from '../../utilities/use-query';
 import useBreadcrumbs from '../../utilities/use-breadcrumbs';
@@ -147,9 +155,21 @@ const Portfolio = () => {
     stateDispatch({ type: 'setIsFetching', payload: true });
     return Promise.all([
       dispatch(fetchPlatforms()),
-      dispatch(fetchSelectedPortfolio(portfolioId)),
       dispatch(
-        fetchPortfolioItemsWithPortfolio(portfolioId, viewState?.portfolioItems)
+        window?.catalog?.standalone
+          ? fetchSelectedPortfolioS(portfolioId)
+          : fetchSelectedPortfolio(portfolioId)
+      ),
+      dispatch(
+        window?.catalog?.standalone
+          ? fetchPortfolioItemsWithPortfolioS(
+              portfolioId,
+              viewState?.portfolioItems
+            )
+          : fetchPortfolioItemsWithPortfolio(
+              portfolioId,
+              viewState?.portfolioItems
+            )
       )
     ])
       .then((data) => {
@@ -168,7 +188,11 @@ const Portfolio = () => {
 
     return () => {
       resetBreadcrumbs();
-      dispatch(resetSelectedPortfolio());
+      dispatch(
+        window.catalog.standalone
+          ? resetSelectedPortfolioS()
+          : resetSelectedPortfolio()
+      );
     };
   }, []);
 
@@ -185,7 +209,9 @@ const Portfolio = () => {
 
   const handleCopyPortfolio = () => {
     stateDispatch({ type: 'setCopyInProgress', payload: true });
-    return dispatch(copyPortfolio(id))
+    return dispatch(
+      window.catalog?.standalone ? copyPortfolioS(id) : copyPortfolio(id)
+    )
       .then(({ id }) =>
         history.push({
           pathname: PORTFOLIO_ROUTE,
@@ -193,7 +219,11 @@ const Portfolio = () => {
         })
       )
       .then(() => stateDispatch({ type: 'setCopyInProgress', payload: false }))
-      .then(() => dispatch(fetchPortfolios()))
+      .then(() =>
+        dispatch(
+          window?.catalog?.standalone ? fetchPortfoliosS : fetchPortfolios
+        )
+      )
       .catch(() =>
         stateDispatch({ type: 'setCopyInProgress', payload: false })
       );
@@ -202,11 +232,17 @@ const Portfolio = () => {
   const removeProducts = (products) => {
     stateDispatch({ type: 'setRemoveInProgress', payload: true });
     dispatch(
-      removeProductsFromPortfolio(
-        products,
-        portfolio.name,
-        state.firstSelectedProduct
-      )
+      window.catalog.standalone
+        ? removeProductsFromPortfolioS(
+            products,
+            portfolio.name,
+            state.firstSelectedProduct
+          )
+        : removeProductsFromPortfolio(
+            products,
+            portfolio.name,
+            state.firstSelectedProduct
+          )
     )
       .then(() => stateDispatch({ type: 'removeSucessfull' }))
       .catch(() =>

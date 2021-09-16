@@ -37,7 +37,7 @@ export interface PortfolioItemStateObject {
 export interface PortfolioReducerState extends AnyObject {
   portfolioItems: ApiCollectionResponse<PortfolioItem>;
   portfolioItem: PortfolioItemStateObject;
-  portfolios: any;
+  portfolios: ApiCollectionResponse<Portfolio>;
   selectedPortfolio: InternalPortfolio;
   portfolio: Portfolio;
   filterValue: string;
@@ -64,6 +64,7 @@ export const portfoliosInitialState: PortfolioReducerState = {
   },
   portfolios: {
     data: [],
+    // @ts-ignore
     results: [],
     meta: defaultSettings
   },
@@ -147,6 +148,7 @@ const addTemporaryPortfolio: PortfolioReducerActionHandler = (
     ]
   }
 });
+
 const updateTemporaryPortfolio: PortfolioReducerActionHandler = (
   state,
   { payload }
@@ -165,6 +167,7 @@ const updateTemporaryPortfolio: PortfolioReducerActionHandler = (
   },
   portfolios: {
     ...state.portfolios,
+    // @ts-ignore
     data: state.portfolios.data.map((item: { id: any }) =>
       item.id === payload.id
         ? {
@@ -185,7 +188,6 @@ const deleteTemporaryPortfolio: PortfolioReducerActionHandler = (
   selectedPortfolio: { metadata: { user_capabilities: {}, statistics: {} } },
   portfolios: {
     ...state.portfolios,
-    // @ts-ignore
     data: state.portfolios.data.filter(({ id }) => id !== payload)
   }
 });

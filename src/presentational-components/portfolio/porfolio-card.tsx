@@ -197,10 +197,6 @@ const PortfolioCard: React.ComponentType<PortfolioCardProps> = ({
   name,
   id,
   handleCopyPortfolio,
-  metadata: {
-    user_capabilities,
-    statistics: { shared_groups, approval_processes, portfolio_items }
-  },
   canLinkOrderProcesses,
   ...props
 }) => {
@@ -217,11 +213,16 @@ const PortfolioCard: React.ComponentType<PortfolioCardProps> = ({
             id={id}
             to={to}
             portfolioName={name}
-            portfolio_items={portfolio_items || 0}
+            portfolio_items={0}
             headerActions={
               <HeaderActions
                 portfolioId={id}
-                userCapabilities={user_capabilities}
+                userCapabilities={{
+                  share: true,
+                  unshare: true,
+                  update: true,
+                  destroy: true
+                }}
                 handleCopyPortfolio={handleCopyPortfolio}
                 canLinkOrderProcesses={canLinkOrderProcesses}
               />
@@ -245,13 +246,13 @@ const PortfolioCard: React.ComponentType<PortfolioCardProps> = ({
           />
         </StyledCardBody>
         <CardFooter>
-          {approval_processes && approval_processes > 0 && (
+          {0 && (
             <Label variant="filled" color="grey">
               {formatMessage(labelMessages.approvalProcessSet)}
             </Label>
           )}
           &nbsp;
-          {shared_groups && shared_groups > 0 && (
+          {0 && (
             <Label variant="filled" color="grey">
               {formatMessage(labelMessages.shared)}
             </Label>
