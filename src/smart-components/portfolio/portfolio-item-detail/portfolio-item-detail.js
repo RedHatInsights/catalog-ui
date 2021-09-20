@@ -204,7 +204,8 @@ const PortfolioItemDetail = () => {
                   uploadIcon={uploadIcon}
                   product={portfolioItemData.portfolioItem}
                   userCapabilities={
-                    portfolioItemData?.portfolioItem?.metadata?.user_capabilities
+                    portfolioItemData?.portfolioItem?.metadata
+                      ?.user_capabilities
                   }
                   url={url}
                   detailPaths={detailPaths}
