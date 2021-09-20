@@ -275,7 +275,7 @@ const Portfolio = () => {
     portfolioItemRoute: `${url}/portfolio-item`
   };
 
-  if (portfolio.metadata.user_capabilities.show === false) {
+  if (portfolio.metadata?.user_capabilities?.show === false) {
     return <UnauthorizedRedirect />;
   }
 
@@ -292,7 +292,7 @@ const Portfolio = () => {
       <Switch>
         <CatalogRoute
           path={routes.addProductsRoute}
-          userCapabilities={portfolio.metadata.user_capabilities}
+          userCapabilities={portfolio.metadata?.user_capabilities}
           requiredCapabilities="update"
         >
           <AddProductsToPortfolio portfolioRoute={routes.portfolioRoute} />

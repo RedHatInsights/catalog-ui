@@ -35,22 +35,28 @@ const PortfolioItems = ({
   }
 }) => {
   const formatMessage = useFormatMessage();
-  const { data, meta, name, description, userCapabilities } = useSelector(
+  const {
+    data,
+    results,
+    meta,
+    count,
+    name,
+    description,
+    userCapabilities
+  } = useSelector(
     ({
       portfolioReducer: {
-        portfolioItems: { data, meta },
-        selectedPortfolio: {
-          name,
-          description,
-          metadata: { user_capabilities }
-        }
+        portfolioItems: { data, results, meta, count },
+        selectedPortfolio: { name, description, metadata }
       }
     }) => ({
       data,
+      results,
       meta,
+      count,
       name,
       description,
-      userCapabilities: user_capabilities
+      userCapabilities: metadata?.user_capabilities
     })
   );
   const { url } = useRouteMatch(PORTFOLIO_ROUTE);
@@ -60,8 +66,9 @@ const PortfolioItems = ({
   const canLinkOrderProcesses = hasPermission(userPermissions, [
     'catalog:order_processes:link'
   ]);
-
-  const items = data.map((item) => (
+  const dataSet = data ? data : results;
+  const metaInfo = meta ? meta : { count };
+  const items = dataSet.map((item) => (
     <PortfolioItem
       key={item.id}
       {...item}
@@ -71,7 +78,7 @@ const PortfolioItems = ({
         'portfolio-item': item.id
       }}
       preserveSearch
-      isSelectable={userCapabilities.update}
+      isSelectable={userCapabilities?.update}
       onSelect={(selectedItem) =>
         stateDispatch({
           type: 'selectItem',
@@ -101,7 +108,7 @@ const PortfolioItems = ({
           copyInProgress,
           removeProducts: () => removeProducts(selectedItems),
           itemsSelected: selectedItems.length > 0,
-          meta,
+          meta: metaInfo,
           fetchPortfolioItemsWithPortfolio: (...args) =>
             dispatch(fetchPortfolioItemsWithPortfolio(...args)),
           portfolioId: id,
@@ -115,17 +122,17 @@ const PortfolioItems = ({
         renderEmptyState={() => (
           <PortfolioEmptyState
             handleFilterChange={handleFilterChange}
-            meta={meta}
+            meta={metaInfo}
             userCapabilities={userCapabilities}
             url={routes.addProductsRoute}
           />
         )}
       />
-      {meta.count > 0 && (
+      {metaInfo?.count > 0 && (
         <BottomPaginationContainer>
           <AsyncPagination
             dropDirection="up"
-            meta={meta}
+            meta={metaInfo}
             apiProps={id}
             apiRequest={(...args) =>
               dispatch(fetchPortfolioItemsWithPortfolio(...args))

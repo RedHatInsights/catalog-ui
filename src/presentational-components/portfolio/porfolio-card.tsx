@@ -197,6 +197,7 @@ const PortfolioCard: React.ComponentType<PortfolioCardProps> = ({
   name,
   id,
   handleCopyPortfolio,
+  metadata,
   canLinkOrderProcesses,
   ...props
 }) => {
@@ -205,6 +206,8 @@ const PortfolioCard: React.ComponentType<PortfolioCardProps> = ({
     pathname: PORTFOLIO_ROUTE,
     search: `?portfolio=${id}`
   };
+  const user_capabilities = metadata?.user_capabilities || {};
+  const statistics = metadata?.statistics || {};
   return (
     <StyledGalleryItem isDisabled={isDisabled}>
       <StyledCard ouiaId={`portfolio-${id}`}>
@@ -213,16 +216,11 @@ const PortfolioCard: React.ComponentType<PortfolioCardProps> = ({
             id={id}
             to={to}
             portfolioName={name}
-            portfolio_items={0}
+            portfolio_items={statistics?.portfolio_items || 0}
             headerActions={
               <HeaderActions
                 portfolioId={id}
-                userCapabilities={{
-                  share: true,
-                  unshare: true,
-                  update: true,
-                  destroy: true
-                }}
+                userCapabilities={user_capabilities}
                 handleCopyPortfolio={handleCopyPortfolio}
                 canLinkOrderProcesses={canLinkOrderProcesses}
               />
@@ -246,13 +244,14 @@ const PortfolioCard: React.ComponentType<PortfolioCardProps> = ({
           />
         </StyledCardBody>
         <CardFooter>
-          {0 && (
-            <Label variant="filled" color="grey">
-              {formatMessage(labelMessages.approvalProcessSet)}
-            </Label>
-          )}
+          {statistics?.approval_processes &&
+            statistics?.approval_processes > 0 && (
+              <Label variant="filled" color="grey">
+                {formatMessage(labelMessages.approvalProcessSet)}
+              </Label>
+            )}
           &nbsp;
-          {0 && (
+          {statistics?.shared_groups && statistics?.shared_groups > 0 && (
             <Label variant="filled" color="grey">
               {formatMessage(labelMessages.shared)}
             </Label>

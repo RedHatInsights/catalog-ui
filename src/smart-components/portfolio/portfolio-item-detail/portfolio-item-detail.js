@@ -142,7 +142,7 @@ const PortfolioItemDetail = () => {
         <CatalogRoute
           requiredCapabilities="update"
           userCapabilities={
-            portfolioItemData?.portfolioItem?.metadata.user_capabilities
+            portfolioItemData?.portfolioItem?.metadata?.user_capabilities
           }
           path={`${url}/edit-survey`}
         >
@@ -167,7 +167,7 @@ const PortfolioItemDetail = () => {
               isFetching={isFetching}
               availability={availability}
               userCapabilities={
-                portfolioItemData?.portfolioItem?.metadata.user_capabilities
+                portfolioItemData?.portfolioItem?.metadata?.user_capabilities
               }
               orderable={portfolioItemData?.portfolioItem.metadata?.orderable}
               canLinkOrderProcesses={canLinkOrderProcesses}
@@ -204,7 +204,7 @@ const PortfolioItemDetail = () => {
                   uploadIcon={uploadIcon}
                   product={portfolioItemData.portfolioItem}
                   userCapabilities={
-                    portfolioItemData?.portfolioItem?.metadata.user_capabilities
+                    portfolioItemData?.portfolioItem?.metadata?.user_capabilities
                   }
                   url={url}
                   detailPaths={detailPaths}

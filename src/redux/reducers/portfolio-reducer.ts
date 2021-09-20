@@ -74,7 +74,12 @@ export const portfoliosInitialState: PortfolioReducerState = {
       statistics: {}
     }
   },
-  portfolio: {},
+  portfolio: {
+    metadata: {
+      user_capabilities: {},
+      statistics: {}
+    }
+  },
   filterValue: '',
   isLoading: false
 };
@@ -159,7 +164,7 @@ const updateTemporaryPortfolio: PortfolioReducerActionHandler = (
     metadata: {
       ...state.selectedPortfolio.metadata,
       user_capabilities: {
-        // the client typings define metadaas object which will result it unknow property TS error. So we have to override it
+        // the client typings define metadata object which will result it unknown property TS error. So we have to override it
         ...(state.selectedPortfolio.metadata as AnyObject).user_capabilities
       }
     },
