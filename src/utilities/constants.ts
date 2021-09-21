@@ -1,13 +1,12 @@
 // eslint-disable-next-line no-undef
-console.log('Debug constants - DEPLOYMENT_MODE: ', DEPLOYMENT_MODE);
 export const CATALOG_API_BASE =
   // eslint-disable-next-line no-undef
-  DEPLOYMENT_MODE === 'standalone'
+  window.catalog?.standalone
     ? 'http://127.0.0.1:8000/api/v1'
     : `${process.env.BASE_PATH || '/api'}/catalog/v1.3`;
 export const SOURCES_API_BASE =
   // eslint-disable-next-line no-undef
-  DEPLOYMENT_MODE === 'standalone'
+  window.catalog?.standalone
     ? 'http://127.0.0.1:8000/api/v1'
     : `${process.env.BASE_PATH || '/api'}/sources/v1.0`;
 export const APPROVAL_API_BASE = `${process.env.BASE_PATH ||
