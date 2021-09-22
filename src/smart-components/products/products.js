@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { WrenchIcon, SearchIcon } from '@patternfly/react-icons';
 
 import { fetchPortfolioItems } from '../../redux/actions/portfolio-actions';
+import { fetchPortfolioItems as fetchPortfolioItemsS } from '../../redux/actions/portfolio-actions-s';
 import { scrollToTop } from '../../helpers/shared/helpers';
 import PortfolioItem from '../portfolio/portfolio-item';
 import createProductsToolbarSchema from '../../toolbar/schemas/products-toolbar.schema';
@@ -10,6 +11,7 @@ import ToolbarRenderer from '../../toolbar/toolbar-renderer';
 import { defaultSettings } from '../../helpers/shared/pagination';
 import ContentGallery from '../content-gallery/content-gallery';
 import { fetchPlatforms } from '../../redux/actions/platform-actions';
+import { fetchPlatformsS } from '../../redux/actions/platform-actions-s';
 import asyncFormValidator from '../../utilities/async-form-validator';
 import ContentGalleryEmptyState from '../../presentational-components/shared/content-gallery-empty-state';
 import {
@@ -32,9 +34,11 @@ import useFormatMessage from '../../utilities/use-format-message';
 const debouncedFilter = asyncFormValidator(
   (value, dispatch, filteringCallback) => {
     filteringCallback(true);
-    dispatch(fetchPortfolioItems(value, defaultSettings)).then(() =>
-      filteringCallback(false)
-    );
+    dispatch(
+      window.catalog?.standalone
+        ? fetchPortfolioItemsS(value, defaultSettings)
+        : fetchPortfolioItems(value, defaultSettings)
+    ).then(() => filteringCallback(false));
   },
   1000
 );

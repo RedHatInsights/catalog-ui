@@ -42,9 +42,9 @@ const debouncedFilter = asyncFormValidator(
     filteringCallback(true);
     dispatch(
       // eslint-disable-next-line no-undef
-      DEPLOYMENT_MODE !== 'standalone'
-        ? fetchPortfoliosWithState(filters, meta)
-        : fetchPortfoliosWithStateS(filters, meta)
+      window.catalog?.standalone
+        ? fetchPortfoliosWithStateS(filters, meta)
+        : fetchPortfoliosWithState(filters, meta)
     ).then(() => filteringCallback(false));
   },
   1000
@@ -124,9 +124,9 @@ const Portfolios = () => {
   useEffect(() => {
     dispatch(
       // eslint-disable-next-line no-undef
-      DEPLOYMENT_MODE !== 'standalone'
-        ? fetchPortfoliosWithState(filters, { ...meta, sortDirection })
-        : fetchPortfoliosWithStateS(filters, { ...meta, sortDirection })
+      window.catalog?.standalone
+        ? fetchPortfoliosWithStateS(filters, { ...meta, sortDirection })
+        : fetchPortfoliosWithState(filters, { ...meta, sortDirection })
     ).then(() => stateDispatch({ type: 'setFetching', payload: false }));
     scrollToTop();
   }, []);
@@ -223,9 +223,9 @@ const Portfolios = () => {
           handleSort={handleSort}
           fetchPortfoliosWithState={
             // eslint-disable-next-line no-undef
-            DEPLOYMENT_MODE !== 'standalone'
-              ? fetchPortfoliosWithState
-              : fetchPortfoliosWithStateS
+            window.catalog?.standalone
+              ? fetchPortfoliosWithStateS
+              : fetchPortfoliosWithState
           }
           isFetching={isFetching}
           isFiltering={isFiltering}
@@ -246,9 +246,9 @@ const Portfolios = () => {
             apiRequest={(_, options) =>
               dispatch(
                 // eslint-disable-next-line no-undef
-                DEPLOYMENT_MODE !== 'standalone'
-                  ? fetchPortfoliosWithState(filters, options)
-                  : fetchPortfoliosWithStateS(filters, options)
+                window.catalog?.standalone
+                  ? fetchPortfoliosWithStateS(filters, options)
+                  : fetchPortfoliosWithState(filters, options)
               )
             }
             dropDirection="up"

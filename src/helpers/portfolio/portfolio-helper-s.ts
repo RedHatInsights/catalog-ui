@@ -58,7 +58,7 @@ export const listPortfolioItems = (
 ): Promise<ApiCollectionResponse<PortfolioItem>> => {
   console.log('Debug 0- listPortfolioItems');
   return axiosInstance
-    .get(`${CATALOG_API_BASE}/portfolio_items/?name${filter}`)
+    .get(`${CATALOG_API_BASE}/portfolio_items/?${filter}`)
     .then(
       (portfolioItems: ApiCollectionResponse<PortfolioItem & AnyObject>) => {
         const portfolioReference = portfolioItems.results.reduce<AnyObject>(
@@ -131,7 +131,9 @@ export const addToPortfolio = (
 ): Promise<PortfolioItem[]> =>
   Promise.all(
     items.map((item) =>
-      portfolioItemApi.createPortfolioItem({
+      axiosInstance.put(`${CATALOG_API_BASE}/portfolio_items/`, {
+        name: item,
+        description: item,
         portfolio_id: portfolioId,
         service_offering_ref: item
       })
@@ -309,12 +311,3 @@ export const undeletePortfolio = (
   axiosInstance.post(`${CATALOG_API_BASE}/portfolios/${portfolioId}/undelete`, {
     restore_key: restoreKey
   });
-
-export const fetchPortfolioItem = async (
-  portfolioItemId: string
-): Promise<PortfolioItem> => {
-  const portfolioItem = await portfolioItemApi.showPortfolioItem(
-    portfolioItemId
-  );
-  return (portfolioItem as unknown) as PortfolioItem;
-};

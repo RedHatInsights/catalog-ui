@@ -98,9 +98,11 @@ const initialState = {
 const debouncedFilter = asyncFormValidator(
   (value, dispatch, filteringCallback, meta) => {
     filteringCallback(true);
-    dispatch(fetchPortfolioItemsWithPortfolio(value, meta)).then(() =>
-      filteringCallback(false)
-    );
+    dispatch(
+      window.catalog?.standalone
+        ? fetchPortfolioItemsWithPortfolioS(value, meta)
+        : fetchPortfolioItemsWithPortfolio(value, meta)
+    ).then(() => filteringCallback(false));
   },
   1000
 );

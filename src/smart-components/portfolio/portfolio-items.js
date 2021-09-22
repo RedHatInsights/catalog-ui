@@ -9,6 +9,7 @@ import PortfolioEmptyState from './portfolio-empty-state';
 import ContentGallery from '../content-gallery/content-gallery';
 import PortfolioItem from './portfolio-item';
 import { fetchPortfolioItemsWithPortfolio } from '../../redux/actions/portfolio-actions';
+import { fetchPortfolioItemsWithPortfolio as fetchPortfolioItemsWithPortfolioS } from '../../redux/actions/portfolio-actions-s';
 import AsyncPagination from '../common/async-pagination';
 import BottomPaginationContainer from '../../presentational-components/shared/bottom-pagination-container';
 import useQuery from '../../utilities/use-query';
@@ -110,7 +111,11 @@ const PortfolioItems = ({
           itemsSelected: selectedItems.length > 0,
           meta: metaInfo,
           fetchPortfolioItemsWithPortfolio: (...args) =>
-            dispatch(fetchPortfolioItemsWithPortfolio(...args)),
+            dispatch(
+              window.catalog?.standalone
+                ? fetchPortfolioItemsWithPortfolioS(...args)
+                : fetchPortfolioItemsWithPortfolio(...args)
+            ),
           portfolioId: id,
           userCapabilities,
           canLinkOrderProcesses
@@ -135,7 +140,11 @@ const PortfolioItems = ({
             meta={metaInfo}
             apiProps={id}
             apiRequest={(...args) =>
-              dispatch(fetchPortfolioItemsWithPortfolio(...args))
+              dispatch(
+                window.catalog?.standalone
+                  ? fetchPortfolioItemsWithPortfolioS(...args)
+                  : fetchPortfolioItemsWithPortfolio(...args)
+              )
             }
           />
         </BottomPaginationContainer>

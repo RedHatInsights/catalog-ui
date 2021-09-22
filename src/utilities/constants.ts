@@ -9,10 +9,12 @@ export const SOURCES_API_BASE =
   window.catalog?.standalone
     ? 'http://127.0.0.1:8000/api/v1'
     : `${process.env.BASE_PATH || '/api'}/sources/v1.0`;
-export const APPROVAL_API_BASE = `${process.env.BASE_PATH ||
-  '/api'}/approval/v1.2`;
-export const CATALOG_INVENTORY_API_BASE = `${process.env.BASE_PATH ||
-  '/api'}/catalog-inventory/v1.0`;
+export const APPROVAL_API_BASE = window.catalog?.standalone
+  ? 'http://127.0.0.1:8000/api/approval/v1'
+  : `${process.env.BASE_PATH || '/api'}/approval/v1.2`;
+export const CATALOG_INVENTORY_API_BASE = window.catalog?.standalone
+  ? 'http://127.0.0.1:8000/api/catalog-inventory/v1'
+  : `${process.env.BASE_PATH || '/api'}/catalog-inventory/v1.0`;
 export const RBAC_API_BASE = `${process.env.BASE_PATH || '/api'}/rbac/v1`;
 export const permissionValues = ['order', 'read', 'update'];
 

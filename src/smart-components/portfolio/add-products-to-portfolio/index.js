@@ -123,7 +123,13 @@ const AddProductsToPortfolio = ({ portfolioRoute }) => {
       .then(() =>
         push({ pathname: portfolioRoute, search: `?portfolio=${portfolio.id}` })
       )
-      .then(() => dispatch(fetchPortfolioItemsWithPortfolio(portfolio.id)))
+      .then(() =>
+        dispatch(
+          window.catalog?.standalone
+            ? fetchPortfolioItemsWithPortfolioS(portfolio.id)
+            : fetchPortfolioItemsWithPortfolio(portfolio.id)
+        )
+      )
       .catch(() => dispatch({ type: 'setFetching', payload: false }));
   };
 

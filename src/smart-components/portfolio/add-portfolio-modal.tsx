@@ -46,9 +46,9 @@ const AddPortfolioModal: React.ComponentType<AddPortfolioModalProps> = ({
   const initialValues = useSelector<CatalogRootState, Portfolio | undefined>(
     ({ portfolioReducer }) =>
       // eslint-disable-next-line no-undef
-      DEPLOYMENT_MODE !== 'standalone'
-        ? getPortfolioFromState(portfolioReducer, portfolioId)
-        : getPortfolioFromStateS(portfolioReducer, portfolioId)
+      window.catalog?.standalone
+        ? getPortfolioFromStateS(portfolioReducer, portfolioId)
+        : getPortfolioFromState(portfolioReducer, portfolioId)
   );
 
   const onAddPortfolio = async (data: Partial<Portfolio>) => {

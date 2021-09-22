@@ -11,6 +11,12 @@ import {
   fetchPortfolioItemsWithPortfolio,
   fetchSelectedPortfolio
 } from '../../../redux/actions/portfolio-actions';
+import {
+  copyPortfolioItem as copyPortfolioItemS,
+  fetchPortfolioItemsWithPortfolio as fetchPortfolioItemsWithPortfolioS,
+  fetchSelectedPortfolio as fetchSelectedPortfolioS
+} from '../../../redux/actions/portfolio-actions-s';
+
 import asyncFormValidator from '../../../utilities/async-form-validator';
 import { listPortfolios } from '../../../helpers/portfolio/portfolio-helper';
 import { PORTFOLIO_ITEM_ROUTE } from '../../../constants/routes';
@@ -113,7 +119,11 @@ const CopyPortfolioItemModal: React.ComponentType<CopyPortfolioItemModalProps> =
       .then(
         () =>
           values.portfolio_id === portfolioId &&
-          dispatch(fetchPortfolioItemsWithPortfolio(portfolioId))
+          dispatch(
+            window.catalog?.standalone
+              ? fetchPortfolioItemsWithPortfolioS(portfolioId)
+              : fetchPortfolioItemsWithPortfolio(portfolioId)
+          )
       );
   };
 
