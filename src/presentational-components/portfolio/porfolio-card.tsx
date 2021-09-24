@@ -35,6 +35,7 @@ import labelMessages from '../../messages/labels.messages';
 import useFormatMessage from '../../utilities/use-format-message';
 import orderProcessesMessages from '../../messages/order-processes.messages';
 import { UserCapabilities, PortfolioMetadata } from '../../types/common-types';
+import { USER_CAPABILITIES_PLACEHOLDER } from '../../utilities/constants';
 
 const TO_DISPLAY = ['description'];
 
@@ -206,7 +207,9 @@ const PortfolioCard: React.ComponentType<PortfolioCardProps> = ({
     pathname: PORTFOLIO_ROUTE,
     search: `?portfolio=${id}`
   };
-  const user_capabilities = metadata?.user_capabilities || {};
+  const user_capabilities = window.catalog?.standalone
+    ? USER_CAPABILITIES_PLACEHOLDER
+    : metadata?.user_capabilities || {};
   const statistics = metadata?.statistics || {};
   return (
     <StyledGalleryItem isDisabled={isDisabled}>

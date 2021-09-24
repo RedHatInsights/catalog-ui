@@ -99,7 +99,9 @@ const CopyPortfolioItemModal: React.ComponentType<CopyPortfolioItemModalProps> =
      * this will ensure that correct portfolio data will be loaded after the redirect occurs
      */
     const { value: portfolio } = await dispatch(
-      fetchSelectedPortfolio(values.portfolio_id) as Promise<{
+      (window.catalog?.standalone
+        ? fetchSelectedPortfolioS(values.portfolio_id)
+        : fetchSelectedPortfolio(values.portfolio_id)) as Promise<{
         value: Full<Portfolio>;
       }>
     );

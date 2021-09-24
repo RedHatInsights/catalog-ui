@@ -7,6 +7,10 @@ import {
   addPortfolio,
   updatePortfolio
 } from '../../redux/actions/portfolio-actions';
+import {
+  addPortfolio as addPortfolioS,
+  updatePortfolio as updatePortfolioS
+} from '../../redux/actions/portfolio-actions-s';
 import useQuery from '../../utilities/use-query';
 import { getPortfolioFromState } from '../../helpers/portfolio/portfolio-helper';
 import { getPortfolioFromState as getPortfolioFromStateS } from '../../helpers/portfolio/portfolio-helper-s';
@@ -62,7 +66,10 @@ const AddPortfolioModal: React.ComponentType<AddPortfolioModalProps> = ({
       })
     };
     const newPortfolio = await dispatch(
-      addPortfolio(data, notification) as Promise<{ value: Portfolio }>
+      (window.catalog?.standalone ? addPortfolioS : addPortfolio)(
+        data,
+        notification
+      ) as Promise<{ value: Portfolio }>
     );
     return newPortfolio && newPortfolio.value && newPortfolio.value.id
       ? push({
@@ -79,7 +86,10 @@ const AddPortfolioModal: React.ComponentType<AddPortfolioModalProps> = ({
        */
       setIsOpen(false);
       return dispatch(
-        (updatePortfolio(data, viewState) as unknown) as Promise<void>
+        ((window.catalog?.standalone ? updatePortfolioS : updatePortfolio)(
+          data,
+          viewState
+        ) as unknown) as Promise<void>
       ).then(() =>
         /**
          * Redirect only after the update was finished.
