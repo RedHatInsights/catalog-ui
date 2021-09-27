@@ -284,7 +284,14 @@ const App = (props) => {
     return (
       <UserContext.Provider
         value={{
-          permissions: [{ permission: 'catalog:portfolios:create' }],
+          permissions: [
+            { permission: 'catalog:portfolios:create' },
+            { permission: 'catalog:portfolios:update' },
+            { permission: 'catalog:portfolios:remove' },
+            { permission: 'catalog:portfolio_items:create' },
+            { permission: 'catalog:portfolio_items:update' },
+            { permission: 'catalog:portfolio_items:remove' }
+          ],
           userIdentity: { identity: { user: { is_org_admin: true } } },
           openApiSchema: {},
           standalone: true

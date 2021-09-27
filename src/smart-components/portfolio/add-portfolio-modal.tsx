@@ -66,10 +66,9 @@ const AddPortfolioModal: React.ComponentType<AddPortfolioModalProps> = ({
       })
     };
     const newPortfolio = await dispatch(
-      (window.catalog?.standalone ? addPortfolioS : addPortfolio)(
-        data,
-        notification
-      ) as Promise<{ value: Portfolio }>
+      window.catalog?.standalone
+        ? (addPortfolioS(data, notification) as Promise<{ value: Portfolio }>)
+        : (addPortfolio(data, notification) as Promise<{ value: Portfolio }>)
     );
     return newPortfolio && newPortfolio.value && newPortfolio.value.id
       ? push({
@@ -85,11 +84,15 @@ const AddPortfolioModal: React.ComponentType<AddPortfolioModalProps> = ({
        * Fake the redirect by closing the modal
        */
       setIsOpen(false);
+      console.log(
+        'Debug message - updatePortfolio - data, viewState',
+        data,
+        viewState
+      );
       return dispatch(
-        ((window.catalog?.standalone ? updatePortfolioS : updatePortfolio)(
-          data,
-          viewState
-        ) as unknown) as Promise<void>
+        (window.catalog?.standalone
+          ? updatePortfolioS(data, viewState)
+          : (updatePortfolio(data, viewState) as unknown)) as Promise<void>
       ).then(() =>
         /**
          * Redirect only after the update was finished.
@@ -101,6 +104,11 @@ const AddPortfolioModal: React.ComponentType<AddPortfolioModalProps> = ({
       return onAddPortfolio(data);
     }
   };
+
+  console.log(
+    'Debug message - addPortfolioModal - initialValues',
+    initialValues
+  );
 
   //if (initialValues?.metadata?.user_capabilities?.update === false) {
   //  return <UnauthorizedRedirect />;

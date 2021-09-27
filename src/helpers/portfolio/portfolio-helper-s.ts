@@ -117,7 +117,10 @@ export const addPortfolio = async (
   portfolioData: Partial<Portfolio>,
   items?: string[]
 ): Promise<Portfolio> => {
-  const portfolio = await portfolioApi.createPortfolio(portfolioData);
+  const portfolio = await axiosInstance.post(
+    `${CATALOG_API_BASE}/portfolios/`,
+    portfolioData
+  );
   if (portfolio && items && items.length > 0) {
     await addToPortfolio((portfolio as Portfolio).id!, items);
   }
@@ -207,36 +210,33 @@ export const updatePortfolioItem = (
 export const fetchPortfolioByName = (
   name = ''
 ): Promise<ApiCollectionResponse<Portfolio>> =>
-  axiosInstance.get(`${CATALOG_API_BASE}/portfolios`, {
-    params: {
-      filter: {
-        name
-      }
-    }
-  });
+  axiosInstance.get(`${CATALOG_API_BASE}/portfolios/?name=${name}`);
 
 export const restorePortfolioItems = (
   restoreData: RestorePortfolioItemConfig[]
 ): Promise<AxiosResponse<PortfolioItem>[]> =>
   Promise.all(
     restoreData.map(({ portfolioItemId, restoreKey }) =>
-      portfolioItemApi.unDeletePortfolioItem(portfolioItemId, {
-        restore_key: restoreKey
-      })
+      axiosInstance.post(
+        `${CATALOG_API_BASE}/portfolio-items/${portfolioItemId}/restore/`,
+        {
+          restore_key: restoreKey
+        }
+      )
     )
   );
 
 export const copyPortfolio = (portfolioId: string): Promise<Portfolio> =>
-  portfolioApi.postCopyPortfolio(portfolioId) as Promise<Portfolio>;
+  axiosInstance.post(`${CATALOG_API_BASE}/portfolios/${portfolioId}/copy/`);
 
 export const copyPortfolioItem = (
   portfolioItemId: string,
   copyObject: Partial<PortfolioItem> = {}
 ): Promise<PortfolioItem> =>
-  portfolioItemApi.postCopyPortfolioItem(
-    portfolioItemId,
+  axiosInstance.post(
+    `${CATALOG_API_BASE}/portfolio-items/${portfolioItemId}/copy/`,
     copyObject
-  ) as Promise<PortfolioItem>;
+  );
 
 export const resetPortfolioItemIcon = (iconId: string): AxiosPromise<void> =>
   axiosInstance.delete(`${CATALOG_API_BASE}/icons/${iconId}/`);
@@ -297,17 +297,30 @@ interface PortfolioReducerPlaceholder {
 export const getPortfolioFromState = (
   portfolioReducer: PortfolioReducerState,
   portfolioId: string
-): Portfolio | undefined =>
-  portfolioReducer.selectedPortfolio &&
-  portfolioReducer.selectedPortfolio.id === portfolioId
+): Portfolio | undefined => {
+  console.log(
+    'debug - getPortfolioFromStateS - portfolioReducer: ',
+    portfolioReducer
+  );
+  console.log(
+    'debug - find',
+    portfolioReducer.portfolios?.results?.find(({ id }) => id === portfolioId)
+  );
+  return portfolioReducer.selectedPortfolio &&
+    portfolioReducer.selectedPortfolio.id === portfolioId
     ? portfolioReducer.selectedPortfolio
-    : // @ts-ignore
-      portfolioReducer.portfolios?.data?.find(({ id }) => id === portfolioId);
+    : portfolioReducer.portfolios?.results?.find(
+        ({ id }) => id === portfolioId
+      );
+};
 
 export const undeletePortfolio = (
   portfolioId: string,
   restoreKey: string
 ): Promise<Portfolio> =>
-  axiosInstance.post(`${CATALOG_API_BASE}/portfolios/${portfolioId}/undelete`, {
-    restore_key: restoreKey
-  });
+  axiosInstance.post(
+    `${CATALOG_API_BASE}/portfolios/${portfolioId}/undelete/`,
+    {
+      restore_key: restoreKey
+    }
+  );

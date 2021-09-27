@@ -152,13 +152,16 @@ const Portfolios = () => {
     stateDispatch({ type: 'setSortBy', payload: direction });
 
   const handleCopyPortfolio = (id) =>
-    dispatch(copyPortfolio(id)).then(({ id }) =>
+    dispatch(
+      window.catalog?.standalone ? copyPortfolioS(id) : copyPortfolio(id)
+    ).then(({ id }) =>
       history.push({
         pathname: PORTFOLIO_ROUTE,
         search: `?portfolio=${id}`
       })
     );
 
+  console.log('Debug - userPermissions: ', userPermissions);
   const canCreate = hasPermission(userPermissions, [
     'catalog:portfolios:create'
   ]);
