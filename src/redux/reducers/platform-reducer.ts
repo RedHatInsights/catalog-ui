@@ -57,6 +57,7 @@ export const platformInitialState: PlatformReducerState = {
   platformItems: {},
   platformInventories: {
     data: [],
+    results: [],
     meta: defaultSettings
   },
   platformItem: {},

@@ -3,10 +3,7 @@ import {
   getPortfolioApi,
   getPortfolioItemApi
 } from '../shared/user-login';
-import {
-  CATALOG_API_BASE,
-  CATALOG_INVENTORY_API_BASE
-} from '../../utilities/constants';
+import { CATALOG_API_BASE } from '../../utilities/constants';
 import { sanitizeValues } from '../shared/helpers';
 import { defaultSettings } from '../shared/pagination';
 import {
@@ -28,8 +25,6 @@ import { GetReduxState } from '../../types/redux';
 import { PortfolioReducerState } from '../../redux/reducers/portfolio-reducer';
 
 const axiosInstance = getAxiosInstance();
-const portfolioApi = getPortfolioApi();
-const portfolioItemApi = getPortfolioItemApi();
 
 export const listPortfolios = (
   filters: AnyObject = {},
@@ -146,23 +141,23 @@ export const addToPortfolio = (
 export const updatePortfolio = (
   { id, ...portfolioData }: Partial<Portfolio>,
   store: Partial<Store>
-): AxiosPromise<Portfolio> =>
-  portfolioApi.updatePortfolio(
-    id!,
-    sanitizeValues(portfolioData, 'Portfolio', store)
+): AxiosPromise<Portfolio> => {
+  console.log('Debug - updatePortfolio, id, portfolioData', id, portfolioData);
+  return axiosInstance.patch(
+    `${CATALOG_API_BASE}/portfolios/${id}/`,
+    portfolioData
   );
+};
 
 export const removePortfolio = (
   portfolioId: string
 ): Promise<Full<RestoreKey>> =>
-  (portfolioApi.destroyPortfolio(portfolioId) as unknown) as Promise<
-    Full<RestoreKey>
-  >;
+  axiosInstance.delete(`${CATALOG_API_BASE}/portfolios/${portfolioId}/`);
 
 export const removePortfolioItem = (
   portfolioItemId: string
 ): AxiosPromise<RestoreKey> =>
-  portfolioItemApi.destroyPortfolioItem(portfolioItemId);
+  axiosInstance.delete(`${CATALOG_API_BASE}/portfolios/${portfolioItemId}/`);
 
 export const removePortfolioItems = (
   portfolioItemIds: string[]
@@ -202,10 +197,10 @@ export const updatePortfolioItem = (
   { id, ...portfolioItem }: Partial<PortfolioItem>,
   store: { getState: GetReduxState }
 ): Promise<PortfolioItem> =>
-  portfolioItemApi.updatePortfolioItem(
-    id!,
+  axiosInstance.patch(
+    `${CATALOG_API_BASE}/portfolio-items/${id}/`,
     sanitizeValues(portfolioItem, 'PortfolioItem', store)
-  ) as Promise<PortfolioItem>;
+  );
 
 export const fetchPortfolioByName = (
   name = ''
@@ -275,7 +270,7 @@ export const getPortfolioItemDetail = (
       `${CATALOG_API_BASE}/portfolio_items/${params.portfolioItem}/`
     ),
     axiosInstance
-      .get(`${CATALOG_INVENTORY_API_BASE}/sources/${params.source}/`)
+      .get(`${CATALOG_API_BASE}/sources/${params.source}/`)
       .catch((error) => {
         if (error.status === 404) {
           return {
@@ -303,14 +298,17 @@ export const getPortfolioFromState = (
     portfolioReducer
   );
   console.log(
-    'debug - find',
-    portfolioReducer.portfolios?.results?.find(({ id }) => id === portfolioId)
+    'debug - find portfolioId: ',
+    portfolioId,
+    portfolioReducer.portfolios?.results?.find(
+      (portfolio) => portfolio.id === portfolioId
+    )
   );
   return portfolioReducer.selectedPortfolio &&
     portfolioReducer.selectedPortfolio.id === portfolioId
     ? portfolioReducer.selectedPortfolio
     : portfolioReducer.portfolios?.results?.find(
-        ({ id }) => id === portfolioId
+        (portfolio) => String(portfolio.id) === portfolioId
       );
 };
 

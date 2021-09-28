@@ -51,6 +51,7 @@ export type PortfolioReducerActionHandler = ReduxActionHandler<
 export const portfoliosInitialState: PortfolioReducerState = {
   portfolioItems: {
     data: [],
+    results: [],
     meta: { limit: 50, offset: 0, filter: '' }
   },
   portfolioItem: {
@@ -64,7 +65,6 @@ export const portfoliosInitialState: PortfolioReducerState = {
   },
   portfolios: {
     data: [],
-    // @ts-ignore
     results: [],
     meta: defaultSettings
   },
@@ -74,12 +74,7 @@ export const portfoliosInitialState: PortfolioReducerState = {
       statistics: {}
     }
   },
-  portfolio: {
-    metadata: {
-      user_capabilities: {},
-      statistics: {}
-    }
-  },
+  portfolio: {},
   filterValue: '',
   isLoading: false
 };
@@ -91,15 +86,11 @@ const setLoadingState: PortfolioReducerActionHandler = (
   ...state,
   isLoading: payload
 });
-const setPortfolios: PortfolioReducerActionHandler = (state, { payload }) => {
-  console.log('Debug - payload: ', payload);
-  return {
-    ...state,
-    portfolios: payload,
-    isLoading: false
-  };
-};
-
+const setPortfolios: PortfolioReducerActionHandler = (state, { payload }) => ({
+  ...state,
+  portfolios: payload,
+  isLoading: false
+});
 const setPortfolioItems: PortfolioReducerActionHandler = (
   state,
   { payload }
@@ -138,7 +129,7 @@ const resetSelectedPortfolio: PortfolioReducerActionHandler = (state) => ({
 });
 
 // these are optimistic UI updates that mutate the portfolio state immediately after user action.
-// State is synchronized with API after actions are sucesfull
+// State is synchronized with API after actions are successful
 const addTemporaryPortfolio: PortfolioReducerActionHandler = (
   state,
   { payload }
@@ -147,13 +138,12 @@ const addTemporaryPortfolio: PortfolioReducerActionHandler = (
   ...state,
   portfolios: {
     ...state.portfolios,
-    data: [
-      ...state.portfolios.data,
+    data: [{ ...payload, metadata: { user_capabilities: {}, statistics: {} } }],
+    results: [
       { ...payload, metadata: { user_capabilities: {}, statistics: {} } }
     ]
   }
 });
-
 const updateTemporaryPortfolio: PortfolioReducerActionHandler = (
   state,
   { payload }
@@ -173,14 +163,22 @@ const updateTemporaryPortfolio: PortfolioReducerActionHandler = (
   portfolios: {
     ...state.portfolios,
     // @ts-ignore
-    data: state.portfolios.data.map((item: { id: any }) =>
+    data: state.portfolios?.data?.map((item: { id: any }) =>
       item.id === payload.id
         ? {
             ...item,
             ...payload
           }
         : item
-    )
+    ),
+    results: state.portfolios?.results?.map((item) => {
+      return String(item.id) === String(payload.id)
+        ? {
+            ...item,
+            ...payload
+          }
+        : item;
+    })
   }
 });
 
@@ -193,7 +191,8 @@ const deleteTemporaryPortfolio: PortfolioReducerActionHandler = (
   selectedPortfolio: { metadata: { user_capabilities: {}, statistics: {} } },
   portfolios: {
     ...state.portfolios,
-    data: state.portfolios.data.filter(({ id }) => id !== payload)
+    data: state.portfolios?.data?.filter(({ id }) => id !== payload),
+    results: state.portfolios?.results?.filter(({ id }) => id !== payload)
   }
 });
 
@@ -213,7 +212,12 @@ const updateTemporaryPortfolioItem: PortfolioReducerActionHandler = (
   },
   portfolioItems: {
     ...state.portfolioItems,
-    data: state.portfolioItems.data.map((item) =>
+    data: state.portfolioItems?.data?.map((item) =>
+      item.id === payload.id
+        ? { created_at: item.created_at, ...payload }
+        : item
+    ),
+    results: state.portfolioItems?.results?.map((item) =>
       item.id === payload.id
         ? { created_at: item.created_at, ...payload }
         : item
@@ -232,7 +236,10 @@ const updatePortfolioItem: PortfolioReducerActionHandler = (
   },
   portfolioItems: {
     ...state.portfolioItems,
-    data: state.portfolioItems.data.map((item) =>
+    data: state.portfolioItems?.data?.map((item) =>
+      item.id === payload.id ? { ...payload } : item
+    ),
+    results: state.portfolioItems?.results?.map((item) =>
       item.id === payload.id ? { ...payload } : item
     )
   }

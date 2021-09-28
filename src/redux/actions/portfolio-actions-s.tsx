@@ -244,12 +244,12 @@ export const removePortfolio = (portfolioId: string, viewState = {}) => (
             )
           }
         });
-        const { meta, data } = getState().portfolioReducer.portfolios;
+        const { meta, results } = getState().portfolioReducer.portfolios;
         return dispatch(
           (fetchPortfolios({
             ...viewState,
             ...meta,
-            offset: data.length === 0 ? 0 : meta.offset
+            offset: results?.length === 0 ? 0 : meta.offset
           }) as unknown) as AnyAction
         );
       })

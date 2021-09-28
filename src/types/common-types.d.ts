@@ -27,8 +27,8 @@ export interface ApiMetadata extends AnyObject {
 export interface ApiCollectionResponse<
   T /** he type of collection item. For instance Portfolio or Order*/
 > {
-  data?: T[];
-  results?: T[];
+  data: T[];
+  results: T[];
   meta: ApiMetadata;
 }
 

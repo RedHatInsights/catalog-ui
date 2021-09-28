@@ -19,6 +19,7 @@ import {
 
 import asyncFormValidator from '../../../utilities/async-form-validator';
 import { listPortfolios } from '../../../helpers/portfolio/portfolio-helper';
+import { listPortfolios as listPortfoliosS } from '../../../helpers/portfolio/portfolio-helper-s';
 import { PORTFOLIO_ITEM_ROUTE } from '../../../constants/routes';
 import actionMessages from '../../../messages/actions.messages';
 import labelMessages from '../../../messages/labels.messages';
@@ -36,18 +37,34 @@ import {
 } from '@redhat-cloud-services/catalog-client';
 
 const loadPortfolios = (name: string) =>
-  listPortfolios({ name }, { limit: 100, offset: 0 }).then(({ data }) =>
-    data
-      .filter(
-        ({
-          metadata: {
-            user_capabilities: { update }
-          }
-        }) => update
-      )
-      .map(({ name, id }) => ({ value: id, label: name }))
+  listPortfolios({ name }, { limit: 100, offset: 0 }).then((portfolio) =>
+    portfolio.data
+      ? portfolio.data
+          .filter(
+            ({
+              metadata: {
+                user_capabilities: { update }
+              }
+            }) => update
+          )
+          .map(({ name, id }) => ({ value: id, label: name }))
+      : []
   );
 
+const loadPortfoliosS = (name: string) =>
+  listPortfoliosS({ name }, { limit: 100, offset: 0 }).then((portfolio) =>
+    portfolio.results
+      ? portfolio.results
+          .filter(
+            ({
+              metadata: {
+                user_capabilities: { update }
+              }
+            }) => update
+          )
+          .map(({ name, id }) => ({ value: id, label: name }))
+      : []
+  );
 const copySchema = (
   getName: (value: string) => Promise<string | undefined>,
   formatMessage: FormatMessage,
@@ -106,11 +123,17 @@ const CopyPortfolioItemModal: React.ComponentType<CopyPortfolioItemModalProps> =
       }>
     );
     return dispatch(
-      (copyPortfolioItem(
-        portfolioItemId,
-        values,
-        portfolio
-      ) as unknown) as Promise<PortfolioItem>
+      window.catalog.standalone
+        ? ((copyPortfolioItemS(
+            portfolioItemId,
+            values,
+            portfolio
+          ) as unknown) as Promise<PortfolioItem>)
+        : ((copyPortfolioItem(
+            portfolioItemId,
+            values,
+            portfolio
+          ) as unknown) as Promise<PortfolioItem>)
     )
       .then(({ id, service_offering_source_ref }) =>
         push({
