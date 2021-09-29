@@ -74,7 +74,7 @@ const mapPlatformIcons = (
   platforms: Source[],
   sourceTypeIcons: StringObject
 ) =>
-  platforms.reduce<StringObject>(
+  platforms?.reduce<StringObject>(
     (acc, curr) =>
       !acc[curr.id || 'undefined']
         ? {
@@ -97,11 +97,6 @@ const setLoadingState: PlatformReducerActionHandler = (
 const setPlatforms: PlatformReducerActionHandler = (state, { payload }) => ({
   ...state,
   platforms: payload,
-  platformIconMapping: mapPlatformIcons(
-    state.platformIconMapping,
-    payload,
-    state.sourceTypeIcons
-  ),
   isPlatformDataLoading: false
 });
 

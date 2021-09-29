@@ -72,8 +72,8 @@ export const fetchPortfolioItems = (
   type: ActionTypes.FETCH_PORTFOLIO_ITEMS,
   meta: { filter, storeState: true, stateKey: 'products' },
   payload: PortfolioHelper.listPortfolioItems(
-    options.limit,
-    options.offset,
+    options?.limit,
+    options?.offset,
     filter
   )
 });
@@ -249,7 +249,7 @@ export const removePortfolio = (portfolioId: string, viewState = {}) => (
           (fetchPortfolios({
             ...viewState,
             ...meta,
-            offset: results?.length === 0 ? 0 : meta.offset
+            offset: results?.length === 0 ? 0 : meta?.offset
           }) as unknown) as AnyAction
         );
       })
@@ -318,14 +318,14 @@ export const removeProductsFromPortfolio = (
     }
   } = getState();
   return PortfolioHelper.removePortfolioItems(portfolioItems)
-    .then((data) =>
+    .then((results) =>
       dispatch(
         fetchPortfolioItemsWithPortfolio(portfolioId!, {
           offset: 0,
           limit: meta.limit,
           filter: ''
         })
-      ).then(() => data)
+      ).then(() => results)
     )
     .then((data) => {
       return dispatch({

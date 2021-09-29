@@ -69,6 +69,10 @@ const PortfolioItems = ({
   ]);
   const dataSet = data ? data : results;
   const metaInfo = meta ? meta : { count };
+  const userCapabilitiesS = window.catalog?.standalone
+    ? { update: true, create: true, destroy: true, share: true, unshare:true }
+    : userCapabilities;
+
   const items = dataSet.map((item) => (
     <PortfolioItem
       key={item.id}
@@ -117,7 +121,7 @@ const PortfolioItems = ({
                 : fetchPortfolioItemsWithPortfolio(...args)
             ),
           portfolioId: id,
-          userCapabilities,
+          userCapabilities: userCapabilitiesS,
           canLinkOrderProcesses
         })}
       />

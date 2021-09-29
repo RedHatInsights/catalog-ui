@@ -53,7 +53,7 @@ export const listPortfolioItems = (
 ): Promise<ApiCollectionResponse<PortfolioItem>> => {
   console.log('Debug 0- listPortfolioItems');
   return axiosInstance
-    .get(`${CATALOG_API_BASE}/portfolio_items/?${filter}`)
+    .get(`${CATALOG_API_BASE}/portfolio_items/`)
     .then(
       (portfolioItems: ApiCollectionResponse<PortfolioItem & AnyObject>) => {
         const portfolioReference = portfolioItems.results.reduce<AnyObject>(
@@ -242,7 +242,7 @@ export const uploadPortfolioItemIcon = (
   iconId?: string
 ): Promise<void> => {
   const data = new FormData();
-  data.append('content', file, file.name);
+  data.append('content', file.name);
   if (iconId) {
     return axiosInstance.patch(`${CATALOG_API_BASE}/icons/${iconId}/`, data);
   }

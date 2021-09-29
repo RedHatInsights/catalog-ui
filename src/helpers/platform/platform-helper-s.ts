@@ -35,20 +35,7 @@ const getSourcesDetails = (
 };
 
 export const getPlatforms = (): Promise<SourceDetails> =>
-  post(`${CATALOG_API_BASE}/graphql`, { query: sourcesQuery })
-    .then(({ data: { application_types } }) => application_types)
-    .then(([{ sources }]) => {
-      return getSourcesDetails(sources.map((source: Source) => source.id)).then(
-        (sourceDetails) => {
-          return sources.map((source: Source) => ({
-            ...source,
-            ...sourceDetails.data.find(
-              (sourceDetail) => sourceDetail.id === source.id
-            )
-          }));
-        }
-      );
-    });
+  axiosInstance.get(`${CATALOG_API_BASE}/sources/`);
 
 export const getPlatform = (platformId: string): Promise<Source> => {
   return axiosInstance.get(`${CATALOG_API_BASE}/sources/${platformId}/`);
