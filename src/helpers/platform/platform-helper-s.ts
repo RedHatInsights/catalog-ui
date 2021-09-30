@@ -72,7 +72,7 @@ export const getPlatformInventories = (
   if (platformId) {
     return axiosInstance.get(
       `${CATALOG_API_BASE}/sources/${platformId}/service_inventories?name=${filter}${
-        options ? `&limit=${options.limit}&offset=${options.offset}` : ''
+        options ? `&page-size=${options.limit}&page=${options.offset}` : ''
       }`
     );
   } else {
