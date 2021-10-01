@@ -250,7 +250,7 @@ const createPortfolioToolbarSchema = ({
                       placeholder
                     },
                     {
-                      hidden: meta.count === 0 || !userCapabilities?.update,
+                      hidden: !userCapabilities?.update,
                       groupName: 'add-portfolio-items',
                       key: 'portfolio-items-add-group',
                       ...createLinkButton({

@@ -491,5 +491,10 @@ export const setOrFetchPortfolio = (
     };
   }
 
+  console.log(
+    'Debug - setorfetchPortfolio - existingPortfolio, id: ',
+    existingPorfolio,
+    id
+  );
   return fetchSelectedPortfolio(id);
 };

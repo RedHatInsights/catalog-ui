@@ -1,5 +1,8 @@
 import { getAxiosInstance, getGraphqlInstance } from '../shared/user-login';
-import { CATALOG_API_BASE } from '../../utilities/constants';
+import {
+  CATALOG_API_BASE,
+  CATALOG_INVENTORY_API_BASE
+} from '../../utilities/constants';
 import { defaultSettings, PaginationConfiguration } from '../shared/pagination';
 import {
   Source,
@@ -29,7 +32,7 @@ const getSourcesDetails = (
   return axiosInstance.get(
     `${CATALOG_API_BASE}/sources?page_size=${sourceIds.length ||
       defaultSettings.limit}${sourceIds.length ? '&' : ''}${sourceIds
-      .map((sourceId) => `id=${sourceId}`)
+      .map((sourceId) => `id=${sourceId}/`)
       .join('&')}`
   );
 };
@@ -52,12 +55,15 @@ export const getPlatformItems = (
   filter?: string,
   options?: PaginationConfiguration
 ): Promise<ApiCollectionResponse<ServiceOffering>> => {
-  const filterQuery = filter ? `&name=${filter}` : '';
   if (platformId) {
+    const filterQuery = filter ? `?name=${filter}` : '';
+    const optionsQuery = options
+      ? `page_size=${options.limit}&page=${options.offset}`
+      : '';
     return axiosInstance.get(
-      `${CATALOG_API_BASE}/sources/${platformId}/service_offerings?${
-        options ? `page_size=${options.limit}&page=${options.offset}` : ''
-      }`
+      `${CATALOG_API_BASE}/sources/${platformId}/service_offerings/${filterQuery}${
+        filter ? '&' : '?'
+      }${optionsQuery}`
     );
   } else {
     return axiosInstance.get(`${CATALOG_API_BASE}/service_offerings/`);
@@ -88,7 +94,7 @@ export const getServiceOffering = (
 ): Promise<{ service: ServiceOffering; source: Source }> =>
   Promise.all([
     axiosInstance.get(
-      `${CATALOG_API_BASE}/service_offerings/${serviceOfferingId}`
+      `${CATALOG_API_BASE}/service_offerings/${serviceOfferingId}/`
     ),
     axiosInstance
       .get(`${CATALOG_API_BASE}/sources/${sourceId}`)

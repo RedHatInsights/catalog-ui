@@ -106,10 +106,16 @@ const AddProductsToPortfolio = ({ portfolioRoute }) => {
     selectedPlatform && platformItems[selectedPlatform.id]
       ? platformItems[selectedPlatform.id].data
       : [];
+
   const meta =
     selectedPlatform &&
     platformItems[selectedPlatform.id] &&
-    platformItems[selectedPlatform.id].meta;
+    (window.catalog?.standalone
+      ? platformItems[selectedPlatform.id].meta
+      : { count: platformItems[selectedPlatform.id].count });
+
+  console.log('Debug - addtoportfolio - meta: ', meta);
+  console.log('Debug - addtoportfolio - selectedPlatform: ', selectedPlatform);
 
   const handleFilterItems = (value) => {
     stateDispatch({ type: 'setFilterValue', payload: value });

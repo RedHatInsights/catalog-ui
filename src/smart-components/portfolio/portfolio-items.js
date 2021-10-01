@@ -43,7 +43,7 @@ const PortfolioItems = ({
     count,
     name,
     description,
-    userCapabilities
+    metadata
   } = useSelector(
     ({
       portfolioReducer: {
@@ -57,7 +57,7 @@ const PortfolioItems = ({
       count,
       name,
       description,
-      userCapabilities: metadata?.user_capabilities
+      metadata
     })
   );
   const { url } = useRouteMatch(PORTFOLIO_ROUTE);
@@ -69,9 +69,22 @@ const PortfolioItems = ({
   ]);
   const dataSet = data ? data : results;
   const metaInfo = meta ? meta : { count };
-  const userCapabilitiesS = window.catalog?.standalone
-    ? { update: true, create: true, destroy: true, share: true, unshare:true }
-    : userCapabilities;
+  const userCapabilities = window.catalog?.standalone
+    ? {
+        show: true,
+        update: true,
+        set_approval: true,
+        share: true,
+        unshare: true,
+        untag: true,
+        tag: true,
+        set_order_process: true,
+        create: true,
+        destroy: true,
+        restore: true,
+        copy: true
+      }
+    : metadata?.user_capabilities;
 
   const items = dataSet.map((item) => (
     <PortfolioItem
@@ -121,7 +134,7 @@ const PortfolioItems = ({
                 : fetchPortfolioItemsWithPortfolio(...args)
             ),
           portfolioId: id,
-          userCapabilities: userCapabilitiesS,
+          userCapabilities,
           canLinkOrderProcesses
         })}
       />
