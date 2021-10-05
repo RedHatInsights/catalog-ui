@@ -46,10 +46,13 @@ const Platforms = () => {
     scrollToTop();
   }, []);
 
-  console.log('Debug - platforms: ', platforms.results);
-  const filteredItems = platforms.results
+  console.log('Debug - platforms: ', platforms);
+  const items = window.catalog?.standalone ? platforms.results : platforms;
+  console.log('Debug - items: ', items);
+
+  const filteredItems = items
     ? {
-        items: platforms?.results.map((item) => (
+        items: items?.map((item) => (
           <PlatformCard
             ouiaId={`platform-${item.id}`}
             key={item.id}
@@ -63,7 +66,7 @@ const Platforms = () => {
             }
           />
         )),
-        isLoading: isLoading && platforms.length === 0
+        isLoading: isLoading && items.length === 0
       }
     : {};
 

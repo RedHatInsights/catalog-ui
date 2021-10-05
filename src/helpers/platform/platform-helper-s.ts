@@ -58,7 +58,7 @@ export const getPlatformItems = (
   if (platformId) {
     const filterQuery = filter ? `?name=${filter}` : '';
     const optionsQuery = options
-      ? `page_size=${options.limit}&page=${options.offset}`
+      ? `page_size=${options.limit}&page=${options.offset || 1}`
       : '';
     return axiosInstance.get(
       `${CATALOG_API_BASE}/sources/${platformId}/service_offerings/${filterQuery}${
@@ -83,7 +83,9 @@ export const getPlatformInventories = (
     );
   } else {
     return axiosInstance.get(
-      `${CATALOG_API_BASE}/service_inventories?page_size=${options.limit}&page=${options.offset}`
+      `${CATALOG_API_BASE}/service_inventories?page_size=${
+        options.limit
+      }&page=${options.offset || 1}`
     );
   }
 };

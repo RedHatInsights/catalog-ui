@@ -129,10 +129,10 @@ export const addToPortfolio = (
 ): Promise<PortfolioItem[]> =>
   Promise.all(
     items.map((item) =>
-      axiosInstance.put(`${CATALOG_API_BASE}/portfolio_items/`, {
+      axiosInstance.post(`${CATALOG_API_BASE}/portfolio_items/`, {
         name: item,
         description: item,
-        portfolio_id: portfolioId,
+        portfolio: portfolioId,
         service_offering_ref: item
       })
     )
@@ -157,7 +157,9 @@ export const removePortfolio = (
 export const removePortfolioItem = (
   portfolioItemId: string
 ): AxiosPromise<RestoreKey> =>
-  axiosInstance.delete(`${CATALOG_API_BASE}/portfolios/${portfolioItemId}/`);
+  axiosInstance.delete(
+    `${CATALOG_API_BASE}/portfolio_items/${portfolioItemId}/`
+  );
 
 export const removePortfolioItems = (
   portfolioItemIds: string[]

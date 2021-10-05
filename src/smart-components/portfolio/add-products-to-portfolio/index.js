@@ -28,8 +28,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import BottomPaginationContainer from '../../../presentational-components/shared/bottom-pagination-container';
 import asyncFormValidator from '../../../utilities/async-form-validator';
 
-const renderGalleryItems = (items = [], checkItem, checkedItems) =>
-  items.map((item) => (
+const renderGalleryItems = (items = [], checkItem, checkedItems) => {
+  console.log(
+    'Debug - renderGalleryItems - items, checkItem, checkedItems : ',
+    items,
+    checkItem,
+    checkedItems
+  );
+  return items.map((item) => (
     <PlatformItem
       key={item.id}
       {...item}
@@ -38,6 +44,7 @@ const renderGalleryItems = (items = [], checkItem, checkedItems) =>
       checked={checkedItems.includes(item.id)}
     />
   ));
+};
 
 const initialState = {
   filterValue: '',
@@ -102,10 +109,15 @@ const AddProductsToPortfolio = ({ portfolioRoute }) => {
       : [...checkedItems, itemId];
   };
 
-  const items =
-    selectedPlatform && platformItems[selectedPlatform.id]
-      ? platformItems[selectedPlatform.id].data
-      : [];
+  const items = () => {
+    if (selectedPlatform && platformItems[selectedPlatform.id]) {
+      return window.catalog.standalone
+        ? platformItems[selectedPlatform.id].results
+        : platformItems[selectedPlatform.id].data;
+    }
+
+    return [];
+  };
 
   const meta =
     selectedPlatform &&
@@ -162,15 +174,34 @@ const AddProductsToPortfolio = ({ portfolioRoute }) => {
     );
   };
 
+  console.log('Debug AddProducts - platforms', platforms);
+  console.log(
+    'Debug AddProducts - options',
+    platforms && platforms.length > 0
+      ? platforms.map((platform) => ({
+          value: platform.id,
+          label: platform.name,
+          id: platform.id
+        }))
+      : []
+  );
+
+  const options =
+    platforms.results && platforms.results.length > 0
+      ? platforms.results.map((platform) => ({
+          value: platform.id,
+          label: platform.name,
+          id: platform.id
+        }))
+      : [];
+  console.log('Debug AddProducts - options', options);
+  console.log('Debug AddProducts - items', items());
+  console.log('Debug AddProducts - checkedItems', checkedItems);
   return (
     <Fragment>
       <ToolbarRenderer
         schema={createAddProductsSchema({
-          options: platforms.map((platform) => ({
-            value: platform.id,
-            label: platform.name,
-            id: platform.id
-          })),
+          options,
           isFetching,
           portfolioName: (portfolio && portfolio.name) || '',
           itemsSelected: checkedItems.length > 0,
@@ -194,7 +225,7 @@ const AddProductsToPortfolio = ({ portfolioRoute }) => {
         checkedItems={checkedItems}
         isLoading={isLoading}
         items={renderGalleryItems(
-          items,
+          items(),
           (itemId) => setCheckedItems(checkItem(itemId)),
           checkedItems
         )}
