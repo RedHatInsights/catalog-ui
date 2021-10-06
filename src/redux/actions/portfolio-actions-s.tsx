@@ -318,14 +318,17 @@ export const removeProductsFromPortfolio = (
     }
   } = getState();
   return PortfolioHelper.removePortfolioItems(portfolioItems)
-    .then((results) =>
+    .then((data) =>
       dispatch(
         fetchPortfolioItemsWithPortfolio(portfolioId!, {
           offset: 0,
           limit: meta.limit,
           filter: ''
         })
-      ).then(() => results)
+      ).then(() => {
+        console.log('Debug dispatch - data');
+        return data;
+      })
     )
     .then((data) => {
       return dispatch({

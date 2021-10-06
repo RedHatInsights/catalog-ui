@@ -184,7 +184,7 @@ PortfolioItems.propTypes = {
     isFetching: PropTypes.bool,
     isFiltering: PropTypes.bool,
     copyInProgress: PropTypes.bool,
-    selectedItems: PropTypes.arrayOf(PropTypes.string),
+    selectedItems: PropTypes.array,
     filterValue: PropTypes.string
   }).isRequired,
   fromProducts: PropTypes.bool

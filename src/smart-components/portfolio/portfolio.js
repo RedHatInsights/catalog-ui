@@ -181,7 +181,6 @@ const Portfolio = () => {
         if (isMounted.current) {
           stateDispatch({ type: 'setIsFetching', payload: false });
         }
-
         return data;
       })
       .catch(() => stateDispatch({ type: 'setIsFetching', payload: false }));
@@ -236,6 +235,12 @@ const Portfolio = () => {
 
   const removeProducts = (products) => {
     stateDispatch({ type: 'setRemoveInProgress', payload: true });
+    console.log(
+      'Debug - removeProducts - products, portfolio.name, state.firstSelectedProduct: ',
+      products,
+      portfolio.name,
+      state.firstSelectedProduct
+    );
     dispatch(
       window.catalog.standalone
         ? removeProductsFromPortfolioS(
@@ -310,7 +315,7 @@ const Portfolio = () => {
             routes={routes}
             fromProducts={fromProducts === 'true'}
             handleFilterChange={handleFilterChange}
-            removeProducts={removeProducts}
+            removeProducts={(products) => removeProducts(products)}
             copyPortfolio={handleCopyPortfolio}
             state={state}
             stateDispatch={stateDispatch}

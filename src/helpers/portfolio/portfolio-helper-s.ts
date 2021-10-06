@@ -101,7 +101,7 @@ export const getPortfolio = (portfolioId: string): Promise<Portfolio> => {
 
 export const getPortfolioItemsWithPortfolio = (
   portfolioId: string,
-  { pageSize, page, filter = '' } = defaultSettings
+  { limit, offset, count, filter = '' } = defaultSettings
 ): Promise<ApiCollectionResponse<PortfolioItem>> =>
   axiosInstance.get(
     `${CATALOG_API_BASE}/portfolios/${portfolioId}/portfolio_items/`
