@@ -161,7 +161,7 @@ const Portfolio = () => {
         window.catalog?.standalone ? fetchPlatformsS() : fetchPlatforms()
       ),
       dispatch(
-        window?.catalog?.standalone
+        window.catalog?.standalone
           ? fetchSelectedPortfolioS(portfolioId)
           : fetchSelectedPortfolio(portfolioId)
       ),
@@ -178,9 +178,13 @@ const Portfolio = () => {
       )
     ])
       .then((data) => {
+        console.log('Debug - portfolio fetchData data: ', data);
+        console.log('Debug - portfolio fetchData data: ', isMounted);
         if (isMounted.current) {
+          console.log('Debug - portfolio fetchData isMounted: ', isMounted);
           stateDispatch({ type: 'setIsFetching', payload: false });
         }
+
         return data;
       })
       .catch(() => stateDispatch({ type: 'setIsFetching', payload: false }));
@@ -193,7 +197,7 @@ const Portfolio = () => {
     return () => {
       resetBreadcrumbs();
       dispatch(
-        window.catalog.standalone
+        window.catalog?.standalone
           ? resetSelectedPortfolioS()
           : resetSelectedPortfolio()
       );
@@ -201,11 +205,17 @@ const Portfolio = () => {
   }, []);
 
   useEffect(() => {
+    console.log(
+      'Debug - useEffect - history.location.pathname',
+      history.location.pathname
+    );
+
     if (
       isMounted.current === true &&
       !state.isFetching &&
       history.location.pathname === PORTFOLIO_ROUTE
     ) {
+      console.log('Debug - useEffect 3');
       fetchData(id);
       scrollToTop();
     }
@@ -225,7 +235,7 @@ const Portfolio = () => {
       .then(() => stateDispatch({ type: 'setCopyInProgress', payload: false }))
       .then(() =>
         dispatch(
-          window?.catalog?.standalone ? fetchPortfoliosS : fetchPortfolios
+          window.catalog?.standalone ? fetchPortfoliosS : fetchPortfolios
         )
       )
       .catch(() =>
@@ -242,7 +252,7 @@ const Portfolio = () => {
       state.firstSelectedProduct
     );
     dispatch(
-      window.catalog.standalone
+      window.catalog?.standalone
         ? removeProductsFromPortfolioS(
             products,
             portfolio.name,
@@ -254,7 +264,11 @@ const Portfolio = () => {
             state.firstSelectedProduct
           )
     )
-      .then(() => stateDispatch({ type: 'removeSucessfull' }))
+      .then(() => {
+        console.log('debug - removeSuccessful - portfolio', portfolio);
+        fetchData(portfolio.id);
+        stateDispatch({ type: 'removeSucessfull' });
+      })
       .catch(() =>
         stateDispatch({ type: 'setRemoveInProgress', payload: false })
       );

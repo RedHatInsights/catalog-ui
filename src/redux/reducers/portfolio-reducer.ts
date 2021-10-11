@@ -147,40 +147,43 @@ const addTemporaryPortfolio: PortfolioReducerActionHandler = (
 const updateTemporaryPortfolio: PortfolioReducerActionHandler = (
   state,
   { payload }
-) => ({
-  prevState: { ...state },
-  ...state,
-  selectedPortfolio: {
-    metadata: {
-      ...state.selectedPortfolio.metadata,
-      user_capabilities: {
-        // the client typings define metadata object which will result it unknown property TS error. So we have to override it
-        ...(state.selectedPortfolio.metadata as AnyObject).user_capabilities
-      }
+) => {
+  console.log('Debug - updateTemporaryPortfolio: state, payload', state, payload);
+  return {
+    prevState: { ...state },
+    ...state,
+    selectedPortfolio: {
+      metadata: {
+        ...state.selectedPortfolio.metadata,
+        user_capabilities: {
+          // the client typings define metadata object which will result it unknown property TS error. So we have to override it
+          ...(state.selectedPortfolio.metadata as AnyObject).user_capabilities
+        }
+      },
+      ...payload
     },
-    ...payload
-  },
-  portfolios: {
-    ...state.portfolios,
-    // @ts-ignore
-    data: state.portfolios?.data?.map((item: { id: any }) =>
-      item.id === payload.id
-        ? {
-            ...item,
-            ...payload
-          }
-        : item
-    ),
-    results: state.portfolios?.results?.map((item) => {
-      return String(item.id) === String(payload.id)
-        ? {
-            ...item,
-            ...payload
-          }
-        : item;
-    })
-  }
-});
+    portfolios: {
+      ...state.portfolios,
+      // @ts-ignore
+      data: state.portfolios?.data?.map((item: { id: any }) =>
+        item.id === payload.id
+          ? {
+              ...item,
+              ...payload
+            }
+          : item
+      ),
+      results: state.portfolios?.results?.map((item) => {
+        return String(item.id) === String(payload.id)
+          ? {
+              ...item,
+              ...payload
+            }
+          : item;
+      })
+    }
+  };
+};
 
 const deleteTemporaryPortfolio: PortfolioReducerActionHandler = (
   state,

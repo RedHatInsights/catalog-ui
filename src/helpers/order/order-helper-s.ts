@@ -1,8 +1,5 @@
 /* eslint camelcase: 0 */
-import {
-  getAxiosInstance,
-  getGraphqlInstance
-} from '../shared/user-login';
+import { getAxiosInstance, getGraphqlInstance } from '../shared/user-login';
 import {
   CATALOG_API_BASE,
   APPROVAL_API_BASE,

@@ -326,11 +326,12 @@ export const removeProductsFromPortfolio = (
           filter: ''
         })
       ).then(() => {
-        console.log('Debug dispatch - data');
+        console.log('Debug dispatch portfolio actions - data');
         return data;
       })
     )
     .then((data) => {
+      console.log('Debug dispatch success - data');
       return dispatch({
         type: ADD_NOTIFICATION,
         payload: {
