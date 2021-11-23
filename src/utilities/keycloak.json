@@ -1,0 +1,13 @@
+{
+  "realm": "aap",
+  "auth-server-url": "http://keycloak.k8s.local/auth",
+  "ssl-required": "external",
+  "resource": "catalog",
+  "verify-token-audience": true,
+  "credentials": {
+    "secret": "SOMESECRETVALUE"
+  },
+  "use-resource-role-mappings": true,
+  "confidential-port": 0,
+  "policy-enforcer": {}
+}
