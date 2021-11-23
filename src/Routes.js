@@ -114,7 +114,6 @@ export const Routes = () => {
         <CatalogRoute path={paths.order_processes} component={OrderProcesses} />
         <CatalogRoute path={paths.order} component={OrderDetail} />
         <CatalogRoute path={paths.orders} component={Orders} />
-        <CatalogRoute path={paths.approval} component={ApprovalComponent} />
         <Route path={errorPaths} component={CommonApiError} />
         <Route
           render={() =>
