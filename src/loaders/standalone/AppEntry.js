@@ -3,15 +3,19 @@ import { Provider } from 'react-redux';
 import store from '../../utilities/store';
 import { IntlProvider } from 'react-intl';
 import Router from './AppStandalone';
+import { ReactKeycloakProvider } from '@react-keycloak/web';
+import keycloak from '../../utilities/keycloak';
 
 const AppEntry = () => {
   console.log('%c Catalog UI started in standalone mode', 'color: blue');
   return (
-    <Provider store={store(true)}>
-      <IntlProvider locale="en">
-        <Router />
-      </IntlProvider>
-    </Provider>
+    <ReactKeycloakProvider authClient={keycloak}>
+      <Provider store={store(true)}>
+        <IntlProvider locale="en">
+          <Router />
+        </IntlProvider>
+      </Provider>
+    </ReactKeycloakProvider>
   );
 };
 

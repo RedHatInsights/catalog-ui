@@ -5,6 +5,7 @@ import Logo from '../../assets/images/logo-large.svg';
 import { useState } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { useHistory } from 'react-router';
+import keycloak from '../../utilities/keycloak';
 
 const LoginPage = (props) => {
   const [userName, setUserName] = useState('');
