@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { Grid, GridItem } from '@patternfly/react-core';
+import { Alert, Grid, GridItem } from '@patternfly/react-core';
 import NotificationsPortal from '@redhat-cloud-services/frontend-components-notifications/NotificationPortal';
 
 import { Routes } from './Routes';
@@ -100,6 +100,12 @@ const App = () => {
       <Fragment>
         <NotificationsPortal />
         <section className="pf-u-p-0 pf-u-ml-0 pf-l-page__main-section pf-c-page__main-section">
+          <Alert
+            variant="info"
+            isInline
+            /* eslint-disable-next-line max-len */
+            title="The Automation Services Catalog will be removed from console.redhat.com on May 1st 2022. An alternative solution for catalog services available in Ansible Automation Platform 2.2 due soon."
+          />
           <Grid style={{ minHeight: MIN_SCREEN_HEIGHT }}>
             <GridItem sm={12} className="content-layout">
               <Routes />
