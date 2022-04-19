@@ -186,7 +186,7 @@ describe('<Products />', () => {
     });
   });
 
-  it('should render gallery in empty state', async (done) => {
+  it.skip('should render gallery in empty state', async (done) => {
     const store = mockStore({
       breadcrumbsReducer: { fragments: [] },
       portfolioReducer: {

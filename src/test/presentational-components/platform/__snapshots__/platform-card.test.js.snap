@@ -11,11 +11,11 @@ exports[`<PlatformCard /> should render correctly 1`] = `
         ouiaId="platform-Foo"
       >
         <Card
-          className="sc-gKXOVf dpDjnC"
+          className="sc-AxheI ueGSf"
           ouiaId="platform-Foo"
         >
           <article
-            className="pf-c-card sc-gKXOVf dpDjnC"
+            className="pf-c-card sc-AxheI ueGSf"
             data-ouia-component-id="platform-Foo"
             data-ouia-component-type="PF4/Card"
             data-ouia-safe={true}
@@ -27,17 +27,17 @@ exports[`<PlatformCard /> should render correctly 1`] = `
               >
                 <Styled(Level)>
                   <Level
-                    className="sc-dkzDqf gQxYYg"
+                    className="sc-AxiKw hSLCUF"
                   >
                     <div
-                      className="pf-l-level sc-dkzDqf gQxYYg"
+                      className="pf-l-level sc-AxiKw hSLCUF"
                     >
                       <Styled(LevelItem)>
                         <LevelItem
-                          className="sc-gsnTZi kkgzEn"
+                          className="sc-AxirZ dRDdDp"
                         >
                           <div
-                            className="sc-gsnTZi kkgzEn"
+                            className="sc-AxirZ dRDdDp"
                           >
                             <CardIcon
                               height={40}
@@ -47,7 +47,7 @@ exports[`<PlatformCard /> should render correctly 1`] = `
                                 height={40}
                               >
                                 <div
-                                  className="sc-ksZaOG kyQRYf"
+                                  className="sc-fzokOt efqMbY"
                                   height={40}
                                 >
                                   <IconPlaceholder
@@ -65,7 +65,7 @@ exports[`<PlatformCard /> should render correctly 1`] = `
                                       />
                                     </svg>
                                   </IconPlaceholder>
-                                  <Styled(c)
+                                  <Styled(t)
                                     delayTime={0}
                                     height={0}
                                     hidden={true}
@@ -73,10 +73,10 @@ exports[`<PlatformCard /> should render correctly 1`] = `
                                     onLoad={[Function]}
                                     threshold={2000}
                                   >
-                                    <c
+                                    <t
                                       afterLoad={[Function]}
                                       beforeLoad={[Function]}
-                                      className="sc-breuTD hXWnqt"
+                                      className="sc-fznZeY ea-dOJy"
                                       delayMethod="throttle"
                                       delayTime={0}
                                       effect=""
@@ -90,10 +90,10 @@ exports[`<PlatformCard /> should render correctly 1`] = `
                                       visibleByDefault={false}
                                       wrapperClassName=""
                                     >
-                                      <u
+                                      <t
                                         afterLoad={[Function]}
                                         beforeLoad={[Function]}
-                                        className="sc-breuTD hXWnqt"
+                                        className="sc-fznZeY ea-dOJy"
                                         delayMethod="throttle"
                                         delayTime={0}
                                         height={0}
@@ -102,15 +102,15 @@ exports[`<PlatformCard /> should render correctly 1`] = `
                                         visibleByDefault={false}
                                       >
                                         <img
-                                          className="sc-breuTD hXWnqt"
+                                          className="sc-fznZeY ea-dOJy"
                                           height={0}
                                           hidden={true}
                                           onError={[Function]}
                                           onLoad={[Function]}
                                         />
-                                      </u>
-                                    </c>
-                                  </Styled(c)>
+                                      </t>
+                                    </t>
+                                  </Styled(t)>
                                 </div>
                               </styled.div>
                             </CardIcon>
@@ -175,17 +175,9 @@ exports[`<PlatformCard /> should render correctly 1`] = `
                           positionModifiers={
                             Object {
                               "bottom": "pf-m-bottom",
-                              "bottom-end": "pf-m-bottom-right",
-                              "bottom-start": "pf-m-bottom-left",
                               "left": "pf-m-left",
-                              "left-end": "pf-m-left-bottom",
-                              "left-start": "pf-m-left-top",
                               "right": "pf-m-right",
-                              "right-end": "pf-m-right-bottom",
-                              "right-start": "pf-m-right-top",
                               "top": "pf-m-top",
-                              "top-end": "pf-m-top-right",
-                              "top-start": "pf-m-top-left",
                             }
                           }
                           trigger={
@@ -274,10 +266,10 @@ exports[`<PlatformCard /> should render correctly 1`] = `
             </CardHeader>
             <Styled(CardBody)>
               <CardBody
-                className="sc-ftvSup fuRIVo"
+                className="sc-AxmLO fFTSWm"
               >
                 <div
-                  className="pf-c-card__body sc-ftvSup fuRIVo"
+                  className="pf-c-card__body sc-AxmLO fFTSWm"
                 >
                   <TextContent>
                     <div
@@ -301,7 +293,7 @@ exports[`<PlatformCard /> should render correctly 1`] = `
                           }
                         >
                           <Component
-                            className="sc-eCYdqJ cMnjNY"
+                            className="sc-AxhUy cYwveG"
                             to={
                               Object {
                                 "hash": undefined,
@@ -311,7 +303,7 @@ exports[`<PlatformCard /> should render correctly 1`] = `
                             }
                           >
                             <Link
-                              className="sc-eCYdqJ cMnjNY"
+                              className="sc-AxhUy cYwveG"
                               to={
                                 Object {
                                   "hash": undefined,
@@ -321,12 +313,12 @@ exports[`<PlatformCard /> should render correctly 1`] = `
                               }
                             >
                               <LinkAnchor
-                                className="sc-eCYdqJ cMnjNY"
+                                className="sc-AxhUy cYwveG"
                                 href="/platforms/platform/platform-templates?platform=Foo"
                                 navigate={[Function]}
                               >
                                 <a
-                                  className="sc-eCYdqJ cMnjNY"
+                                  className="sc-AxhUy cYwveG"
                                   href="/platforms/platform/platform-templates?platform=Foo"
                                   onClick={[Function]}
                                 >
@@ -343,7 +335,7 @@ exports[`<PlatformCard /> should render correctly 1`] = `
                                     >
                                       <styled.div>
                                         <div
-                                          className="sc-hKMtZM emGFBx"
+                                          className="sc-AxhCb hYKqDj"
                                         />
                                       </styled.div>
                                     </h3>
@@ -388,7 +380,7 @@ exports[`<PlatformCard /> should render correctly 1`] = `
                             key="card-prop-description"
                           >
                             <div
-                              className="sc-bczRLJ kBMtkl"
+                              className="sc-AxjAm hDziHm"
                             />
                           </styled.div>
                         </span>
@@ -454,17 +446,9 @@ exports[`<PlatformCard /> should render correctly 1`] = `
                               positionModifiers={
                                 Object {
                                   "bottom": "pf-m-bottom",
-                                  "bottom-end": "pf-m-bottom-right",
-                                  "bottom-start": "pf-m-bottom-left",
                                   "left": "pf-m-left",
-                                  "left-end": "pf-m-left-bottom",
-                                  "left-start": "pf-m-left-top",
                                   "right": "pf-m-right",
-                                  "right-end": "pf-m-right-bottom",
-                                  "right-start": "pf-m-right-top",
                                   "top": "pf-m-top",
-                                  "top-end": "pf-m-top-right",
-                                  "top-start": "pf-m-top-left",
                                 }
                               }
                               trigger={
@@ -510,7 +494,7 @@ exports[`<PlatformCard /> should render correctly 1`] = `
                             key="card-prop-modified"
                           >
                             <div
-                              className="sc-bczRLJ kBMtkl"
+                              className="sc-AxjAm hDziHm"
                             />
                           </styled.div>
                         </span>
@@ -576,17 +560,9 @@ exports[`<PlatformCard /> should render correctly 1`] = `
                               positionModifiers={
                                 Object {
                                   "bottom": "pf-m-bottom",
-                                  "bottom-end": "pf-m-bottom-right",
-                                  "bottom-start": "pf-m-bottom-left",
                                   "left": "pf-m-left",
-                                  "left-end": "pf-m-left-bottom",
-                                  "left-start": "pf-m-left-top",
                                   "right": "pf-m-right",
-                                  "right-end": "pf-m-right-bottom",
-                                  "right-start": "pf-m-right-top",
                                   "top": "pf-m-top",
-                                  "top-end": "pf-m-top-right",
-                                  "top-start": "pf-m-top-left",
                                 }
                               }
                               trigger={
