@@ -50,11 +50,11 @@ describe('Portfolio actions', () => {
     mockApi.reset();
   });
 
-  it('should dispatch correct actions after fetching the portfolios', () => {
+  it('should dispatch correct actions after fetching portfolios', () => {
     const expectedPortfolio = { name: 'Name', description: 'Description' };
     mockApi
-        .onGet(`${CATALOG_API_BASE}/portfolios?limit=50&offset=0`)
-        .replyOnce(200, { data: [expectedPortfolio], meta: {} });
+      .onGet(`${CATALOG_API_BASE}/portfolios?limit=50&offset=0`)
+      .replyOnce(200, { data: [expectedPortfolio], meta: {} });
     const store = mockStore({
       portfolioReducer: {
         isLoading: false
@@ -113,8 +113,8 @@ describe('Portfolio actions', () => {
     ]);
 
     mockApi
-        .onGet(`${CATALOG_API_BASE}/portfolios?limit=50&offset=0`)
-        .replyOnce(500);
+      .onGet(`${CATALOG_API_BASE}/portfolios?limit=50&offset=0`)
+      .replyOnce(500);
 
     return store.dispatch(fetchPortfolios()).catch(() => {
       expect(store.getActions()).toEqual(expectedActions);
@@ -125,21 +125,21 @@ describe('Portfolio actions', () => {
     const store = mockStore({});
 
     mockApi
-        .onGet(
-            CATALOG_API_BASE +
-            '/portfolio_items?filter[name][contains_i]=123&limit=50&offset=0'
-        )
-        .replyOnce(200, {
-          data: [
-            {
-              portfolio_id: '1'
-            }
-          ],
-          meta: {}
-        });
+      .onGet(
+        CATALOG_API_BASE +
+          '/portfolio_items?filter[name][contains_i]=123&limit=50&offset=0'
+      )
+      .replyOnce(200, {
+        data: [
+          {
+            portfolio_id: '1'
+          }
+        ],
+        meta: {}
+      });
     mockApi
-        .onGet(`${CATALOG_API_BASE}/portfolios?filter[id][]=1`)
-        .replyOnce(200, { data: [{ id: '1', name: 'portfolio name' }] });
+      .onGet(`${CATALOG_API_BASE}/portfolios?filter[id][]=1`)
+      .replyOnce(200, { data: [{ id: '1', name: 'portfolio name' }] });
     const expectedActions = [
       {
         type: `${FETCH_PORTFOLIO_ITEMS}_PENDING`,
@@ -169,10 +169,10 @@ describe('Portfolio actions', () => {
     const store = mockStore({});
 
     mockApi
-        .onGet(
-            `${CATALOG_API_BASE}/portfolios/888/portfolio_items?filter[name][contains_i]=&limit=50&offset=0`
-        )
-        .replyOnce(200, { data: ['foo'] });
+      .onGet(
+        `${CATALOG_API_BASE}/portfolios/888/portfolio_items?filter[name][contains_i]=&limit=50&offset=0`
+      )
+      .replyOnce(200, { data: ['foo'] });
 
     const expectedActions = [
       {
@@ -208,11 +208,11 @@ describe('Portfolio actions', () => {
   it('should create correct action creators when adding portfolio', () => {
     const store = mockStore({});
     mockApi
-        .onGet(`${CATALOG_API_BASE}/portfolios?limit=50&offset=0`)
-        .replyOnce(200, [{ data: [], meta: {} }]);
+      .onGet(`${CATALOG_API_BASE}/portfolios?limit=50&offset=0`)
+      .replyOnce(200, [{ data: [], meta: {} }]);
     mockApi
-        .onPost(`${CATALOG_API_BASE}/portfolios`)
-        .replyOnce(200, [{ data: 'foo' }]);
+      .onPost(`${CATALOG_API_BASE}/portfolios`)
+      .replyOnce(200, [{ data: 'foo' }]);
 
     const expectedActions = [
       expect.objectContaining({ type: `${ADD_PORTFOLIO}_PENDING` }),
@@ -224,17 +224,17 @@ describe('Portfolio actions', () => {
     ];
 
     return store
-        .dispatch(addPortfolio({ data: 'new portfolio' }, { variant: 'success' }))
-        .then(() => {
-          expect(store.getActions()).toEqual(expectedActions);
-        });
+      .dispatch(addPortfolio({ data: 'new portfolio' }, { variant: 'success' }))
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
   });
 
   it('should create error action creators when adding portfolio failed', () => {
     const store = mockStore({});
     mockApi
-        .onGet(`${CATALOG_API_BASE}/portfolios?limit=50&offset=0`)
-        .replyOnce(200, [{ data: [], meta: {} }]);
+      .onGet(`${CATALOG_API_BASE}/portfolios?limit=50&offset=0`)
+      .replyOnce(200, [{ data: [], meta: {} }]);
     mockApi.onPost(CATALOG_API_BASE + '/portfolios').replyOnce(500);
 
     const expectedActions = [
@@ -254,11 +254,11 @@ describe('Portfolio actions', () => {
   it('should create correct action creators when updating portfolio', () => {
     const store = mockStore({ openApiReducer: openApiReducerMock });
     mockApi
-        .onGet(`${CATALOG_API_BASE}/portfolios?limit=50&offset=0`)
-        .replyOnce(200, { data: [], meta: {} });
+      .onGet(`${CATALOG_API_BASE}/portfolios?limit=50&offset=0`)
+      .replyOnce(200, { data: [], meta: {} });
     mockApi
-        .onPatch(CATALOG_API_BASE + '/portfolios/123')
-        .replyOnce(200, { data: [], meta: {} });
+      .onPatch(CATALOG_API_BASE + '/portfolios/123')
+      .replyOnce(200, { data: [], meta: {} });
 
     const expectedActions = [
       {
@@ -274,10 +274,10 @@ describe('Portfolio actions', () => {
     ];
 
     return store
-        .dispatch(updatePortfolio({ id: '123', data: { foo: 'bar' } }))
-        .then(() => {
-          expect(store.getActions()).toEqual(expectedActions);
-        });
+      .dispatch(updatePortfolio({ id: '123', data: { foo: 'bar' } }))
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
   });
 
   it('should create correct action creators when updating portfolio failed', () => {
@@ -294,10 +294,10 @@ describe('Portfolio actions', () => {
     ];
 
     return store
-        .dispatch(updatePortfolio({ id: 123, data: { foo: 'bar' } }))
-        .catch(() => {
-          expect(store.getActions()).toEqual(expectedActions);
-        });
+      .dispatch(updatePortfolio({ id: 123, data: { foo: 'bar' } }))
+      .catch(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
   });
 
   it('should create correct action creators when removing portfolio', () => {
@@ -310,11 +310,11 @@ describe('Portfolio actions', () => {
       }
     });
     mockApi
-        .onGet(`${CATALOG_API_BASE}/portfolios?limit=50&offset=0`)
-        .replyOnce(200, {});
+      .onGet(`${CATALOG_API_BASE}/portfolios?limit=50&offset=0`)
+      .replyOnce(200, {});
     mockApi
-        .onDelete(CATALOG_API_BASE + '/portfolios/123')
-        .replyOnce(200, { data: 'foo' });
+      .onDelete(CATALOG_API_BASE + '/portfolios/123')
+      .replyOnce(200, { data: 'foo' });
 
     const expectedActions = [
       {
@@ -339,8 +339,8 @@ describe('Portfolio actions', () => {
   it('should create correct action creators when removing portfolio failed', () => {
     const store = mockStore({});
     mockApi
-        .onGet(`${CATALOG_API_BASE}/portfolios?limit=50&offset=0`)
-        .replyOnce(200, [{ data: [], meta: {} }]);
+      .onGet(`${CATALOG_API_BASE}/portfolios?limit=50&offset=0`)
+      .replyOnce(200, [{ data: [], meta: {} }]);
     mockApi.onDelete(CATALOG_API_BASE + '/portfolios/123').replyOnce(500);
 
     const expectedActions = [
@@ -398,28 +398,28 @@ describe('Portfolio actions', () => {
     ];
 
     mockApi
-        .onDelete(`${CATALOG_API_BASE}/portfolio_items/1`)
-        .replyOnce(200, { restore_key: 'restore-1' });
+      .onDelete(`${CATALOG_API_BASE}/portfolio_items/1`)
+      .replyOnce(200, { restore_key: 'restore-1' });
     mockApi
-        .onDelete(`${CATALOG_API_BASE}/portfolio_items/2`)
-        .replyOnce(200, { restore_key: 'restore-2' });
+      .onDelete(`${CATALOG_API_BASE}/portfolio_items/2`)
+      .replyOnce(200, { restore_key: 'restore-2' });
     mockApi
-        .onDelete(`${CATALOG_API_BASE}/portfolio_items/3`)
-        .replyOnce(200, { restore_key: 'restore-3' });
+      .onDelete(`${CATALOG_API_BASE}/portfolio_items/3`)
+      .replyOnce(200, { restore_key: 'restore-3' });
     mockApi
-        .onGet(
-            `${CATALOG_API_BASE}/portfolios/123/portfolio_items?filter[name][contains_i]=&limit=0&offset=0`
-        )
-        .replyOnce(200, []);
+      .onGet(
+        `${CATALOG_API_BASE}/portfolios/123/portfolio_items?filter[name][contains_i]=&limit=0&offset=0`
+      )
+      .replyOnce(200, []);
 
     return store
-        .dispatch(
-            removeProductsFromPortfolio(['1', '2', '3'], 'Foo portfolio', {
-              id: '1',
-              name: 'bar'
-            })
-        )
-        .then(() => expect(store.getActions()).toEqual(expectedActions));
+      .dispatch(
+        removeProductsFromPortfolio(['1', '2', '3'], 'Foo portfolio', {
+          id: '1',
+          name: 'bar'
+        })
+      )
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
   });
 
   it('should create correct actions after remove portfolio items action fals', () => {
@@ -440,8 +440,8 @@ describe('Portfolio actions', () => {
     mockApi.onDelete(CATALOG_API_BASE + '/portfolio_items/1').replyOnce(500);
 
     return store
-        .dispatch(removeProductsFromPortfolio(['1'], 'Foo portfolio'))
-        .then(() => expect(store.getActions()).toEqual(expectedActions));
+      .dispatch(removeProductsFromPortfolio(['1'], 'Foo portfolio'))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
   });
 
   it('should create correct actions after restore portfolio items action success', () => {
@@ -485,20 +485,20 @@ describe('Portfolio actions', () => {
     ];
 
     mockApi
-        .onPost(CATALOG_API_BASE + '/portfolio_items/1/undelete')
-        .replyOnce(200, { id: '1' });
+      .onPost(CATALOG_API_BASE + '/portfolio_items/1/undelete')
+      .replyOnce(200, { id: '1' });
     mockApi
-        .onPost(CATALOG_API_BASE + '/portfolio_items/2/undelete')
-        .replyOnce(200, { id: '2' });
+      .onPost(CATALOG_API_BASE + '/portfolio_items/2/undelete')
+      .replyOnce(200, { id: '2' });
     mockApi
-        .onGet(
-            `${CATALOG_API_BASE}/portfolios/999/portfolio_items?filter[name][contains_i]=&limit=50&offset=0`
-        )
-        .replyOnce(200, { data: [] });
+      .onGet(
+        `${CATALOG_API_BASE}/portfolios/999/portfolio_items?filter[name][contains_i]=&limit=50&offset=0`
+      )
+      .replyOnce(200, { data: [] });
 
     return store
-        .dispatch(undoRemoveProductsFromPortfolio(restoreData, '999'))
-        .then(() => expect(store.getActions()).toEqual(expectedActions));
+      .dispatch(undoRemoveProductsFromPortfolio(restoreData, '999'))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
   });
 
   it('should create correct actions after restore portfolio items action fails', () => {
@@ -513,12 +513,12 @@ describe('Portfolio actions', () => {
     ];
 
     mockApi
-        .onPost(CATALOG_API_BASE + '/portfolio_items/1/undelete')
-        .replyOnce(500);
+      .onPost(CATALOG_API_BASE + '/portfolio_items/1/undelete')
+      .replyOnce(500);
 
     return store
-        .dispatch(undoRemoveProductsFromPortfolio(restoreData, '123'))
-        .then(() => expect(store.getActions()).toEqual(expectedActions));
+      .dispatch(undoRemoveProductsFromPortfolio(restoreData, '123'))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
   });
 
   it('should call correct action creator for reset selected portfolio', () => {
@@ -541,11 +541,11 @@ describe('Portfolio actions', () => {
     });
 
     mockApi
-        .onPost(`${CATALOG_API_BASE}/portfolios/123/undelete`)
-        .replyOnce(200, { id: '123', name: 'Yay' });
+      .onPost(`${CATALOG_API_BASE}/portfolios/123/undelete`)
+      .replyOnce(200, { id: '123', name: 'Yay' });
     mockApi
-        .onGet(`${CATALOG_API_BASE}/portfolios?limit=50&offset=0`)
-        .replyOnce(200, { data: [] });
+      .onGet(`${CATALOG_API_BASE}/portfolios?limit=50&offset=0`)
+      .replyOnce(200, { data: [] });
     const expectedActions = [
       {
         type: CLEAR_NOTIFICATIONS
@@ -557,12 +557,12 @@ describe('Portfolio actions', () => {
       expect.objectContaining({ type: `${FETCH_PORTFOLIOS}_FULFILLED` })
     ];
     return store
-        .dispatch(
-            undoRemovePortfolio(123, 'restore-key', { limit: 50, offset: 0 })
-        )
-        .then(() => {
-          expect(store.getActions()).toEqual(expectedActions);
-        });
+      .dispatch(
+        undoRemovePortfolio(123, 'restore-key', { limit: 50, offset: 0 })
+      )
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
   });
 
   describe('setOrFetchPortfolio', () => {
