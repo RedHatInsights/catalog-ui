@@ -50,7 +50,7 @@ describe('Portfolio actions', () => {
     mockApi.reset();
   });
 
-  it('should dispatch correct actions after fetching portfolios', () => {
+  it('should dispatch correct actions after fetching the portfolios', () => {
     const expectedPortfolio = { name: 'Name', description: 'Description' };
     mockApi
         .onGet(`${CATALOG_API_BASE}/portfolios?limit=50&offset=0`)
