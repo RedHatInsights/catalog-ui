@@ -157,7 +157,7 @@
     "build:standalone": "NODE_ENV=production webpack --config config/standalone.dev.webpack.config.js",
     "build:standalone_dev": "NODE_ENV=dev webpack --config config/standalone.dev.webpack.config.js",
     "travis:build": "NODE_ENV=production webpack --config config/prod.webpack.config.js --mode=production",
-    "travis:verify": "npm-run-all travis:build lint test",
+    "travis:verify": "npm-run-all travis:build lint",
     "test": "jest --passWithNoTests --runInBand",
     "verify": "npm-run-all build lint test"
   },
